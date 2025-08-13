@@ -1,1 +1,0 @@
-self.__REACT_LOADABLE_MANIFEST="{\"components\\\\homes\\\\home-2\\\\FaqHomeTwo.tsx -> bootstrap/js/dist/collapse\":{\"id\":\"components\\\\homes\\\\home-2\\\\FaqHomeTwo.tsx -> bootstrap/js/dist/collapse\",\"files\":[\"static/chunks/_app-pages-browser_node_modules_bootstrap_js_dist_collapse_js.js\"]}}"
