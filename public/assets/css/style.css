@@ -592,7 +592,7 @@ img {
 
 .home-banner {
   background-size: cover;
-  background-color: #002935;
+  background-color: #359093;
   color: #fff;
   position: relative;
   height: 750px;
@@ -730,7 +730,7 @@ img {
 .hbstyle-2:before {
   position: absolute;
   content: "";
-  background: #002935;
+  background: #359093;
   width: 100%;
   height: 100%;
   opacity: 0.9;
@@ -1351,7 +1351,7 @@ img {
   top: 0;
   width: 100%;
   height: 100%;
-  background: #002935;
+  background: #359093;
   opacity: 0.87;
   z-index: -1;
 }
@@ -1977,7 +1977,7 @@ svg#play_icon:hover #triangle {
 }
 .partners {
   border-radius: 16px;
-  background-color: #002935;
+  background-color: #359093;
   padding: 60px;
 }
 
@@ -2147,7 +2147,7 @@ svg#play_icon:hover #triangle {
 --------------------------------*/
 
 .footer {
-  background: #002935;
+  background: #359093;
   color: #fff;
   padding-top: 80px;
   position: relative;
@@ -2200,7 +2200,7 @@ svg#play_icon:hover #triangle {
 }
 .footer .newsletter button:hover,
 .footer .newsletter button:focus {
-  background-color: #002935;
+  background-color: #359093;
 }
 .footer-bottom {
   border-top: 1px solid rgba(225, 225, 225, 0.08);
@@ -2373,7 +2373,7 @@ svg#play_icon:hover #triangle {
   height: 100%;
   left: 0;
   top: 0;
-  background: #002935;
+  background: #359093;
   opacity: 0.9;
   z-index: -1;
 }
@@ -2775,7 +2775,7 @@ svg#play_icon:hover #triangle {
   width: 35px;
   height: 35px;
   line-height: 38px;
-  background: #002935;
+  background: #359093;
   color: #fff;
   transition: 0.5s;
   border-radius: 50%;
@@ -2853,8 +2853,8 @@ svg#play_icon:hover #triangle {
 }
 .cd_btn:hover,
 .cd_btn:focus {
-  background-color: #002935;
-  border-color: 1px solid #002935;
+  background-color: #359093;
+  border-color: 1px solid #359093;
   color: #fff;
   box-shadow: 0;
 }
@@ -3313,11 +3313,11 @@ li.comment {
 .woocommerce-cart-form .coupon button:focus,
 .woocommerce-cart-form .coupon input[type="submit"]:hover,
 .woocommerce-cart-form .coupon input[type="submit"]:focus {
-  border-color: #002935;
-  background: #002935;
+  border-color: #359093;
+  background: #359093;
 }
 .btn_border {
-  border: 2px solid #002935;
+  border: 2px solid #359093;
   color: #222;
   padding: 8px 25px;
   font-weight: 600;
@@ -3572,7 +3572,7 @@ li.comment {
   text-align: center;
   text-transform: capitalize;
   font-size: 28px;
-  color: #002935;
+  color: #359093;
   margin-top: 15px;
 }
 
@@ -3876,7 +3876,7 @@ li.comment {
   color: #082f5e;
 }
 .cart_drawer_btm .button-checkout {
-  background-color: #002935;
+  background-color: #359093;
   color: #fff;
 }
 
