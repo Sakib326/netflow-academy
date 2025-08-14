@@ -1,7 +1,98 @@
-// "use client";
-
 import HomeOne from "@/components/homes/home";
+import { Metadata } from "next";
+import { PaginatedCourses } from "@/types/course";
+import { CourseCategory } from "@/types/courseCategory";
+import { Instructor } from "@/types/instructor";
+import { PaginatedReviews } from "@/types/review";
 
-export default function Home() {
-  return <HomeOne />;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+interface FetchCoursesParams {
+  page?: number;
+  per_page?: number;
+  category_id?: number;
+  search?: string;
+  sort?: "latest" | "popular" | "price_low" | "price_high";
+}
+
+export const metadata: Metadata = {
+  title: "Netflow Academy - Home",
+  description:
+    "Welcome to Netflow Academy. Your trusted partner for networking solutions.",
+  keywords: ["Netflow", "Academy", "Networking", "Solutions"],
+};
+
+export async function fetchCourses(
+  params: FetchCoursesParams = {}
+): Promise<PaginatedCourses> {
+  const url = new URL(`${API_URL}/courses`);
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      url.searchParams.append(key, String(value));
+    }
+  });
+
+  const res = await fetch(url.toString(), { cache: "no-store" });
+  if (!res.ok) {
+    throw new Error("Failed to fetch courses");
+  }
+  return res.json();
+}
+
+export async function fetchCategories(): Promise<CourseCategory[]> {
+  const res = await fetch(`${API_URL}/categories`, { cache: "no-store" });
+  if (!res.ok) {
+    throw new Error("Failed to fetch categories");
+  }
+  return res.json();
+}
+
+export async function fetchInstructors(): Promise<Instructor[]> {
+  const res = await fetch(`${API_URL}/instructors`, { cache: "no-store" });
+  if (!res.ok) {
+    throw new Error("Failed to fetch instructors");
+  }
+  return res.json();
+}
+
+interface FetchReviewsParams {
+  page?: number;
+  per_page?: number;
+  course_id?: number;
+  rating?: number;
+}
+
+export async function fetchReviews(
+  params: FetchReviewsParams = {}
+): Promise<PaginatedReviews> {
+  const url = new URL(`${API_URL}/reviews`);
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      url.searchParams.append(key, String(value));
+    }
+  });
+
+  const res = await fetch(url.toString(), { cache: "no-store" });
+  if (!res.ok) {
+    throw new Error("Failed to fetch reviews");
+  }
+  return res.json();
+}
+
+export default async function Home() {
+  const [courses, categories, instructors, reviews] = await Promise.all([
+    fetchCourses({ page: 1, per_page: 10, sort: "latest" }),
+    fetchCategories(),
+    fetchInstructors(),
+    fetchReviews({ page: 1, per_page: 10 }),
+  ]);
+
+  return (
+    <HomeOne
+      courses={courses.data ?? []}
+      categories={categories}
+      instructors={instructors}
+      reviews={reviews.data ?? []}
+    />
+  );
 }

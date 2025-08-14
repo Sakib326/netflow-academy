@@ -1,3 +1,4 @@
+import { Course, Instructor } from "@/types/course";
 import FooterOne from "../../../layouts/footers/FooterOne";
 import HeaderOne from "../../../layouts/headers/HeaderOne";
 import ScrollToTop from "../../common/ScrollToTop";
@@ -13,8 +14,29 @@ import InstructorsHomeOne from "./InstructorsHomeOne";
 import ReviewHomeOne from "./ReviewHomeOne";
 import VideoHomeOne from "./VideoHomeOne";
 import WorkingProcessHomeOne from "./WorkingProcessHomeOne";
+import { CourseCategory } from "@/types/courseCategory";
+import { Review } from "@/types/review";
 
-export default function HomeOne() {
+interface HomeOneProps {
+  courses: Course[];
+  categories: CourseCategory[];
+  instructors: Instructor[];
+  reviews: Review[];
+}
+
+export default function HomeOne({
+  courses,
+  categories,
+  instructors,
+  reviews,
+}: HomeOneProps) {
+  console.log({
+    courses,
+    categories,
+    instructors,
+    reviews,
+  });
+
   return (
     <>
       <HeaderOne />
@@ -35,5 +57,3 @@ export default function HomeOne() {
     </>
   );
 }
-
-

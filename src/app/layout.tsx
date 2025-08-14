@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import "@/styles/index.css";
 
 export const metadata: Metadata = {
-  title: "Netflow Academy - Education React JS Template",
-  description: "Professional education website template built with Next.js",
+  title: "Netflow Academy - Education Platform",
+  description:
+    "Netflow Academy provides skill-based education to help you succeed in your global career. Our courses teach real-world skills and come with lifetime support and career guidance.",
   icons: {
     icon: "/vite.svg",
   },

@@ -31,10 +31,7 @@ export default function FooterOne() {
                 <div className="about-footer">
                   <div className="footer-logo">
                     <a href="#">
-                      <img
-                        src="assets/img/footer-logo.svg"
-                        alt="Netflow Academy"
-                      />
+                      <img src="/assets/img/logo.jpg" alt="Netflow Academy" />
                     </a>
                   </div>
                   <p>
