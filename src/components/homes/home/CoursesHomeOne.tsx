@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -280,5 +281,3 @@ export default function CoursesHomeOne() {
     </>
   );
 }
-
-

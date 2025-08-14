@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import HomeOne from "@/components/homes/home";
 

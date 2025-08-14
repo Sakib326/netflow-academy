@@ -1,13 +1,11 @@
- 
+"use client";
+
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-
 export default function ReviewHomeOne() {
-
   return (
     <>
-
       <section className="review section-padding">
         <div className="container">
           <div className="row">
@@ -20,17 +18,15 @@ export default function ReviewHomeOne() {
 
             <div className="col-xl-12 wow fadeIn">
               <div className="review-slider owl-carousel owl-loaded owl-drag">
-                
                 <Swiper
-                   
                   slidesPerView={3}
                   spaceBetween={30}
-                  loop={true} 
-                  pagination={{el: ".owl-dots", clickable: true}}
+                  loop={true}
+                  pagination={{ el: ".owl-dots", clickable: true }}
                   modules={[Autoplay, Navigation, Pagination]}
-                  navigation={{ nextEl: '.owl-next', prevEl: '.owl-prev' }}
+                  navigation={{ nextEl: ".owl-next", prevEl: ".owl-prev" }}
                   autoplay={{ delay: 3000, disableOnInteraction: false }}
-                  centeredSlides={true} 
+                  centeredSlides={true}
                   breakpoints={{
                     0: {
                       slidesPerView: 1,
@@ -42,8 +38,8 @@ export default function ReviewHomeOne() {
                       slidesPerView: 3,
                     },
                   }}
-                  className="owl-stage-outer">
-
+                  className="owl-stage-outer"
+                >
                   <SwiperSlide
                     className="owl-item"
                     style={{ width: "408.667px", marginRight: "35px" }}
@@ -179,8 +175,6 @@ export default function ReviewHomeOne() {
                       </div>
                     </div>
                   </SwiperSlide>
-                   
-
                 </Swiper>
 
                 <div className="owl-nav">
@@ -200,8 +194,7 @@ export default function ReviewHomeOne() {
                   </button>
                 </div>
 
-                <div className="owl-dots"> 
-                </div>
+                <div className="owl-dots"></div>
               </div>
             </div>
           </div>
@@ -223,5 +216,3 @@ export default function ReviewHomeOne() {
     </>
   );
 }
-
-

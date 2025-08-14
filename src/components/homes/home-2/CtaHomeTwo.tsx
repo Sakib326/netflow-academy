@@ -12,7 +12,7 @@ export default function CtaHomeTwo() {
                   </h3>
                   <p>
                     Top instructors from around the world teach millions of
-                    student on Netflow Bangladesh
+                    student on Netflow Academy
                   </p>
                   <a href="#" className="bg_btn bt">
                     Apply Now
@@ -57,7 +57,7 @@ export default function CtaHomeTwo() {
 
                   <p>
                     Top instructors from around the world teach millions of
-                    student on Netflow Bangladesh
+                    student on Netflow Academy
                   </p>
                   <a href="#" className="bg_btn bt">
                     Register
@@ -98,5 +98,3 @@ export default function CtaHomeTwo() {
     </>
   );
 }
-
-

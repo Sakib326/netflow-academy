@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "@/styles/index.css";
 
 export const metadata: Metadata = {
-  title: "Netflow Bangladesh - Education React JS Template",
+  title: "Netflow Academy - Education React JS Template",
   description: "Professional education website template built with Next.js",
   icons: {
     icon: "/vite.svg",

@@ -1,6 +1,7 @@
- 
-import { Autoplay } from 'swiper/modules'
-import { Swiper, SwiperSlide } from 'swiper/react'
+"use client";
+
+import { Autoplay } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function BrandHomeOne() {
   return (
@@ -9,7 +10,7 @@ export default function BrandHomeOne() {
         <div className="row">
           <Swiper
             slidesPerView={6}
-            spaceBetween={30} 
+            spaceBetween={30}
             loop={true}
             modules={[Autoplay]}
             autoplay={{ delay: 3000, disableOnInteraction: false }}
@@ -23,55 +24,72 @@ export default function BrandHomeOne() {
               1200: {
                 slidesPerView: 6,
               },
-
             }}
-            className="mx-auto partners owl-carousel">
+            className="mx-auto partners owl-carousel"
+          >
             <SwiperSlide className="client-item">
-              <a href="#"><img src="assets/img/partners/1.svg" alt="client" /></a>
+              <a href="#">
+                <img src="assets/img/partners/1.svg" alt="client" />
+              </a>
             </SwiperSlide>
 
             <SwiperSlide className="client-item">
-              <a href="#"><img src="assets/img/partners/2.svg" alt="client" /></a>
+              <a href="#">
+                <img src="assets/img/partners/2.svg" alt="client" />
+              </a>
             </SwiperSlide>
 
             <SwiperSlide className="client-item">
-              <a href="#"><img src="assets/img/partners/3.svg" alt="client" /></a>
+              <a href="#">
+                <img src="assets/img/partners/3.svg" alt="client" />
+              </a>
             </SwiperSlide>
 
             <SwiperSlide className="client-item">
-              <a href="#"><img src="assets/img/partners/4.svg" alt="client" /></a>
+              <a href="#">
+                <img src="assets/img/partners/4.svg" alt="client" />
+              </a>
             </SwiperSlide>
 
             <SwiperSlide className="client-item">
-              <a href="#"><img src="assets/img/partners/5.svg" alt="client" /></a>
+              <a href="#">
+                <img src="assets/img/partners/5.svg" alt="client" />
+              </a>
             </SwiperSlide>
 
             <SwiperSlide className="client-item">
-              <a href="#"><img src="assets/img/partners/1.svg" alt="client" /></a>
+              <a href="#">
+                <img src="assets/img/partners/1.svg" alt="client" />
+              </a>
             </SwiperSlide>
 
             <SwiperSlide className="client-item">
-              <a href="#"><img src="assets/img/partners/2.svg" alt="client" /></a>
+              <a href="#">
+                <img src="assets/img/partners/2.svg" alt="client" />
+              </a>
             </SwiperSlide>
 
             {/* repet */}
             <SwiperSlide className="client-item">
-              <a href="#"><img src="assets/img/partners/1.svg" alt="client" /></a>
+              <a href="#">
+                <img src="assets/img/partners/1.svg" alt="client" />
+              </a>
             </SwiperSlide>
 
             <SwiperSlide className="client-item">
-              <a href="#"><img src="assets/img/partners/2.svg" alt="client" /></a>
+              <a href="#">
+                <img src="assets/img/partners/2.svg" alt="client" />
+              </a>
             </SwiperSlide>
 
             <SwiperSlide className="client-item">
-              <a href="#"><img src="assets/img/partners/3.svg" alt="client" /></a>
-            </SwiperSlide> 
-
+              <a href="#">
+                <img src="assets/img/partners/3.svg" alt="client" />
+              </a>
+            </SwiperSlide>
           </Swiper>
         </div>
       </section>
     </>
-  )
+  );
 }
-
-

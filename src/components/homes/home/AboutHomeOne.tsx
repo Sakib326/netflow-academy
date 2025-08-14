@@ -17,9 +17,9 @@ export default function AboutHomeOne() {
               </div>
 
               <p className="mb50">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-                sed turpis in arcu gravida faucibus euismod eget magna. Donec
-                non justo ac libero pharetra congue.
+                NetFlow Academy provides skill-based education to help you
+                succeed in your global career. Our courses teach real-world
+                skills and come with lifetime support and career guidance.
               </p>
 
               <div className="single_about">
@@ -40,7 +40,8 @@ export default function AboutHomeOne() {
                 <div className="sbcontent">
                   <h4>Our Success Mission</h4>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    At NetFlow Academy, our mission is to teach students
+                    practical skills and guide them toward successful careers.{" "}
                   </p>
                 </div>
               </div>
@@ -62,9 +63,10 @@ export default function AboutHomeOne() {
                 </div>
 
                 <div className="sbcontent">
-                  <h4>Our Success Mission</h4>
+                  <h4>Our Success Vision</h4>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    NetFlow Academy aims to create an environment where students
+                    are empowered to build their own future.{" "}
                   </p>
                 </div>
               </div>
@@ -79,5 +81,3 @@ export default function AboutHomeOne() {
     </>
   );
 }
-
-

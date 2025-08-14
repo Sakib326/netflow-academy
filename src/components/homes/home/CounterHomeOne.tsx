@@ -1,3 +1,5 @@
+"use client";
+
 import Count from "../../common/Count";
 
 interface CounterType {
@@ -72,5 +74,3 @@ export default function CounterHomeOne() {
     </>
   );
 }
-
-

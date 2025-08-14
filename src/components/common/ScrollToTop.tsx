@@ -1,7 +1,7 @@
- 
-import  { useState, useEffect } from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 import UseSticky from "../../hooks/UseSticky";
- 
 
 const ScrollToTop = () => {
   const { sticky }: { sticky: boolean } = UseSticky();
@@ -25,26 +25,26 @@ const ScrollToTop = () => {
     return () => window.removeEventListener("scroll", checkScrollTop);
   }, []);
 
-   
   const styles = {
     position: "fixed" as const,
     bottom: "15px",
     right: "15px",
     opacity: sticky ? 1 : 0,
-    cursor: "pointer"
+    cursor: "pointer",
   };
 
   return (
-    <> 
-
-      <div id="topcontrol" className="topcontrol" onClick={scrollTop} style={styles}>
+    <>
+      <div
+        id="topcontrol"
+        className="topcontrol"
+        onClick={scrollTop}
+        style={styles}
+      >
         <i className="fa-solid fa-arrow-up scrolltop"></i>
-        </div>
-
+      </div>
     </>
   );
 };
 
 export default ScrollToTop;
-
-

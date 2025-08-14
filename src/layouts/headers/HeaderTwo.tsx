@@ -15,7 +15,7 @@ export default function HeaderTwo() {
             <div className="col-xl-3 col-lg-3 col-md-6 align-self-center">
               <div className="site-logo">
                 <Link href="/">
-                  <img src="assets/img/logo.jpg" alt="Netflow Bangladesh" />
+                  <img src="assets/img/logo.jpg" alt="Netflow Academy" />
                 </Link>
               </div>
             </div>

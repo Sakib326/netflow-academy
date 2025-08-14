@@ -33,7 +33,7 @@ export default function FooterOne() {
                     <a href="#">
                       <img
                         src="assets/img/footer-logo.svg"
-                        alt="Netflow Bangladesh"
+                        alt="Netflow Academy"
                       />
                     </a>
                   </div>
@@ -234,7 +234,7 @@ export default function FooterOne() {
 
         <div className="copyright text-center wow fadeIn">
           <p>
-            Copyright © 2024 <a href="#">Netflow Bangladesh</a>. All rights
+            Copyright © 2025 <a href="#">Netflow Academy</a>. All rights
             reserved.
           </p>
         </div>
@@ -242,5 +242,3 @@ export default function FooterOne() {
     </>
   );
 }
-
-

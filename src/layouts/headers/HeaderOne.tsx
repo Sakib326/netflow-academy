@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import NavMenu from "./NavMenu";
 import MobileMenu from "./MobileMenu";
@@ -15,55 +17,8 @@ export default function HeaderOne() {
             <div className="col-30 left-col align-self-center rk_style">
               <div className="site-logo">
                 <Link href="/">
-                  <img src="assets/img/logo.jpg" alt="Netflow Bangladesh" />
+                  <img src="assets/img/logo.jpg" alt="Netflow Academy" />
                 </Link>
-              </div>
-
-              <div className="course_cat">
-                <ul className="cat_list">
-                  <li>
-                    <a href="#">
-                      Category <i className="bx bx-chevron-down"></i>
-                    </a>
-                    <ul className="sub-menu">
-                      <li>
-                        <a href="#">
-                          <i className="bx bx-code-curly"></i>Web Design
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i className="bx bx-heart"></i> Fitness
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i className="bx bxl-wordpress"></i> WordPress
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i className="bx bxl-react"></i> React
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i className="bx bxl-shopify"></i> Shopify
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i className="bx bxl-java"></i> Java
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <i className="bx bxl-php"></i> PHP
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
               </div>
             </div>
 
@@ -99,7 +54,7 @@ export default function HeaderOne() {
                   <span>3</span>
                 </div>
               </div>
-              <a href="#" className="white-btn bt">
+              <a href="/login" className="white-btn bt">
                 Login / Register
               </a>
             </div>

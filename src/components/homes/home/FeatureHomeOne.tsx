@@ -35,7 +35,13 @@ export default function FeatureHomeOne({ style_2 }: Props) {
                   </svg>
                 </div>
                 <h3>Exclusive Advisor</h3>
-                <p>Lorem ipsum dolor amet consectetur </p>
+                <p>
+                  Expert guidelines, strategies, and resources for your success
+                  in the freelancing world. We teach you how to develop skills,
+                  start working in global marketplaces, increase your earnings,
+                  and take your career to new heights. Your journey to online
+                  independence starts here.{" "}
+                </p>
                 <span className="fnumber">01</span>
               </div>
             </div>
@@ -55,7 +61,11 @@ export default function FeatureHomeOne({ style_2 }: Props) {
                   </svg>
                 </div>
                 <h3>Video Tutorial</h3>
-                <p>Lorem ipsum dolor amet consectetur </p>
+                <p>
+                  At NetFlow Academy, we believe learning should be simple,
+                  clear, and hands-on. That’s why our video tutorials are
+                  designed so you can watch and learn anytime, anywhere.
+                </p>
                 <span className="fnumber">02</span>
               </div>
             </div>
@@ -76,7 +86,12 @@ export default function FeatureHomeOne({ style_2 }: Props) {
                   </svg>
                 </div>
                 <h3>Affordable Price</h3>
-                <p>Lorem ipsum dolor amet consectetur </p>
+                <p>
+                  At NetFlow Academy, we believe quality education should not be
+                  only for the privileged, but for everyone. That’s why all our
+                  courses and video tutorials are offered at affordable prices,
+                  so anyone can easily learn and build their career.
+                </p>
                 <span className="fnumber">03</span>
               </div>
             </div>
@@ -98,7 +113,12 @@ export default function FeatureHomeOne({ style_2 }: Props) {
                   </svg>
                 </div>
                 <h3>Life Time Support</h3>
-                <p>Lorem ipsum dolor amet consectetur </p>
+                <p>
+                  At NetFlow Academy, we know that the learning journey is never
+                  easy. That’s why we provide every student with lifetime
+                  support, so you can get help with any question or issue
+                  anytime.
+                </p>
                 <span className="fnumber">04</span>
               </div>
             </div>
@@ -108,5 +128,3 @@ export default function FeatureHomeOne({ style_2 }: Props) {
     </>
   );
 }
-
-
