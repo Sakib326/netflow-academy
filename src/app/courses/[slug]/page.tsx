@@ -1,6 +1,7 @@
 import CourseDetails from "@/components/course-details";
 import { Metadata } from "next";
 import { SingleCourse } from "@/types/course";
+import { notFound } from "next/navigation";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -38,8 +39,7 @@ export default async function CourseDetailsPage({
     cache: "no-store",
   });
   if (!res.ok) {
-    // Optionally, you can render a 404 or error component here
-    return <div>Course not found.</div>;
+    notFound();
   }
   const course: SingleCourse = await res.json();
 
