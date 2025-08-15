@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import VideoPopup from "../../../modals/VideoPopup";
+import VideoPopup from "../../modals/VideoPopup";
 
-export default function VideoHomeOne() {
+export default function VideoHome() {
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
 
   return (

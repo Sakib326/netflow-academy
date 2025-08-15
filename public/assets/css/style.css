@@ -446,7 +446,7 @@ img {
 --------------------------------*/
 
 .searchcart .sicon svg {
-  width: 19px;
+  width: 25px;
 }
 
 .searchcart .cart-icon svg {
@@ -501,7 +501,7 @@ img {
   width: 0px;
   background: #0f2b5a;
   transition: 0.5s;
-  z-index: 99;
+  z-index: 10000;
   display: flex;
   left: 0;
   top: 0;
@@ -560,7 +560,7 @@ img {
   color: #fff;
   position: absolute;
   /* width: 50px; */
-  font-size: 17px;
+  font-size: 20px;
   right: 0;
   top: 0;
   line-height: 57px;

@@ -1,6 +1,6 @@
 "use client";
 
-import Count from "../../common/Count";
+import Count from "../common/Count";
 
 interface CounterType {
   id: number;
@@ -41,7 +41,7 @@ const counter_data: CounterType[] = [
   },
 ];
 
-export default function CounterHomeOne() {
+export default function CounterHome() {
   return (
     <>
       <section className="counter-up section-padding">

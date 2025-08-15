@@ -1,4 +1,6 @@
-export default function FooterOne() {
+import Link from "next/link";
+
+export default function Footer() {
   return (
     <>
       <section className="footer">
@@ -30,13 +32,20 @@ export default function FooterOne() {
               <div className="single-footer">
                 <div className="about-footer">
                   <div className="footer-logo">
-                    <a href="#">
-                      <img src="/assets/img/logo.jpg" alt="Netflow Academy" />
-                    </a>
+                    <Link href="/">
+                      <img
+                        src="/assets/img/logo.jpg"
+                        style={{ width: "160px" }}
+                        alt="Netflow Academy"
+                      />
+                    </Link>
                   </div>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                    varius congue Morbi
+                    Netflow Academy is a leading online learning platform
+                    dedicated to empowering students and professionals with
+                    industry-relevant skills. Our mission is to provide
+                    high-quality courses, expert instructors, and practical
+                    learning experiences to help you achieve your career goals.
                   </p>
 
                   <div className="fot-social">
@@ -231,7 +240,7 @@ export default function FooterOne() {
 
         <div className="copyright text-center wow fadeIn">
           <p>
-            Copyright © 2025 <a href="#">Netflow Academy</a>. All rights
+            Copyright © 2025 <Link href="/">Netflow Academy</Link>. All rights
             reserved.
           </p>
         </div>

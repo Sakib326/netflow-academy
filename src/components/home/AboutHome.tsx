@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function AboutHomeOne() {
+export default function AboutHome() {
   return (
     <>
       <section className="about">

@@ -5,7 +5,7 @@ import NavMenu from "./NavMenu";
 import MobileMenu from "./MobileMenu";
 import Link from "next/link";
 
-export default function HeaderOne() {
+export default function Header() {
   const [open, setOpen] = useState(false);
   const [opneMenu, setOpneMenu] = useState(false);
 
@@ -31,7 +31,10 @@ export default function HeaderOne() {
             <div className="col-30 right-col align-self-center text-end">
               <div className="searchcart">
                 <a
-                  style={{ cursor: "pointer" }}
+                  style={{
+                    cursor: "pointer",
+                    marginRight: "30px",
+                  }}
                   onClick={() => setOpen(!open)}
                   className="sicon search-btn"
                 >
@@ -42,7 +45,7 @@ export default function HeaderOne() {
                     />
                   </svg>
                 </a>
-                <div className="cart-icon">
+                {/* <div className="cart-icon">
                   <a href="#" className="mcart_open" data-menu="#mini_cart">
                     <svg fill="none" viewBox="0 0 17 19">
                       <path
@@ -52,7 +55,7 @@ export default function HeaderOne() {
                     </svg>
                   </a>
                   <span>3</span>
-                </div>
+                </div> */}
               </div>
               <a href="/login" className="white-btn bt">
                 Login / Register

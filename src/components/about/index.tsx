@@ -1,27 +1,19 @@
 "use client";
 
-import FeatureHomeOne from "../homes/home/FeatureHomeOne";
-import AboutHomeOne from "../homes/home/AboutHomeOne";
-import CounterHomeOne from "../homes/home/CounterHomeOne";
-import InstructorsHomeOne from "../homes/home/InstructorsHomeOne";
-import HeaderOne from "../../layouts/headers/HeaderOne";
 import Breadcrumb from "../common/Breadcrumb";
-import FooterOne from "../../layouts/footers/FooterOne";
-import ScrollToTop from "../common/ScrollToTop";
-import ScrollTop from "../common/ScrollTop";
+import AboutHomeOne from "../home/AboutHome";
+import CounterHomeOne from "../home/CounterHome";
+import FeatureHomeOne from "../home/FeatureHome";
+import InstructorsHomeOne from "../home/InstructorsHome";
 
 export default function About() {
   return (
     <>
-      <HeaderOne />
       <Breadcrumb title="About Us" subtitle="About Us" />
       <FeatureHomeOne />
       <AboutHomeOne />
       <CounterHomeOne />
-      <InstructorsHomeOne style_2={true} />
-      <FooterOne />
-      <ScrollToTop />
-      <ScrollTop />
+      <InstructorsHomeOne />
     </>
   );
 }

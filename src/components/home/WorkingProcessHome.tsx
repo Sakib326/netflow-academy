@@ -1,4 +1,4 @@
-export default function WorkingProcessHomeOne() {
+export default function WorkingProcessHome() {
   return (
     <>
       <section

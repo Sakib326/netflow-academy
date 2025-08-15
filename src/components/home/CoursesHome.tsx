@@ -2,8 +2,12 @@
 import Link from "next/link";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import type { Course } from "@/types/course";
 
-export default function CoursesHomeOne() {
+type Props = {
+  courses: Course[];
+};
+export default function CoursesHome({ courses }: Props) {
   return (
     <>
       <section className="courses">
@@ -39,62 +43,81 @@ export default function CoursesHomeOne() {
                   }}
                   className="courses-slider owl-carousel owl-loaded owl-drag"
                 >
-                  <SwiperSlide className="single-course">
-                    <div className="course-img">
-                      <img src="assets/img/courses/1.jpg" alt="course image" />
-                      <span className="cprice">৳50.00</span>
-                    </div>
-
-                    <div className="course_content">
-                      <div className="crating">
-                        <a href="#">
-                          <i className="bx bxs-star"></i>
-                          <i className="bx bxs-star"></i>
-                          <i className="bx bxs-star"></i>
-                          <i className="bx bxs-star"></i>
-                          <i className="bx bxs-star"></i>
-                          <span>(21)</span>
-                        </a>
-                      </div>
-                      <h2>
-                        <Link href="/course-details">
-                          Financial Security Thinking and Principles Theory
-                        </Link>
-                      </h2>
-
-                      <div className="cmeta">
-                        <div className="smeta">
-                          <i className="bx bx-user"></i>
-                          25 Students
-                        </div>
-
-                        <div className="smeta">
-                          <i className="bx bx-file"></i>
-                          15 Lessons
-                        </div>
-
-                        <div className="smeta">
-                          <i className="bx bx-time-five"></i>
-                          1.5 Hours
-                        </div>
+                  {courses?.map((course) => (
+                    <SwiperSlide key={course?.id} className="single-course">
+                      <div className="course-img">
+                        <img src={`${course?.thumbnail}`} alt="course image" />
+                        <span className="cprice">৳{course?.price}</span>
                       </div>
 
-                      <div className="course_btm">
-                        <div className="cauthor">
+                      <div className="course_content">
+                        <div className="crating">
                           <a href="#">
-                            <img src="assets/img/review/1.jpg" alt="" />
-                            <span>Masum Billah</span>
+                            {new Array(course?.average_rating || 0)
+                              .fill(0)
+                              .map((_, i) => (
+                                <i key={i} className="bx bxs-star"></i>
+                              ))}
+                            <span>({course?.total_reviews})</span>
                           </a>
                         </div>
+                        <h2>
+                          <Link href={`/courses/${course?.slug}`}>
+                            {course?.title}
+                          </Link>
+                        </h2>
 
-                        <div className="ccategory">
-                          <a href="#">WordPress</a>
+                        <div className="cmeta">
+                          <div className="smeta">
+                            <i className="bx bx-user"></i>
+                            {course?.total_students} Students
+                          </div>
+
+                          <div className="smeta">
+                            <i className="bx bx-file"></i>
+                            {course?.total_lessons} Lessons
+                          </div>
+
+                          <div className="smeta">
+                            <i className="bx bx-time-five"></i>
+                            {course?.duration || 0} Hours
+                          </div>
+                        </div>
+
+                        <div className="course_btm">
+                          <div className="cauthor">
+                            <a href="#">
+                              <img
+                                src={
+                                  course?.instructor?.avatar ||
+                                  "/assets/img/instructor/1.png"
+                                }
+                                alt={course?.instructor?.name || "Instructor"}
+                                onError={(
+                                  e: React.SyntheticEvent<HTMLImageElement>
+                                ) => {
+                                  e.currentTarget.onerror = null; // prevent infinite loop
+                                  e.currentTarget.src =
+                                    "/assets/img/instructor/1.png";
+                                }}
+                              />
+                              <span>
+                                {course?.instructor?.name || "Instructor"}
+                              </span>
+                            </a>
+                          </div>
+
+                          <div className="ccategory">
+                            <Link href={`/courses/${course?.category?.slug}`}>
+                              {course?.category?.name}
+                            </Link>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </SwiperSlide>
+                    </SwiperSlide>
+                  ))}
 
-                  <SwiperSlide className="single-course">
+                  {/* <SwiperSlide className="single-course">
                     <div className="course-img">
                       <img src="assets/img/courses/2.jpg" alt="course image" />
                       <span className="cprice">৳50.00</span>
@@ -146,8 +169,8 @@ export default function CoursesHomeOne() {
                         </div>
                       </div>
                     </div>
-                  </SwiperSlide>
-
+                  </SwiperSlide> */}
+                  {/*
                   <SwiperSlide className="single-course">
                     <div className="course-img">
                       <img src="assets/img/courses/3.jpg" alt="course image" />
@@ -254,7 +277,7 @@ export default function CoursesHomeOne() {
                         </div>
                       </div>
                     </div>
-                  </SwiperSlide>
+                  </SwiperSlide> */}
                 </Swiper>
 
                 <div className="owl-nav">

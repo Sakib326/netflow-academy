@@ -9,7 +9,7 @@ const nextConfig = {
     ignoreDuringBuilds: false,
   },
   images: {
-    domains: ["localhost"],
+    domains: ["localhost", "admin.netflowacademy.com"],
   },
   async rewrites() {
     return [

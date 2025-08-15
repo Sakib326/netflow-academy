@@ -1,9 +1,14 @@
 "use client";
 
+import { Review } from "@/types/review";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-export default function ReviewHomeOne() {
+type Props = {
+  reviews: Review[];
+};
+
+export default function ReviewHome({ reviews }: Props) {
   return (
     <>
       <section className="review section-padding">
@@ -40,7 +45,37 @@ export default function ReviewHomeOne() {
                   }}
                   className="owl-stage-outer"
                 >
-                  <SwiperSlide
+                  {reviews.map((review) => (
+                    <SwiperSlide
+                      key={review?.id}
+                      className="owl-item"
+                      style={{ width: "408.667px", marginRight: "35px" }}
+                    >
+                      <div className="review-item">
+                        <div className="rimage">
+                          <img src={`${review?.user?.avatar}`} alt="review" />
+                          <span className="rating-number">
+                            {(review?.rating ?? 0).toFixed(2)}
+                          </span>
+                        </div>
+
+                        <div className="rev-content">
+                          <h4>{review?.user?.name}</h4>
+                          <p>{review?.review}</p>
+
+                          <div className="rev-rating">
+                            {new Array(review?.rating || 0)
+                              .fill(0)
+                              .map((_, i) => (
+                                <i key={i} className="bx bxs-star"></i>
+                              ))}
+                          </div>
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+                {/* <SwiperSlide
                     className="owl-item"
                     style={{ width: "408.667px", marginRight: "35px" }}
                   >
@@ -66,8 +101,8 @@ export default function ReviewHomeOne() {
                         </div>
                       </div>
                     </div>
-                  </SwiperSlide>
-                  <SwiperSlide
+                  </SwiperSlide> */}
+                {/* <SwiperSlide
                     className="owl-item"
                     style={{ width: "408.667px", marginRight: "35px" }}
                   >
@@ -174,8 +209,7 @@ export default function ReviewHomeOne() {
                         </div>
                       </div>
                     </div>
-                  </SwiperSlide>
-                </Swiper>
+                  </SwiperSlide> */}
 
                 <div className="owl-nav">
                   <button

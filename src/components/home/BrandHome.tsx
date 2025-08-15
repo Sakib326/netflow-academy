@@ -3,17 +3,17 @@
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-export default function BrandHomeOne() {
+export default function BrandHome() {
   return (
     <>
-      <section className="container pt120 wow fadeIn">
+      <section className="container pt120 wow fadeIn mb-5">
         <div className="row">
           <Swiper
             slidesPerView={6}
             spaceBetween={30}
             loop={true}
             modules={[Autoplay]}
-            autoplay={{ delay: 3000, disableOnInteraction: false }}
+            autoplay={{ delay: 4000, disableOnInteraction: false }}
             breakpoints={{
               0: {
                 slidesPerView: 2,

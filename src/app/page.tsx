@@ -1,4 +1,4 @@
-import HomeOne from "@/components/homes/home";
+import Home from "@/components/home";
 import { Metadata } from "next";
 import { PaginatedCourses } from "@/types/course";
 import { CourseCategory } from "@/types/courseCategory";
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   keywords: ["Netflow", "Academy", "Networking", "Solutions"],
 };
 
-export default async function Home() {
+export default async function HomePage() {
   async function fetchCourses(
     params: FetchCoursesParams = {}
   ): Promise<PaginatedCourses> {
@@ -87,10 +87,10 @@ export default async function Home() {
   ]);
 
   return (
-    <HomeOne
+    <Home
       courses={courses.data ?? []}
-      categories={categories}
-      instructors={instructors}
+      categories={categories ?? []}
+      instructors={instructors ?? []}
       reviews={reviews.data ?? []}
     />
   );

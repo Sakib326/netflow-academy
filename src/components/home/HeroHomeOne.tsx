@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 
-export default function HeroHomeOne() {
+export default function HeroHome() {
   const parallax = (event: MouseEvent) => {
     const elements = document.querySelectorAll<HTMLElement>(".eitem");
 
@@ -219,5 +219,3 @@ export default function HeroHomeOne() {
     </>
   );
 }
-
-

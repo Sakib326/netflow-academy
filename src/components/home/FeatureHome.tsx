@@ -2,7 +2,7 @@ type Props = {
   style_2?: boolean;
 };
 
-export default function FeatureHomeOne({ style_2 }: Props) {
+export default function FeatureHome({ style_2 }: Props) {
   return (
     <>
       <section

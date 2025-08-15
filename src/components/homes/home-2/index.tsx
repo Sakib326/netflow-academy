@@ -1,14 +1,10 @@
-import FooterOne from "../../../layouts/footers/FooterOne";
+import FooterOne from "../../../layouts/footers";
 import HeaderTwo from "../../../layouts/headers/HeaderTwo";
 import ScrollToTop from "../../common/ScrollToTop";
 import ScrollTop from "../../common/ScrollTop";
-import AboutHomeOne from "../home/AboutHomeOne";
-import CounterHomeOne from "../home/CounterHomeOne";
-import CourseCategoryHomeOne from "../home/CourseCategoryHomeOne";
-import FeatureHomeOne from "../home/FeatureHomeOne";
-import InstructorsHomeOne from "../home/InstructorsHomeOne";
-import ReviewHomeOne from "../home/ReviewHomeOne";
-import WorkingProcessHomeOne from "../home/WorkingProcessHomeOne";
+import AboutHomeOne from "../../home/AboutHome";
+import CounterHomeOne from "../../home/CounterHome";
+import WorkingProcessHomeOne from "../../home/WorkingProcessHome";
 import BrandHomeTwo from "./BrandHomeTwo";
 import CoursesHomeTwo from "./CoursesHomeTwo";
 import CtaHomeTwo from "./CtaHomeTwo";
@@ -21,15 +17,15 @@ export default function HomeTwo() {
       <HeaderTwo />
       <HeroHomeTwo />
       <BrandHomeTwo />
-      <FeatureHomeOne style_2={true} />
+      {/* <FeatureHomeOne style_2={true} /> */}
       <AboutHomeOne />
       <CounterHomeOne />
       <CoursesHomeTwo />
-      <CourseCategoryHomeOne />
+      {/* <CourseCategoryHomeOne /> */}
       <WorkingProcessHomeOne />
-      <InstructorsHomeOne style_2={true} />
+      {/* <InstructorsHomeOne /> */}
       <FaqHomeTwo />
-      <ReviewHomeOne />
+      {/* <ReviewHomeOne /> */}
       <CtaHomeTwo />
       <FooterOne />
       <ScrollToTop />
@@ -37,5 +33,3 @@ export default function HomeTwo() {
     </>
   );
 }
-
-
