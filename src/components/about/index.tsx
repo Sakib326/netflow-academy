@@ -1,13 +1,14 @@
- 
-import FeatureHomeOne from '../homes/home/FeatureHomeOne'
-import AboutHomeOne from '../homes/home/AboutHomeOne'
-import CounterHomeOne from '../homes/home/CounterHomeOne'
-import InstructorsHomeOne from '../homes/home/InstructorsHomeOne'
-import HeaderOne from '../../layouts/headers/HeaderOne'
-import Breadcrumb from '../common/Breadcrumb'
-import FooterOne from '../../layouts/footers/FooterOne'
-import ScrollToTop from '../common/ScrollToTop'
-import ScrollTop from '../common/ScrollTop'
+"use client";
+
+import FeatureHomeOne from "../homes/home/FeatureHomeOne";
+import AboutHomeOne from "../homes/home/AboutHomeOne";
+import CounterHomeOne from "../homes/home/CounterHomeOne";
+import InstructorsHomeOne from "../homes/home/InstructorsHomeOne";
+import HeaderOne from "../../layouts/headers/HeaderOne";
+import Breadcrumb from "../common/Breadcrumb";
+import FooterOne from "../../layouts/footers/FooterOne";
+import ScrollToTop from "../common/ScrollToTop";
+import ScrollTop from "../common/ScrollTop";
 
 export default function About() {
   return (
@@ -22,7 +23,5 @@ export default function About() {
       <ScrollToTop />
       <ScrollTop />
     </>
-  )
+  );
 }
-
-
