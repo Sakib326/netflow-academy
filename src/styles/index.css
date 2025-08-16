@@ -1,4 +1,6 @@
 /* Import third-party libraries */
+@import "tailwindcss" prefix(tw) important;
+
 @import "swiper/css/bundle";
 @import "react-modal-video/css/modal-video.css";
 

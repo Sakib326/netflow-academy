@@ -1,4 +1,5 @@
 import ModalVideo from "react-modal-video";
+import ReactPlayer from "react-player";
 
 const VideoPopup = ({
   isVideoOpen,
@@ -8,17 +9,17 @@ const VideoPopup = ({
   return (
     <>
       {/* @ts-ignore */}
-      <ModalVideo
+      {/* <ModalVideo
         channel="youtube"
         // autoplay
         isOpen={isVideoOpen}
         videoId={videoId}
         onClose={() => setIsVideoOpen(false)}
-      />
+      /> */}
+
+      <ReactPlayer />
     </>
   );
 };
 
 export default VideoPopup;
-
-

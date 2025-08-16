@@ -1,5 +1,5 @@
-import FooterOne from "../../../layouts/footers";
-import HeaderTwo from "../../../layouts/headers/HeaderTwo";
+import FooterOne from "../../../layouts/Footer";
+import HeaderTwo from "../../../layouts/Header/HeaderTwo";
 import ScrollToTop from "../../common/ScrollToTop";
 import ScrollTop from "../../common/ScrollTop";
 import AboutHomeOne from "../../home/AboutHome";
