@@ -19,9 +19,9 @@ export default function InstructorsHome({ instructors }: Props) {
             </div>
 
             <div className="col-xl-4 col-md-4 align-self-center text-end title_btn wow fadeIn">
-              <Link href="/instructors" className="bg_btn bt">
+              {/* <Link href="/instructors" className="bg_btn bt">
                 View All
-              </Link>
+              </Link> */}
             </div>
 
             {instructors?.map((instructor) => (
@@ -35,7 +35,7 @@ export default function InstructorsHome({ instructors }: Props) {
                       src={instructor?.avatar || "/assets/img/instructor/1.png"}
                       alt={instructor?.name || "Instructor"}
                     />
-                    <span className="sicon">
+                    {/* <span className="sicon">
                       <a>
                         <i className="bx bx-plus"></i>
                       </a>
@@ -74,7 +74,7 @@ export default function InstructorsHome({ instructors }: Props) {
                           </a>
                         </li>
                       </ul>
-                    </div>
+                    </div> */}
                   </div>
 
                   <div className="inbottom">
@@ -87,7 +87,7 @@ export default function InstructorsHome({ instructors }: Props) {
                       {instructor?.designation || "UI / UX Designer"}
                     </span>
 
-                    <div className="inmeta">
+                    {/* <div className="inmeta">
                       <span className="float-start">
                         <i className="bx bx-user"></i>
                         <p>{instructor?.total_students} Students</p>
@@ -97,7 +97,7 @@ export default function InstructorsHome({ instructors }: Props) {
                         <i className="bx bx-file-blank"></i>
                         <p>{instructor?.total_courses} Courses</p>
                       </span>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

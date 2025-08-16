@@ -128,7 +128,7 @@ export default function Header() {
           </div>
         </div>
 
-        <div id="mini_cart" className="cart_drawer">
+        {/* <div id="mini_cart" className="cart_drawer">
           <div className="cart_top">
             <a href="#" className="cart_close">
               <i className="bx bx-x"></i>
@@ -234,7 +234,7 @@ export default function Header() {
               </a>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className={`search_box ${open ? "active" : ""}`}>
           <div
