@@ -71,7 +71,7 @@ export default function AboutHome() {
                 </div>
               </div>
 
-              <Link href="/about" className="bg_btn bt">
+              <Link href="/about-us" className="bg_btn bt">
                 Discover More
               </Link>
             </div>
