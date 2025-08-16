@@ -1,67 +1,66 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { useRegisterMutation } from "@/redux/auth/authApi";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function RegisterForm() {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
+  });
+  const [register, { isLoading, isError, error, isSuccess }] =
+    useRegisterMutation();
+  const token = useSelector((state: RootState) => state.auth.token);
+  const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-    setSuccess(null);
-
     try {
-      // Register user
-      const res = await axios.post(`${API_URL}/auth/register`, {
-        name,
-        email,
-        password,
-        password_confirmation: passwordConfirmation,
-        phone,
-      });
-
-      const { token } = res.data;
-      localStorage.setItem("token", token);
-      Cookies.set("token", token, {
-        domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN,
-      });
-      // Get user details using token
-      const userRes = await axios.get(`${API_URL}/auth/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const user = userRes.data;
-      localStorage.setItem("user", JSON.stringify(user));
-
-      setSuccess("Registration successful!");
+      register(formData);
     } catch (err: any) {
-      if (err.response?.data?.errors) {
-        // Laravel validation errors
-        const messages = Object.values(err.response.data.errors)
-          .flat()
-          .join(" ");
-        setError(messages);
-      } else {
-        setError(err.response?.data?.message || "Registration failed");
-      }
-    } finally {
-      setLoading(false);
+      toast.error(`${err?.message} | "Register failed"`);
     }
   };
+
+  useEffect(() => {
+    if (token) {
+      router.push("/dashboard");
+    }
+    if (isError && error) {
+      // Type guard for RTK Query error types
+      if ("status" in error) {
+        // FetchBaseQueryError
+        const errorData = error.data as any;
+        toast.error(errorData?.message || `Error: ${error.status}`);
+      } else if ("message" in error) {
+        // SerializedError
+        toast.error(error.message || "Login failed");
+      } else {
+        toast.error("Login failed");
+      }
+    }
+
+    if (isSuccess) {
+      toast.success("Regester successfully");
+      router.push("/dashboard");
+    }
+  }, [isSuccess, isError, token, router, error]);
 
   return (
     <>
@@ -80,8 +79,8 @@ export default function RegisterForm() {
                       id="fullname"
                       className="form-control"
                       name="name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      value={formData?.name}
+                      onChange={handleChange}
                       required
                     />
                   </div>
@@ -93,8 +92,8 @@ export default function RegisterForm() {
                       id="phone"
                       className="form-control"
                       name="phone"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
+                      value={formData.phone}
+                      onChange={handleChange}
                       required
                     />
                   </div>
@@ -106,8 +105,8 @@ export default function RegisterForm() {
                       id="email-address"
                       className="form-control"
                       name="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={formData.email}
+                      onChange={handleChange}
                       required
                     />
                   </div>
@@ -119,8 +118,8 @@ export default function RegisterForm() {
                       id="cpwd"
                       className="form-control"
                       name="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      value={formData.password}
+                      onChange={handleChange}
                       required
                     />
                   </div>
@@ -132,28 +131,26 @@ export default function RegisterForm() {
                       id="cpwd2"
                       className="form-control"
                       name="password_confirmation"
-                      value={passwordConfirmation}
-                      onChange={(e) => setPasswordConfirmation(e.target.value)}
+                      value={formData.password_confirmation}
+                      onChange={handleChange}
                       required
                     />
                   </div>
-                  {error && <div className="alert alert-danger">{error}</div>}
-                  {success && (
-                    <div className="alert alert-success">{success}</div>
-                  )}
+
                   <div className="form-group col-lg-12">
                     <button
                       className="bg_btn bt"
                       type="submit"
                       name="submit"
-                      disabled={loading}
+                      disabled={isLoading}
                     >
-                      {loading ? "Signing up..." : "Signup now"}
+                      {isLoading ? "Register..." : "Register"}
                     </button>
                   </div>
                 </form>
                 <p>
-                  Already have an account? <Link href="/login">Login</Link>
+                  <small> Already have an account?</small>{" "}
+                  <Link href="/login">Login</Link>
                 </p>
               </div>
             </div>

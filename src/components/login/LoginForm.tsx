@@ -1,50 +1,54 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+import { useEffect, useState } from "react";
+import { useLoginMutation } from "@/redux/auth/authApi";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [login, { isLoading, isError, isSuccess, error }] = useLoginMutation();
+  const router = useRouter();
+  const token = useSelector((state: RootState) => state.auth.token);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-
     try {
-      // Login and get token
-      const res = await axios.post(`${API_URL}/auth/login`, {
-        email,
-        password,
-      });
-      const token = res.data.token;
-      localStorage.setItem("token", token);
-      Cookies.set("token", token, {
-        domain: process.env.NEXT_PUBLIC_COOKIE_DOMAIN,
-      });
-      // Get user details using token
-      const userRes = await axios.get(`${API_URL}/auth/me`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const user = userRes.data;
-      localStorage.setItem("user", JSON.stringify(user));
-
-      alert("Login successful!");
+      login(formData);
     } catch (err: any) {
-      setError(err.response?.data?.message || "Login failed");
-    } finally {
-      setLoading(false);
+      toast.error(err?.data?.message || "Login failed");
     }
   };
+
+  useEffect(() => {
+    if (token) {
+      router.push("/dashboard");
+    }
+    if (isError && error) {
+      // Type guard for RTK Query error types
+      if ("status" in error) {
+        // FetchBaseQueryError
+        const errorData = error.data as any;
+        toast.error(errorData?.message || `Error: ${error.status}`);
+      } else if ("message" in error) {
+        // SerializedError
+        toast.error(error.message || "Login failed");
+      } else {
+        toast.error("Login failed");
+      }
+    }
+    if (isSuccess) {
+      toast.success("Loged in succesfully");
+      router.push("/dashboard");
+    }
+  }, [isError, isSuccess, toast, router, error, token]);
 
   return (
     <>
@@ -65,8 +69,8 @@ export default function LoginForm() {
                       placeholder="Enter Email"
                       className="form-control"
                       name="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      value={formData.email}
+                      onChange={handleChange}
                       required
                     />
                   </div>
@@ -78,8 +82,8 @@ export default function LoginForm() {
                       id="login-password"
                       className="form-control"
                       name="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      value={formData.password}
+                      onChange={handleChange}
                       required
                     />
                   </div>
@@ -95,16 +99,14 @@ export default function LoginForm() {
                     </label>
                   </div>
 
-                  {error && <div className="alert alert-danger">{error}</div>}
-
                   <div className="form-group col-lg-12">
                     <button
                       className="bg_btn bt"
                       type="submit"
                       name="submit"
-                      disabled={loading}
+                      disabled={isLoading}
                     >
-                      {loading ? "Logging in..." : "login"}
+                      {isLoading ? "Logging in..." : "Login"}
                     </button>
                   </div>
                 </form>
