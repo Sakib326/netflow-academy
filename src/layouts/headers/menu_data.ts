@@ -21,11 +21,11 @@ const menu_data: DataType[] = [
     link: "/courses",
   },
 
-  {
-    id: 5,
-    title: "Contact",
-    link: "/contact",
-    has_dropdown: false,
-  },
+  // {
+  //   id: 5,
+  //   title: "Contact",
+  //   link: "/contact",
+  //   has_dropdown: false,
+  // },
 ];
 export default menu_data;

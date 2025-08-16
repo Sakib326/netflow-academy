@@ -1,6 +1,4 @@
-import Link from "next/link";
-
-export default function Footer() {
+export default function FooterOne() {
   return (
     <>
       <section className="footer">
@@ -10,21 +8,16 @@ export default function Footer() {
               <div className="single-footer">
                 <div className="about-footer">
                   <div className="footer-logo">
-                    <Link href="/">
-                      <img
-                        src="/assets/img/logo.jpg"
-                        style={{ width: "160px" }}
-                        alt="Netflow Academy"
-                      />
-                    </Link>
+                    <a href="#">
+                      <img src="/assets/img/logo.jpg" alt="Netflow Academy" />
+                    </a>
                   </div>
                   <p>
-                    Netflow Academy is a leading online learning platform
-                    dedicated to empowering students and professionals with
-                    industry-relevant skills. Our mission is to provide
-                    high-quality courses, expert instructors, and practical
-                    learning experiences to help you achieve your career goals.
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                    varius congue Morbi
                   </p>
+
+                
                 </div>
               </div>
             </div>
@@ -34,15 +27,15 @@ export default function Footer() {
                 <h3 className="footer-title">Useful Links</h3>
                 <ul>
                   <li>
-                    <a href="/">Home</a>
+                    <a href="#">Home</a>
                   </li>
                   <li>
-                    <a href="/about">About Us</a>
+                    <a href="#">About Us</a>
                   </li>
                   <li>
-                    <a href="/courses">Courses</a>
+                    <a href="#">Courses</a>
                   </li>
-                  {/* <li>
+                  <li>
                     <a href="#">Categories</a>
                   </li>
                   <li>
@@ -50,7 +43,7 @@ export default function Footer() {
                   </li>
                   <li>
                     <a href="#">Contact</a>
-                  </li> */}
+                  </li>
                 </ul>
               </div>
             </div>
@@ -164,7 +157,7 @@ export default function Footer() {
 
         <div className="copyright text-center wow fadeIn">
           <p>
-            Copyright © 2025 <Link href="/">Netflow Academy</Link>. All rights
+            Copyright © 2025 <a href="#">Netflow Academy</a>. All rights
             reserved.
           </p>
         </div>
