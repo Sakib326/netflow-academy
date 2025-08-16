@@ -35,13 +35,24 @@ export async function generateMetadata({
 export default async function CourseDetailsPage({
   params,
 }: CourseDetailsPageProps) {
+  console.log("API_URL:", API_URL); // Add this debug log
+  console.log("Full URL:", `${API_URL}/courses/${params.slug}`);
+
+  // Add null check
+  if (!API_URL) {
+    console.error("API_URL is not defined");
+    notFound();
+  }
+
   const res = await fetch(`${API_URL}/courses/${params.slug}`, {
     cache: "no-store",
   });
+
   if (!res.ok) {
+    console.log("Fetch failed:", res.status, res.statusText);
     notFound();
   }
-  const course: SingleCourse = await res.json();
 
+  const course: SingleCourse = await res.json();
   return <CourseDetails course={course} />;
 }
