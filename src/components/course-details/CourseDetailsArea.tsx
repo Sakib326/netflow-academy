@@ -28,7 +28,7 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
       <VideoPopup
         isVideoOpen={isVideoOpen}
         setIsVideoOpen={setIsVideoOpen}
-        videoId={"qmGYnJgCW1o"}
+        videoUrl={"qmGYnJgCW1o"}
       />
       {/* video modal end */}
 

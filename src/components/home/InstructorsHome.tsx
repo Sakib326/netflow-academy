@@ -34,70 +34,15 @@ export default function InstructorsHome({ instructors }: Props) {
                     <img
                       src={instructor?.avatar || "/assets/img/instructor/1.png"}
                       alt={instructor?.name || "Instructor"}
+                      className="tw:rounded"
                     />
-                    {/* <span className="sicon">
-                      <a>
-                        <i className="bx bx-plus"></i>
-                      </a>
-                    </span>
-                    <div className="social-link">
-                      <ul>
-                        <li>
-                          <a
-                            href={`${
-                              instructor?.social_links?.facebook || "#"
-                            }`}
-                            target="_blank"
-                            className="fb_bg"
-                          >
-                            <i className="bx bxl-facebook"></i>
-                          </a>
-                        </li>
-
-                        <li>
-                          <a
-                            href={`${instructor?.social_links?.twitter || "#"}`}
-                            className="tw_bg"
-                          >
-                            <i className="bx bxl-twitter"></i>
-                          </a>
-                        </li>
-
-                        <li>
-                          <a
-                            href={`${
-                              instructor?.social_links?.linkedin || "#"
-                            }`}
-                            className="li_bg"
-                          >
-                            <i className="bx bxl-linkedin"></i>
-                          </a>
-                        </li>
-                      </ul>
-                    </div> */}
                   </div>
 
-                  <div className="inbottom">
-                    <h3>
-                      <Link href={`/instructors/${instructor?.id}`}>
-                        {instructor?.name}
-                      </Link>
-                    </h3>
+                  <div className="inbottom tw:pb-4">
+                    <h3>{instructor?.name}</h3>
                     <span className="designation">
                       {instructor?.designation || "UI / UX Designer"}
                     </span>
-
-                    {/* <div className="inmeta">
-                      <span className="float-start">
-                        <i className="bx bx-user"></i>
-                        <p>{instructor?.total_students} Students</p>
-                      </span>
-
-                      <span className="float-end">
-                        <i className="bx bx-file-blank"></i>
-                        <p>{instructor?.total_courses} Courses</p>
-                      </span>
-                    </div> */}
                   </div>
                 </div>
               </div>

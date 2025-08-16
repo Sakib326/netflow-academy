@@ -1,23 +1,21 @@
 import ModalVideo from "react-modal-video";
-import ReactPlayer from "react-player";
 
-const VideoPopup = ({
-  isVideoOpen,
-  setIsVideoOpen,
-  videoId = "bgMEvrd2E",
-}: any) => {
+type Props = {
+  isVideoOpen: boolean;
+  setIsVideoOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  videoUrl: string;
+};
+
+const VideoPopup = ({ isVideoOpen, setIsVideoOpen, videoUrl }: Props) => {
   return (
     <>
       {/* @ts-ignore */}
-      {/* <ModalVideo
-        channel="youtube"
-        // autoplay
+      <ModalVideo
+        channel="custom"
         isOpen={isVideoOpen}
-        videoId={videoId}
+        url={videoUrl}
         onClose={() => setIsVideoOpen(false)}
-      /> */}
-
-      <ReactPlayer />
+      />
     </>
   );
 };

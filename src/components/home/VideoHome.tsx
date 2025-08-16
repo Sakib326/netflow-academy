@@ -56,13 +56,11 @@ export default function VideoHome() {
         </div>
       </section>
 
-      {/* video modal start */}
       <VideoPopup
         isVideoOpen={isVideoOpen}
         setIsVideoOpen={setIsVideoOpen}
-        videoId={"qmGYnJgCW1o"}
+        videoUrl={"/assets/video/video-1.mp4"}
       />
-      {/* video modal end */}
     </>
   );
 }

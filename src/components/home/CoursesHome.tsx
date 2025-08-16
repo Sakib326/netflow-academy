@@ -44,13 +44,20 @@ export default function CoursesHome({ courses }: Props) {
                   className="courses-slider owl-carousel owl-loaded owl-drag"
                 >
                   {courses?.map((course) => (
-                    <SwiperSlide key={course?.id} className="single-course">
-                      <div className="course-img">
-                        <img src={`${course?.thumbnail}`} alt="course image" />
+                    <SwiperSlide
+                      key={course?.id}
+                      className="single-course tw:shadow"
+                    >
+                      <div className="course-img tw:rounded-b-0">
+                        <img
+                          src={`${course?.thumbnail}`}
+                          alt="course image"
+                          className="tw:rounded-b-0"
+                        />
                         <span className="cprice">৳{course?.price}</span>
                       </div>
 
-                      <div className="course_content">
+                      <div className="course_content tw:p-4">
                         <div className="crating">
                           <a href="#">
                             {new Array(course?.average_rating || 0)
@@ -61,8 +68,11 @@ export default function CoursesHome({ courses }: Props) {
                             <span>({course?.total_reviews})</span>
                           </a>
                         </div>
-                        <h2>
-                          <Link href={`/courses/${course?.slug}`}>
+                        <h2 className="tw:text-md">
+                          <Link
+                            href={`/courses/${course?.slug}`}
+                            className="tw:text-md"
+                          >
                             {course?.title}
                           </Link>
                         </h2>
@@ -116,168 +126,6 @@ export default function CoursesHome({ courses }: Props) {
                       </div>
                     </SwiperSlide>
                   ))}
-
-                  {/* <SwiperSlide className="single-course">
-                    <div className="course-img">
-                      <img src="assets/img/courses/2.jpg" alt="course image" />
-                      <span className="cprice">৳50.00</span>
-                    </div>
-
-                    <div className="course_content">
-                      <div className="crating">
-                        <a href="#">
-                          <i className="bx bxs-star"></i>
-                          <i className="bx bxs-star"></i>
-                          <i className="bx bxs-star"></i>
-                          <i className="bx bxs-star"></i>
-                          <i className="bx bxs-star"></i>
-                          <span>(21)</span>
-                        </a>
-                      </div>
-                      <h2>
-                        <Link href="/course-details">
-                          Professional Ceramic Moulding for Beginners
-                        </Link>
-                      </h2>
-                      <div className="cmeta">
-                        <div className="smeta">
-                          <i className="bx bx-user"></i>
-                          25 Students
-                        </div>
-
-                        <div className="smeta">
-                          <i className="bx bx-file"></i>
-                          15 Lessons
-                        </div>
-
-                        <div className="smeta">
-                          <i className="bx bx-time-five"></i>
-                          1.5 Hours
-                        </div>
-                      </div>
-
-                      <div className="course_btm">
-                        <div className="cauthor">
-                          <a href="#">
-                            <img src="assets/img/review/1.jpg" alt="" />
-                            <span>Masum Billah</span>
-                          </a>
-                        </div>
-
-                        <div className="ccategory">
-                          <a href="#">JavaScript</a>
-                        </div>
-                      </div>
-                    </div>
-                  </SwiperSlide> */}
-                  {/*
-                  <SwiperSlide className="single-course">
-                    <div className="course-img">
-                      <img src="assets/img/courses/3.jpg" alt="course image" />
-                      <span className="cprice">৳50.00</span>
-                    </div>
-
-                    <div className="course_content">
-                      <div className="crating">
-                        <a href="#">
-                          <i className="bx bxs-star"></i>
-                          <i className="bx bxs-star"></i>
-                          <i className="bx bxs-star"></i>
-                          <i className="bx bxs-star"></i>
-                          <i className="bx bxs-star"></i>
-                          <span>(21)</span>
-                        </a>
-                      </div>
-                      <h2>
-                        <Link href="/course-details">
-                          Basic Fundamentals of Interior & Graphics Design
-                        </Link>
-                      </h2>
-                      <div className="cmeta">
-                        <div className="smeta">
-                          <i className="bx bx-user"></i>
-                          25 Students
-                        </div>
-
-                        <div className="smeta">
-                          <i className="bx bx-file"></i>
-                          15 Lessons
-                        </div>
-
-                        <div className="smeta">
-                          <i className="bx bx-time-five"></i>
-                          1.5 Hours
-                        </div>
-                      </div>
-
-                      <div className="course_btm">
-                        <div className="cauthor">
-                          <a href="#">
-                            <img src="assets/img/review/1.jpg" alt="" />
-                            <span>Masum Billah</span>
-                          </a>
-                        </div>
-
-                        <div className="ccategory">
-                          <a href="#">Laravel</a>
-                        </div>
-                      </div>
-                    </div>
-                  </SwiperSlide>
-
-                  <SwiperSlide className="single-course">
-                    <div className="course-img">
-                      <img src="assets/img/courses/4.jpg" alt="course image" />
-                      <span className="cprice">৳50.00</span>
-                    </div>
-
-                    <div className="course_content">
-                      <div className="crating">
-                        <a href="#">
-                          <i className="bx bxs-star"></i>
-                          <i className="bx bxs-star"></i>
-                          <i className="bx bxs-star"></i>
-                          <i className="bx bxs-star"></i>
-                          <i className="bx bxs-star"></i>
-                          <span>(21)</span>
-                        </a>
-                      </div>
-                      <h2>
-                        <Link href="/course-details">
-                          WordPress for Beginners – Master WordPress
-                        </Link>
-                      </h2>
-                      <div className="cmeta">
-                        <div className="smeta">
-                          <i className="bx bx-user"></i>
-                          25 Students
-                        </div>
-
-                        <div className="smeta">
-                          <i className="bx bx-file"></i>
-                          15 Lessons
-                        </div>
-
-                        <div className="smeta">
-                          <i className="bx bx-time-five"></i>
-                          1.5 Hours
-                        </div>
-                      </div>
-
-                      <div className="course_btm">
-                        <div className="cauthor">
-                          <a href="#">
-                            <img src="assets/img/review/1.jpg" alt="" />
-                            <span>Masum Billah</span>
-                          </a>
-                        </div>
-
-                        <div className="ccategory">
-                          <a href="#">PHP</a>
-                        </div>
-                      </div>
-                    </div>
-                  </SwiperSlide> */}
                 </Swiper>
 
                 <div className="owl-nav">

@@ -6,22 +6,25 @@ import MobileMenu from "./MobileMenu";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { AnimatePresence, motion } from "motion/react";
+import { MdDashboard, MdPerson, MdSettings, MdLogout } from "react-icons/md";
+import { logout } from "@/redux/auth/authSlice";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [opneMenu, setOpneMenu] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { token, user } = useSelector((state: RootState) => state.auth);
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
-    Cookies.remove("token");
-    localStorage.removeItem("user");
-    setIsLoggedIn(false);
-    router.push("/login");
+    dispatch(logout());
+    router.replace("/login");
   };
   return (
     <>
@@ -42,12 +45,11 @@ export default function Header() {
               </nav>
             </div>
 
-            <div className="col-30 right-col tw:flex tw:gap-2 tw:items-center tw:justify-end">
+            <div className="col-30 right-col tw:flex tw:gap-3 tw:items-center tw:justify-end">
               <div className="searchcart">
                 <a
                   style={{
                     cursor: "pointer",
-                    marginRight: "30px",
                   }}
                   onClick={() => setOpen(!open)}
                   className="sicon search-btn"
@@ -72,52 +74,86 @@ export default function Header() {
                 </div> */}
               </div>
               {token ? (
-                <div className="tw:relative tw:group">
-                  <button
-                    className="tw:flex tw:gap-2 tw:items-center"
-                    type="button"
-                    aria-expanded="false"
-                  >
-                    {user?.avatar ? (
-                      <img
-                        src={user?.avatar || "/default-avatar.png"}
-                        alt="avatar"
-                        className="tw:w-10 tw:h-10 tw:rounded-full tw:object-contain"
-                      />
-                    ) : (
-                      <span className="tw:bg-slate-200 tw:rounded-full tw:w-10 tw:h-10 tw:flex tw:justify-center tw:items-center tw:font-semibold tw:text-xl">
-                        {user?.name.charAt(0).toUpperCase()}
-                      </span>
-                    )}
-                    <span>{user?.name.split(" ")[0]}</span>
-                    <span className="tw:text-gray-500 tw:text-sm">▼</span>
-                  </button>
+                <div
+                  className="tw:relative tw:group"
+                  onMouseEnter={() => setIsOpen(true)}
+                  onMouseLeave={() => setIsOpen(false)}
+                >
+                  <div className="tw:relative">
+                    <button
+                      className="tw:flex tw:gap-2 tw:items-center"
+                      type="button"
+                    >
+                      {user?.avatar ? (
+                        <img
+                          src={user?.avatar || "/default-avatar.png"}
+                          alt="avatar"
+                          className="tw:w-10 tw:h-10 tw:rounded-full tw:object-contain"
+                        />
+                      ) : (
+                        <span className="tw:bg-slate-200 tw:rounded-full tw:w-9 tw:h-9 tw:flex tw:justify-center tw:items-center tw:font-semibold tw:text-lg">
+                          {user?.name?.charAt(0).toUpperCase()}
+                        </span>
+                      )}
+                    </button>
+                  </div>
 
                   {/* Dropdown */}
-                  <ul className="tw:absolute tw:right-0 tw:mt-2 tw:w-48 tw:bg-white tw:rounded-lg tw:shadow-lg tw:py-2 tw:hidden group-hover:tw:block">
-                    <li className="tw:px-4 tw:py-2 tw:text-gray-700 tw:text-sm">
-                      {user?.name}
-                    </li>
-                    <li>
-                      <hr className="tw:border-gray-200" />
-                    </li>
-                    <li>
-                      <Link
-                        href="/dashboard"
-                        className="tw:block tw:px-4 tw:py-2 tw:text-gray-700 hover:tw:bg-gray-100"
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.ul
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.5 }}
+                        className="tw:absolute tw:right-0 tw:mt-1 tw:w-64 tw:bg-white tw:rounded tw:shadow-lg tw:py-2 tw:z-50"
                       >
-                        Dashboard
-                      </Link>
-                    </li>
-                    <li>
-                      <button
-                        className="tw:block tw:w-full tw:text-left tw:px-4 tw:py-2 tw:text-gray-700 hover:tw:bg-gray-100"
-                        onClick={handleLogout}
-                      >
-                        Logout
-                      </button>
-                    </li>
-                  </ul>
+                        <li className="tw:px-4 tw:py-2 tw:text-gray-700 tw:text-lg tw:border-b tw:border-gray-200">
+                          {user?.name}
+                        </li>
+
+                        <li>
+                          <Link
+                            href="/dashboard"
+                            className="tw:flex tw:items-center tw:gap-2 tw:px-4 tw:py-2 tw:text-gray-700 tw:hover:bg-gray-100"
+                          >
+                            <MdDashboard className="tw:text-lg" />
+                            <span>Dashboard</span>
+                          </Link>
+                        </li>
+
+                        <li>
+                          <Link
+                            href="/dashboard/my-profile"
+                            className="tw:flex tw:items-center tw:gap-2 tw:px-4 tw:py-2 tw:text-gray-700 tw:hover:bg-gray-100"
+                          >
+                            <MdPerson className="tw:text-lg" />
+                            <span>My Profile</span>
+                          </Link>
+                        </li>
+
+                        <li>
+                          <Link
+                            href="/dashboard/settings"
+                            className="tw:flex tw:items-center tw:gap-2 tw:px-4 tw:py-2 tw:text-gray-700 tw:hover:bg-gray-100"
+                          >
+                            <MdSettings className="tw:text-lg" />
+                            <span>Account Setting</span>
+                          </Link>
+                        </li>
+
+                        <li>
+                          <button
+                            className="tw:flex tw:items-center tw:gap-2 tw:w-full tw:text-left tw:px-4 tw:py-2 tw:text-gray-700 tw:hover:bg-gray-100"
+                            onClick={handleLogout}
+                          >
+                            <MdLogout />
+                            <span>Logout</span>
+                          </button>
+                        </li>
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
                 </div>
               ) : (
                 <Link href="/login" className="white-btn bt">

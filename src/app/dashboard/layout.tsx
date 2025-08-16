@@ -19,7 +19,7 @@ const DashboardLayout = async ({ children }: Props) => {
       <Header />
       <div className="tw:grid tw:grid-cols-[300px_1fr]">
         <Sidebar />
-        <div>{children}</div>
+        <div className="tw:p-6 tw:pr-0">{children}</div>
       </div>
     </div>
   );

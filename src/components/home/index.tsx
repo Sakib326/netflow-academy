@@ -8,7 +8,7 @@ import CounterHome from "./CounterHome";
 import CourseCategoryHome from "./CourseCategoryHome";
 import CoursesHome from "./CoursesHome";
 import FeatureHome from "./FeatureHome";
-import HeroHome from "../homes/home-2/HeroHome";
+import HeroHome from "./HeroHome";
 import Instructors from "./InstructorsHome";
 import ReviewHome from "./ReviewHome";
 import VideoHome from "./VideoHome";

@@ -19,8 +19,8 @@ export default function WorkingProcessHome() {
             </div>
 
             <div className="col-xl-4 col-md-6 col-12 wow fadeIn">
-              <div className="single-work">
-                <div className="wicon">
+              <div className="single-work ">
+                <div className="wicon tw:mx-auto tw:flex tw:justify-center tw:items-center">
                   <svg
                     fillRule="evenodd"
                     clipRule="evenodd"
@@ -54,7 +54,7 @@ export default function WorkingProcessHome() {
 
             <div className="col-xl-4 col-md-6 col-12 wow fadeIn">
               <div className="single-work">
-                <div className="wicon">
+                <div className="wicon tw:mx-auto tw:flex tw:justify-center tw:items-center">
                   <svg
                     fillRule="evenodd"
                     clipRule="evenodd"
@@ -92,7 +92,7 @@ export default function WorkingProcessHome() {
 
             <div className="col-xl-4 col-md-6 col-12 wow fadeIn">
               <div className="single-work">
-                <div className="wicon">
+                <div className="wicon tw:mx-auto tw:flex tw:justify-center tw:items-center">
                   <svg
                     fillRule="evenodd"
                     clipRule="evenodd"

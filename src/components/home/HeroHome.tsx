@@ -5,17 +5,16 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 const HeroHome = () => {
   return (
-    <div className="container">
+    <div>
       <Swiper
         slidesPerView={1}
-        // spaceBetween={30}
         loop={true}
         pagination={{ el: ".owl-dots", clickable: true }}
         modules={[Autoplay]}
         navigation={{ nextEl: ".owl-next", prevEl: ".owl-prev" }}
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        autoplay={{ delay: 7000, disableOnInteraction: false }}
         centeredSlides={true}
-        className="owl-stage-outer"
+        className="owl-stage-outer "
       >
         <SwiperSlide className="owl-item">
           <Image
@@ -23,7 +22,7 @@ const HeroHome = () => {
             alt="review"
             width={1320}
             height={600}
-            className="img-fluid"
+            className="tw:w-full tw:h-[600px] tw:object-cover tw:object-center"
           />
         </SwiperSlide>
         <SwiperSlide className="owl-item">
@@ -32,7 +31,7 @@ const HeroHome = () => {
             alt="review"
             width={1320}
             height={600}
-            className="img-fluid"
+            className="tw:w-full tw:h-[600px] tw:object-cover tw:object-center"
           />
         </SwiperSlide>
       </Swiper>

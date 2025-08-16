@@ -1,7 +1,9 @@
+import Dashboard from "@/components/dashboard";
+
 const DashboardPage = () => {
   return (
-    <div>
-      <h1 className="tw:text-xl tw:text-red-500">Hello world</h1>
+    <div className="">
+      <Dashboard />
     </div>
   );
 };

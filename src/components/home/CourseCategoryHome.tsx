@@ -1,10 +1,30 @@
 import type { CourseCategory } from "@/types/courseCategory";
-import Image from "next/image";
 import Link from "next/link";
+import {
+  FaCode,
+  FaPaintBrush,
+  FaChartLine,
+  FaGlobe,
+  FaLaptopCode,
+  FaCamera,
+  FaPenNib,
+  FaBrain,
+} from "react-icons/fa";
 
 type Props = {
   categories: CourseCategory[];
 };
+
+const icons = [
+  FaCode,
+  FaPaintBrush,
+  FaChartLine,
+  FaGlobe,
+  FaLaptopCode,
+  FaCamera,
+  FaPenNib,
+  FaBrain,
+];
 
 export default function CourseCategoryHome({ categories }: Props) {
   return (
@@ -19,44 +39,27 @@ export default function CourseCategoryHome({ categories }: Props) {
               </div>
             </div>
 
-            {categories?.map((category) => (
-              <div
-                key={category?.id}
-                className="col-xl-3 col-lg-4 col-md-6 col-12 wow fadeIn"
-              >
-                <div className="single-category">
-                  <div className="icon">
-                    <img
-                      src={`${
-                        category?.icon ||
-                        "/assets/img/category/digital-marketing.png"
-                      }`}
-                      alt="icon"
-                    />
+            <div className="tw:grid tw:justify-center tw:grid-cols-1 tw:md:grid-cols-2 tw:lg:grid-cols-4 tw:gap-6">
+              {categories?.map((category, index) => {
+                const Icon = icons[index % icons.length];
+                return (
+                  <div key={category?.id} className="">
+                    <div className="single-category tw:h-full">
+                      <div className="icon">
+                        <Icon className="tw:text-xl" />
+                      </div>
+
+                      <h3>
+                        <Link href={`/courses/${category?.slug}`}>
+                          {category?.name}
+                        </Link>
+                      </h3>
+                      <span>{category?.courses_count} Courses</span>
+                    </div>
                   </div>
-
-                  <h3>
-                    <Link href={`/courses/${category?.slug}`}>
-                      {category?.name}
-                    </Link>
-                  </h3>
-                  <span>{category?.courses_count} Courses</span>
-                </div>
-              </div>
-            ))}
-
-            {/* <div className="col-xl-3 col-lg-4 col-md-6 col-12 wow fadeIn">
-              <div className="single-category">
-                <div className="icon">
-                  
-                </div>
-
-                <h3>
-                  <a href="#">UI / UX Design</a>
-                </h3>
-                <span>87 Courses</span>
-              </div>
-            </div> */}
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
