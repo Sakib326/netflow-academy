@@ -84,9 +84,9 @@ export default function Header() {
                       className="tw:flex tw:gap-2 tw:items-center"
                       type="button"
                     >
-                      {user?.avatar ? (
+                      {user?.avatar_url ? (
                         <img
-                          src={user?.avatar || "/default-avatar.png"}
+                          src={user?.avatar_url || "/default-avatar.png"}
                           alt="avatar"
                           className="tw:w-10 tw:h-10 tw:rounded-full tw:object-contain"
                         />

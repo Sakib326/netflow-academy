@@ -1,6 +1,7 @@
 import { User } from "@/types/user";
 import { apiSlice } from "../api/apiSlice";
 import { register, login } from "./authSlice";
+import Cookies from "js-cookie";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -33,6 +34,10 @@ export const authApi = apiSlice.injectEndpoints({
           if (result && result?.data?.token) {
             dispatch(login(result.data));
           }
+          Cookies.set("token", result.data.token, {
+            expires: 7, // Set cookie to expire in 7 days
+            secure: process.env.NODE_ENV === "production", // Use secure cookies in production
+          });
         } catch (error) {}
       },
     }),

@@ -28,27 +28,21 @@ export default function LoginForm() {
   };
 
   useEffect(() => {
-    if (token) {
+    if (isSuccess) {
+      toast.success("Logged in successfully");
       router.push("/dashboard");
     }
     if (isError && error) {
-      // Type guard for RTK Query error types
       if ("status" in error) {
-        // FetchBaseQueryError
         const errorData = error.data as any;
         toast.error(errorData?.message || `Error: ${error.status}`);
       } else if ("message" in error) {
-        // SerializedError
         toast.error(error.message || "Login failed");
       } else {
         toast.error("Login failed");
       }
     }
-    if (isSuccess) {
-      toast.success("Loged in succesfully");
-      router.push("/dashboard");
-    }
-  }, [isError, isSuccess, toast, router, error, token]);
+  }, [isError, isSuccess, router, error]);
 
   return (
     <>

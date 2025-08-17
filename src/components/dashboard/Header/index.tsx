@@ -10,10 +10,23 @@ const Header = () => {
   return (
     <div className="tw:flex tw:justify-between tw:items-center tw:py-6 tw:border-b tw:border-gray-200">
       <div className="tw:flex tw:gap-2 tw:items-center">
-        {profile?.avatar ? (
-          <img src="" alt="" />
+        {profile?.avatar_url ? (
+          <img
+            src={profile?.avatar_url}
+            alt=""
+            style={{
+              width: 100,
+              height: 100,
+              objectFit: "cover",
+              borderRadius: "50%",
+            }}
+            className="tw:w-[100px] tw:h-[100px] tw:rounded-full tw:object-cover"
+          />
         ) : (
-          <span className="tw:flex tw:w-12 tw:h-12 tw:justify-center tw:items-center tw:rounded-full tw:bg-[#359093] tw:text-white tw:text-3xl tw:font-medium">
+          <span
+            className="tw:flex tw:w-[100px] tw:h-[100px] tw:justify-center tw:items-center tw:rounded-full tw:bg-[#359093] tw:text-white tw:text-5xl tw:font-medium"
+            style={{ fontSize: 48 }}
+          >
             {profile?.name?.charAt(0).toUpperCase()}
           </span>
         )}
