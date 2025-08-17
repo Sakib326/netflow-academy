@@ -2,13 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { useRegisterMutation } from "@/redux/auth/authApi";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -22,7 +19,7 @@ export default function RegisterForm() {
   });
   const [register, { isLoading, isError, error, isSuccess }] =
     useRegisterMutation();
-  const token = useSelector((state: RootState) => state.auth.token);
+  const token = Cookies.get("token");
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

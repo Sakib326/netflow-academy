@@ -44,6 +44,12 @@ export const authSlice = createSlice({
         localStorage.setItem("user", JSON.stringify(action?.payload.user));
       }
     },
+    profile: (state, action: PayloadAction<User>) => {
+      state.user = action?.payload;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("user", JSON.stringify(action?.payload));
+      }
+    },
     logout: (state) => {
       Cookies.remove("token");
       state.user = undefined;
@@ -56,5 +62,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const { register, login, logout } = authSlice.actions;
+export const { register, login, profile, logout } = authSlice.actions;
 export default authSlice.reducer;

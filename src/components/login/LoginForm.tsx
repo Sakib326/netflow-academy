@@ -5,14 +5,13 @@ import { useEffect, useState } from "react";
 import { useLoginMutation } from "@/redux/auth/authApi";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import Cookies from "js-cookie";
 
 export default function LoginForm() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [login, { isLoading, isError, isSuccess, error }] = useLoginMutation();
   const router = useRouter();
-  const token = useSelector((state: RootState) => state.auth.token);
+  const token = Cookies.get("token");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

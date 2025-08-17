@@ -1,24 +1,26 @@
 "use client";
-
-import { useProfileQuery } from "@/redux/auth/authApi";
-import { FaRegBell } from "react-icons/fa";
 import Link from "next/link";
-import { useEffect } from "react";
+import { FaRegBell } from "react-icons/fa";
+import { useProfileQuery } from "@/redux/auth/authApi";
 
 const Header = () => {
-  const { data: profile, isFetching, error } = useProfileQuery();
+  const { data: user, isFetching } = useProfileQuery();
   return (
     <div className="tw:flex tw:justify-between tw:items-center tw:py-6 tw:border-b tw:border-gray-200">
       <div className="tw:flex tw:gap-2 tw:items-center">
-        {profile?.avatar ? (
-          <img src="" alt="" />
+        {user?.avatar_url ? (
+          <img
+            src={user?.avatar_url}
+            alt={user?.name}
+            className="tw:w-16 tw:h-16 tw:rounded-full tw:object-center tw:object-cover"
+          />
         ) : (
           <span className="tw:flex tw:w-12 tw:h-12 tw:justify-center tw:items-center tw:rounded-full tw:bg-[#359093] tw:text-white tw:text-3xl tw:font-medium">
-            {profile?.name?.charAt(0).toUpperCase()}
+            {user?.name?.charAt(0).toUpperCase()}
           </span>
         )}
 
-        <p className="tw:text-xl tw:mb-0">{profile?.name}</p>
+        <p className="tw:text-xl tw:mb-0">{user?.name}</p>
       </div>
 
       <div>

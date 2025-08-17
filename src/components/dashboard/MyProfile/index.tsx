@@ -1,13 +1,12 @@
-"use client";
-import { RootState } from "@/redux/store";
-import { useSelector } from "react-redux";
 import moment from "moment";
+import { fetchData } from "@/utils/fetchData";
+import { User } from "@/types/user";
 
-const MyProfile = () => {
-  const user = useSelector((state: RootState) => state.auth.user);
+const MyProfile = async () => {
+  const user = await fetchData<User>("/auth/me");
 
   return (
-    <div className="">
+    <>
       <h4 className="tw:w-xl tw:mb-4">My Profile</h4>
       <table className="tw:w-full tw:border-collapse">
         <tbody>
@@ -35,7 +34,7 @@ const MyProfile = () => {
           </tr>
         </tbody>
       </table>
-    </div>
+    </>
   );
 };
 

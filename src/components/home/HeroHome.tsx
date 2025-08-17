@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 const HeroHome = () => {
   return (
-    <div>
+    <>
       <Swiper
         slidesPerView={1}
         loop={true}
@@ -35,7 +35,7 @@ const HeroHome = () => {
           />
         </SwiperSlide>
       </Swiper>
-    </div>
+    </>
   );
 };
 export default HeroHome;
