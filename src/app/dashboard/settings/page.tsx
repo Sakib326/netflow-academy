@@ -1,4 +1,10 @@
+import Setting from "@/components/dashboard/Setting";
+
 const SettingPage = () => {
-  return <div>SettingPage</div>;
+  return (
+    <>
+      <Setting />
+    </>
+  );
 };
 export default SettingPage;

@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function fetchData<T>(
@@ -5,10 +7,14 @@ export async function fetchData<T>(
   options: RequestInit = {}
 ): Promise<T> {
   try {
-    const res = await fetch(`${API_URL}/url`, {
+    const cookieStore = cookies();
+    const token = cookieStore.get("token")?.value;
+    console.log("token", token);
+    const res = await fetch(`${API_URL}${url}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...(options.headers || {}),
       },
       cache: "no-store",
@@ -20,7 +26,7 @@ export async function fetchData<T>(
 
     return (await res.json()) as T;
   } catch (err: any) {
-    console.error("❌ fetchData error:", err.message);
+    console.error("fetchData error:", err.message);
     throw err;
   }
 }

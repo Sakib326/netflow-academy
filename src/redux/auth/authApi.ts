@@ -1,6 +1,6 @@
 import { User } from "@/types/user";
 import { apiSlice } from "../api/apiSlice";
-import { register, login } from "./authSlice";
+import { register, login, profile } from "./authSlice";
 import Cookies from "js-cookie";
 
 export const authApi = apiSlice.injectEndpoints({
@@ -48,9 +48,46 @@ export const authApi = apiSlice.injectEndpoints({
         method: "GET",
       }),
       providesTags: ["User"],
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          if (result && result?.data) {
+            dispatch(profile(result.data));
+          }
+        } catch (error) {}
+      },
+    }),
+    updateProfile: builder.mutation({
+      query: (body) => ({
+        url: "/auth/update",
+        method: "POST",
+        body: body,
+      }),
+      invalidatesTags: ["User"],
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const result = await queryFulfilled;
+          if (result && result?.data?.user) {
+            dispatch(profile(result?.data?.user));
+          }
+        } catch (error) {}
+      },
+    }),
+
+    resetPassword: builder.mutation({
+      query: (body) => ({
+        url: "/auth/update-password",
+        method: "POST",
+        body: body,
+      }),
     }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation, useProfileQuery } =
-  authApi;
+export const {
+  useRegisterMutation,
+  useLoginMutation,
+  useProfileQuery,
+  useUpdateProfileMutation,
+  useResetPasswordMutation,
+} = authApi;
