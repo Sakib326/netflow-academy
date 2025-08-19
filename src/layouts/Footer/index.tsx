@@ -12,7 +12,7 @@ export default function Footer() {
                   <div className="footer-logo">
                     <Link href="/">
                       <img
-                        src="/assets/img/logo.jpg"
+                        src="/assets/img/logo.png"
                         style={{ width: "160px" }}
                         alt="Netflow Academy"
                       />

@@ -9,15 +9,13 @@ export default function FooterOne() {
                 <div className="about-footer">
                   <div className="footer-logo">
                     <a href="#">
-                      <img src="/assets/img/logo.jpg" alt="Netflow Academy" />
+                      <img src="/assets/img/logo.png" alt="Netflow Academy" />
                     </a>
                   </div>
                   <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit
                     varius congue Morbi
                   </p>
-
-                
                 </div>
               </div>
             </div>

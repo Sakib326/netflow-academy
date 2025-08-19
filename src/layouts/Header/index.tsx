@@ -30,7 +30,7 @@ export default function Header() {
           <div className="col-30 left-col align-self-center rk_style">
             <div className="site-logo">
               <Link href="/">
-                <img src="/assets/img/logo.jpg" alt="Netflow Academy" />
+                <img src="/assets/img/logo.png" alt="Netflow Academy" />
               </Link>
             </div>
           </div>
