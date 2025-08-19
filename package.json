@@ -16,6 +16,7 @@
     "axios": "^1.11.0",
     "bootstrap": "^5.3.3",
     "js-cookie": "^3.0.5",
+    "media-chrome": "^4.13.0",
     "moment": "^2.30.1",
     "motion": "^12.23.12",
     "next": "^14.0.0",

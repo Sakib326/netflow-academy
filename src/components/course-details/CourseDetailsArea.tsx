@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import VideoPopup from "../../modals/VideoPopup";
 import { SingleCourse } from "@/types/course";
+import Link from "next/link";
 
 interface CourseDetailsAreaProps {
   course: SingleCourse;
@@ -208,10 +209,12 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                             {(module.lessons ?? []).map((lesson) => (
                               <li key={lesson.id}>
                                 <span>
-                                  <a href="#">
+                                  <Link
+                                    href={`/courses/${course?.slug}/lessons/${lesson?.title}`}
+                                  >
                                     <i className="bx bx-play-circle"></i>{" "}
                                     {lesson.title ?? "Untitled Lesson"}
-                                  </a>
+                                  </Link>
                                 </span>
                                 <span className="cd_cur_right">
                                   {lesson.is_free && (
