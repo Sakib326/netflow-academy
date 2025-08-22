@@ -79,18 +79,8 @@ export default function CoursesHome({ courses }: Props) {
 
                         <div className="cmeta">
                           <div className="smeta">
-                            <i className="bx bx-user"></i>
-                            {course?.total_students} Students
-                          </div>
-
-                          <div className="smeta">
                             <i className="bx bx-file"></i>
                             {course?.total_lessons} Lessons
-                          </div>
-
-                          <div className="smeta">
-                            <i className="bx bx-time-five"></i>
-                            {course?.duration || 0} Hours
                           </div>
                         </div>
 

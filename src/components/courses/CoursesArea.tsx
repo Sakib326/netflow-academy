@@ -79,10 +79,6 @@ export default function CoursesArea({ courses, pagination }: CoursesAreaProps) {
                         <i className="bx bx-file"></i>
                         {course.total_lessons} Lessons
                       </div>
-                      <div className="smeta">
-                        <i className="bx bx-time-five"></i>
-                        {course.duration ?? "N/A"}
-                      </div>
                     </div>
 
                     <div className="course_btm">
