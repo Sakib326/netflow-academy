@@ -24,10 +24,7 @@ export async function generateMetadata({
   const course: SingleCourse = await res.json();
   return {
     title: `${course.title} | Netflow Academy`,
-    description:
-      course.short_description ||
-      course.description ||
-      "Course details and curriculum.",
+    description: course.description || "Course details and curriculum.",
     keywords: [course.title, course.category.name, "Netflow Academy", "Course"],
   };
 }
