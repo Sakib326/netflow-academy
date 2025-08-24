@@ -48,7 +48,14 @@ const baseQueryWithAuth: BaseQueryFn<
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQueryWithAuth,
-  tagTypes: ["User", "Course", "Lesson", "Module", "Submission"],
+  tagTypes: [
+    "User",
+    "Course",
+    "Lesson",
+    "Module",
+    "Submission",
+    "EnrolledCourse",
+  ],
   keepUnusedDataFor: 0,
   endpoints: (builder) => ({}),
 });
