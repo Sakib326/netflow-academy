@@ -3,7 +3,8 @@ import { Metadata } from "next";
 import { SingleCourse } from "@/types/course";
 import { notFound } from "next/navigation";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ?? "https://admin.netflowacademy.com/api";
 
 interface CourseDetailsPageProps {
   params: { slug: string };
@@ -32,24 +33,16 @@ export async function generateMetadata({
 export default async function CourseDetailsPage({
   params,
 }: CourseDetailsPageProps) {
-  console.log("API_URL:", API_URL); // Add this debug log
-  console.log("Full URL:", `${API_URL}/courses/${params.slug}`);
+  if (!API_URL) notFound();
 
-  // Add null check
-  if (!API_URL) {
-    console.error("API_URL is not defined");
+  try {
+    const res = await fetch(`${API_URL}/courses/${params.slug}`, {
+      next: { revalidate: 60 },
+    });
+    if (!res.ok) throw new Error(`Status: ${res.status}`);
+    const course: SingleCourse = await res.json();
+    return <CourseDetails course={course} />;
+  } catch {
     notFound();
   }
-
-  const res = await fetch(`${API_URL}/courses/${params.slug}`, {
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    console.log("Fetch failed:", res.status, res.statusText);
-    notFound();
-  }
-
-  const course: SingleCourse = await res.json();
-  return <CourseDetails course={course} />;
 }
