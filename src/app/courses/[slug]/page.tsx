@@ -1,5 +1,4 @@
 import CourseDetails from "@/components/course-details";
-import { Metadata } from "next";
 import { SingleCourse } from "@/types/course";
 import { notFound } from "next/navigation";
 
