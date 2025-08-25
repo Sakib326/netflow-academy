@@ -1,321 +1,58 @@
 "use client";
 
-import { useState } from "react";
-import { FaBookOpen, FaCheckCircle, FaPlayCircle } from "react-icons/fa";
-import { FiChevronDown } from "react-icons/fi";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import { useRouter, useParams } from "next/navigation";
+import {
+  FaBookOpen,
+  FaPlayCircle,
+  FaClock,
+  FaFile,
+  FaCheckCircle,
+} from "react-icons/fa";
+import { FiChevronDown, FiChevronRight } from "react-icons/fi";
 import Link from "next/link";
+import { useGetModulesByCourseSlugQuery } from "@/redux/lesson/lessonApi";
+import type { Module, Lesson } from "@/types/moduleLessons";
 
-const lessons = [
-  {
-    id: 1,
-    title: "Introduction",
-    items: [
-      {
-        id: "1-1",
-        name: "Welcome & Overview",
-        slug: "welcome-overview",
-        video: "https://www.youtube.com/watch?v=ysz5S6PUM-U",
-        completed: true,
-      },
-      {
-        id: "1-2",
-        name: "Course Structure",
-        slug: "course-structure",
-        video: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        completed: false,
-      },
-      {
-        id: "1-3",
-        name: "Getting Started",
-        slug: "getting-started",
-        video: "https://www.youtube.com/watch?v=9bZkp7q19f0",
-        completed: false,
-      },
-      {
-        id: "1-4",
-        name: "Setup & Installation",
-        slug: "setup-installation",
-        video: "https://www.youtube.com/watch?v=3JZ_D3ELwOQ",
-        completed: false,
-      },
-      {
-        id: "1-5",
-        name: "Basic Concepts",
-        slug: "basic-concepts",
-        video: "https://www.youtube.com/watch?v=l482T0yNkeo",
-        completed: false,
-      },
-      {
-        id: "1-6",
-        name: "First Project",
-        slug: "first-project",
-        video: "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
-        completed: false,
-      },
-      {
-        id: "1-7",
-        name: "Understanding UI",
-        slug: "understanding-ui",
-        video: "https://www.youtube.com/watch?v=oHg5SJYRHA0",
-        completed: false,
-      },
-      {
-        id: "1-8",
-        name: "Navigation Basics",
-        slug: "navigation-basics",
-        video: "https://www.youtube.com/watch?v=6Dh-RL__uN4",
-        completed: false,
-      },
-      {
-        id: "1-9",
-        name: "Common Mistakes",
-        slug: "common-mistakes",
-        video: "https://www.youtube.com/watch?v=fJ9rUzIMcZQ",
-        completed: false,
-      },
-      {
-        id: "1-10",
-        name: "Summary & Next Steps",
-        slug: "summary-next-steps",
-        video: "https://www.youtube.com/watch?v=ScMzIvxBSi4",
-        completed: false,
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: "Advanced Concepts",
-    items: [
-      {
-        id: "2-1",
-        name: "Deep Dive into Components",
-        slug: "deep-dive-components",
-        video: "https://www.youtube.com/watch?v=1roy4o4tqQM",
-        completed: false,
-      },
-      {
-        id: "2-2",
-        name: "State Management",
-        slug: "state-management",
-        video: "https://www.youtube.com/watch?v=HgzGwKwLmgM",
-        completed: false,
-      },
-      {
-        id: "2-3",
-        name: "Routing Techniques",
-        slug: "routing-techniques",
-        video: "https://www.youtube.com/watch?v=kXYiU_JCYtU",
-        completed: false,
-      },
-      {
-        id: "2-4",
-        name: "Forms & Validation",
-        slug: "forms-validation",
-        video: "https://www.youtube.com/watch?v=CevxZvSJLk8",
-        completed: false,
-      },
-      {
-        id: "2-5",
-        name: "API Integration",
-        slug: "api-integration",
-        video: "https://www.youtube.com/watch?v=uelHwf8o7_U",
-        completed: false,
-      },
-      {
-        id: "2-6",
-        name: "Error Handling",
-        slug: "error-handling",
-        video: "https://www.youtube.com/watch?v=09R8_2nJtjg",
-        completed: false,
-      },
-      {
-        id: "2-7",
-        name: "Performance Optimization",
-        slug: "performance-optimization",
-        video: "https://www.youtube.com/watch?v=RgKAFK5djSk",
-        completed: false,
-      },
-      {
-        id: "2-8",
-        name: "Testing Basics",
-        slug: "testing-basics",
-        video: "https://www.youtube.com/watch?v=OPf0YbXqDm0",
-        completed: false,
-      },
-      {
-        id: "2-9",
-        name: "Deployment Strategies",
-        slug: "deployment-strategies",
-        video: "https://www.youtube.com/watch?v=60ItHLz5WEA",
-        completed: false,
-      },
-      {
-        id: "2-10",
-        name: "Final Project",
-        slug: "final-project",
-        video: "https://www.youtube.com/watch?v=2Vv-BfVoq4g",
-        completed: false,
-      },
-    ],
-  },
-  {
-    id: 3,
-    title: "Intermediate Techniques",
-    items: [
-      {
-        id: "3-1",
-        name: "State & Props Deep Dive",
-        slug: "state-props-deep-dive",
-        video: "https://www.youtube.com/watch?v=2vjPBrBU-TM",
-        completed: false,
-      },
-      {
-        id: "3-2",
-        name: "Component Lifecycle",
-        slug: "component-lifecycle",
-        video: "https://www.youtube.com/watch?v=04854XqcfCY",
-        completed: false,
-      },
-      {
-        id: "3-3",
-        name: "Context API Usage",
-        slug: "context-api-usage",
-        video: "https://www.youtube.com/watch?v=KQ6zr6kCPj8",
-        completed: false,
-      },
-      {
-        id: "3-4",
-        name: "Hooks in Depth",
-        slug: "hooks-in-depth",
-        video: "https://www.youtube.com/watch?v=OPf0YbXqDm0",
-        completed: false,
-      },
-      {
-        id: "3-5",
-        name: "Conditional Rendering",
-        slug: "conditional-rendering",
-        video: "https://www.youtube.com/watch?v=6_b7RDuLwcI",
-        completed: false,
-      },
-      {
-        id: "3-6",
-        name: "Lists & Keys",
-        slug: "lists-keys",
-        video: "https://www.youtube.com/watch?v=U9BwWKXjVaI",
-        completed: false,
-      },
-      {
-        id: "3-7",
-        name: "Event Handling",
-        slug: "event-handling",
-        video: "https://www.youtube.com/watch?v=SlPhMPnQ58k",
-        completed: false,
-      },
-      {
-        id: "3-8",
-        name: "Styling Components",
-        slug: "styling-components",
-        video: "https://www.youtube.com/watch?v=CevxZvSJLk8",
-        completed: false,
-      },
-      {
-        id: "3-9",
-        name: "Higher Order Components",
-        slug: "higher-order-components",
-        video: "https://www.youtube.com/watch?v=kJQP7kiw5Fk",
-        completed: false,
-      },
-      {
-        id: "3-10",
-        name: "Render Props Pattern",
-        slug: "render-props-pattern",
-        video: "https://www.youtube.com/watch?v=fRh_vgS2dFE",
-        completed: false,
-      },
-    ],
-  },
-  {
-    id: 4,
-    title: "Expert Practices",
-    items: [
-      {
-        id: "4-1",
-        name: "Performance Optimization",
-        slug: "performance-optimization-expert",
-        video: "https://www.youtube.com/watch?v=hT_nvWreIhg",
-        completed: false,
-      },
-      {
-        id: "4-2",
-        name: "Code Splitting",
-        slug: "code-splitting",
-        video: "https://www.youtube.com/watch?v=YykjpeuMNEk",
-        completed: false,
-      },
-      {
-        id: "4-3",
-        name: "Lazy Loading Components",
-        slug: "lazy-loading-components",
-        video: "https://www.youtube.com/watch?v=60ItHLz5WEA",
-        completed: false,
-      },
-      {
-        id: "4-4",
-        name: "Memoization Techniques",
-        slug: "memoization-techniques",
-        video: "https://www.youtube.com/watch?v=3AtDnEC4zak",
-        completed: false,
-      },
-      {
-        id: "4-5",
-        name: "Custom Hooks",
-        slug: "custom-hooks",
-        video: "https://www.youtube.com/watch?v=uelHwf8o7_U",
-        completed: false,
-      },
-      {
-        id: "4-6",
-        name: "Error Boundaries",
-        slug: "error-boundaries",
-        video: "https://www.youtube.com/watch?v=ScMzIvxBSi4",
-        completed: false,
-      },
-      {
-        id: "4-7",
-        name: "Advanced Routing",
-        slug: "advanced-routing",
-        video: "https://www.youtube.com/watch?v=3JZ_D3ELwOQ",
-        completed: false,
-      },
-      {
-        id: "4-8",
-        name: "Server-Side Rendering",
-        slug: "server-side-rendering",
-        video: "https://www.youtube.com/watch?v=9bZkp7q19f0",
-        completed: false,
-      },
-      {
-        id: "4-9",
-        name: "Static Site Generation",
-        slug: "static-site-generation",
-        video: "https://www.youtube.com/watch?v=l482T0yNkeo",
-        completed: false,
-      },
-      {
-        id: "4-10",
-        name: "Security Best Practices",
-        slug: "security-best-practices",
-        video: "https://www.youtube.com/watch?v=6Dh-RL__uN4",
-        completed: false,
-      },
-    ],
-  },
-];
+const LessonSidebar = () => {
+  const router = useRouter();
+  const params = useParams();
+  const currentLessonSlug = params.lesson as string;
 
-const LessionSidebar = () => {
-  // allow multiple sections open → array of IDs
-  const [openSections, setOpenSections] = useState<number[]>([1]);
+  const courseSlug = params.slug as string;
+
+  console.log("Current Lesson Slug:", currentLessonSlug);
+
+  const { data, isLoading, isError } =
+    useGetModulesByCourseSlugQuery(courseSlug);
+  const modules: Module[] = data?.modules ?? [];
+  const [openSections, setOpenSections] = useState<number[]>([]);
+
+  // Auto-expand section containing current lesson and validate lesson slug
+  useEffect(() => {
+    if (modules.length > 0 && currentLessonSlug) {
+      // Find which module contains the current lesson
+      const currentModuleIndex = modules.findIndex((module) =>
+        module.lessons?.some((lesson) => lesson.slug === currentLessonSlug)
+      );
+
+      if (currentModuleIndex !== -1) {
+        // Current lesson exists - expand its module
+        const currentModule = modules[currentModuleIndex];
+        setOpenSections((prev) =>
+          prev.includes(currentModule.id) ? prev : [...prev, currentModule.id]
+        );
+      } else {
+        // Current lesson doesn't exist - redirect to first lesson
+        const firstModule = modules[0];
+        const firstLesson = firstModule?.lessons?.[0];
+
+        if (firstLesson) {
+          router.replace(`/courses/${courseSlug}/lessons/${firstLesson.slug}`);
+        }
+      }
+    }
+  }, [modules, currentLessonSlug, router]);
 
   const toggleSection = (id: number) => {
     setOpenSections((prev) =>
@@ -323,71 +60,212 @@ const LessionSidebar = () => {
     );
   };
 
+  const handleSectionToggle = (e: React.MouseEvent, id: number) => {
+    // Prevent event bubbling to avoid conflicts
+    e.stopPropagation();
+    toggleSection(id);
+  };
+
+  const getLessonIcon = (lessonType: string) => {
+    switch (lessonType) {
+      case "video":
+        return <FaPlayCircle className="tw:text-blue-500 tw:text-sm" />;
+      case "quiz":
+        return <FaCheckCircle className="tw:text-orange-500 tw:text-sm" />;
+      case "reading":
+        return <FaFile className="tw:text-purple-500 tw:text-sm" />;
+      default:
+        return <FaClock className="tw:text-gray-400 tw:text-sm" />;
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <aside className="tw:w-full tw:bg-white tw:shadow-lg tw:rounded-lg tw:min-h-[85vh] tw:flex tw:items-center tw:justify-center">
+        <div className="tw:flex tw:flex-col tw:items-center tw:gap-3">
+          <div className="tw:w-8 tw:h-8 tw:border-4 tw:border-blue-200 tw:border-t-blue-600 tw:rounded-full tw:animate-spin"></div>
+          <span className="tw:text-gray-500 tw:font-medium">
+            Loading course content...
+          </span>
+        </div>
+      </aside>
+    );
+  }
+
+  if (isError || !modules.length) {
+    return (
+      <aside className="tw:w-full tw:bg-white tw:shadow-lg tw:rounded-lg tw:min-h-[85vh] tw:flex tw:items-center tw:justify-center">
+        <div className="tw:text-center tw:p-6">
+          <div className="tw:w-16 tw:h-16 tw:bg-red-100 tw:rounded-full tw:flex tw:items-center tw:justify-center tw:mx-auto tw:mb-4">
+            <FaBookOpen className="tw:text-red-500 tw:text-2xl" />
+          </div>
+          <h3 className="tw:text-lg tw:font-semibold tw:text-gray-800 tw:mb-2">
+            No Content Available
+          </h3>
+          <p className="tw:text-gray-500">
+            Course modules will appear here once they're added.
+          </p>
+        </div>
+      </aside>
+    );
+  }
+
   return (
-    <aside className="tw:w-full tw:bg-white tw:shadow-md tw:min-h-[85vh]">
-      <h2 className="tw:text-lg tw:font-semibold tw:flex tw:items-center tw:gap-2 tw:mb-4 tw:p-3">
-        <FaBookOpen /> Course Content
-      </h2>
+    <aside className="tw:w-full tw:bg-white tw:shadow-lg tw:rounded-lg tw:min-h-[85vh] tw:overflow-hidden">
+      {/* Header */}
+      <div className="tw:bg-gradient-to-r tw:from-blue-600 tw:to-indigo-600 tw:p-6 tw:text-white">
+        <h2 className="tw:text-xl tw:font-bold tw:flex tw:items-center tw:gap-3">
+          <div className="tw:p-2 tw:bg-white/20 tw:rounded-lg">
+            <FaBookOpen className="tw:text-lg" />
+          </div>
+          Course Content
+        </h2>
+        <p className="tw:text-blue-100 tw:text-sm tw:mt-2">
+          {modules.length} module{modules.length !== 1 ? "s" : ""} •{" "}
+          {modules.reduce(
+            (total, module) => total + (module.lessons?.length || 0),
+            0
+          )}{" "}
+          lessons
+        </p>
+      </div>
 
-      <ul className="">
-        {lessons.map((section) => {
-          const isOpen = openSections.includes(section.id);
-          return (
-            <li
-              key={section.id}
-              className="tw:bg-[#EFF1F6] tw:border-b tw:border-white"
-            >
-              {/* Section Header */}
-              <button
-                onClick={() => toggleSection(section.id)}
-                className="tw:w-full tw:flex tw:items-center tw:justify-between tw:p-3 tw:text-left tw:font-medium hover:tw:bg-gray-100"
+      {/* Content */}
+      <div className="tw:p-2">
+        <ul className="tw:space-y-2">
+          {modules.map((section, index) => {
+            const isOpen = openSections.includes(section.id);
+            const lessonCount = section.lessons?.length || 0;
+
+            return (
+              <li
+                key={section.id}
+                className="tw:rounded-lg tw:overflow-hidden tw:border tw:border-gray-200"
               >
-                {section.title}
-                <FiChevronDown
-                  className={`tw:transition-transform ${
-                    isOpen ? "tw:rotate-180" : ""
-                  }`}
-                />
-              </button>
+                {/* Section Header */}
+                <button
+                  onClick={(e) => handleSectionToggle(e, section.id)}
+                  className={`
+                    tw:w-full tw:flex tw:items-center tw:justify-between tw:p-4 tw:text-left tw:font-semibold
+                    tw:transition-all tw:duration-200 tw:group
+                    ${
+                      isOpen
+                        ? "tw:bg-blue-50 tw:text-blue-800 tw:border-b tw:border-blue-200"
+                        : "tw:bg-gray-50 hover:tw:bg-gray-100 tw:text-gray-700 hover:tw:text-gray-900"
+                    }
+                  `}
+                >
+                  <div className="tw:flex tw:items-center tw:gap-3">
+                    <div
+                      className={`
+                      tw:flex tw:items-center tw:justify-center tw:w-8 tw:h-8 tw:rounded-full tw:text-sm tw:font-bold
+                      ${
+                        isOpen
+                          ? "tw:bg-blue-200 tw:text-blue-800"
+                          : "tw:bg-gray-200 tw:text-gray-600"
+                      }
+                    `}
+                    >
+                      {index + 1}
+                    </div>
+                    <div>
+                      <div className="tw:text-base tw:font-semibold">
+                        {section.title}
+                      </div>
+                      <div className="tw:text-xs tw:text-gray-500 tw:mt-1">
+                        {lessonCount} lessons
+                      </div>
+                    </div>
+                  </div>
 
-              {/* Animated Accordion */}
-              <AnimatePresence initial={false}>
-                {isOpen && (
-                  <motion.ul
-                    key="content"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.4, ease: "easeInOut" }}
-                    className="tw:pl-6 tw:pr-2 tw:pb-2 tw:space-y-2 tw:overflow-hidden"
-                  >
-                    {section.items.map((lesson) => (
-                      <li
-                        key={lesson.id}
-                        className="tw:flex tw:items-center tw:gap-2 tw:text-md hover:tw:text-indigo-600 tw:cursor-pointer"
-                      >
-                        {lesson.completed ? (
-                          <FaCheckCircle className="tw:text-green-500" />
-                        ) : (
-                          <FaPlayCircle className="tw:text-gray-400" />
-                        )}
-                        <Link
-                          href={`/courses/english-for-workplace/lessons/${lesson?.slug}`}
-                        >
-                          {" "}
-                          {lesson.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </motion.ul>
-                )}
-              </AnimatePresence>
-            </li>
-          );
-        })}
-      </ul>
+                  <div className="tw:flex tw:items-center tw:gap-2">
+                    <div
+                      className={`
+                      tw-w-8 tw-h-1 tw:rounded-full tw:bg-gray-200 tw:overflow-hidden
+                    `}
+                    ></div>
+                    {isOpen ? (
+                      <FiChevronDown className="tw:text-lg tw:transition-transform tw:duration-200" />
+                    ) : (
+                      <FiChevronRight className="tw:text-lg tw:transition-transform tw:duration-200" />
+                    )}
+                  </div>
+                </button>
+
+                {/* Lessons List with CSS Animation */}
+                <div
+                  className={`
+                  tw:transition-all tw:duration-300 tw:ease-in-out tw:overflow-hidden
+                  ${
+                    isOpen
+                      ? "tw:max-h-96 tw:opacity-100"
+                      : "tw:max-h-0 tw:opacity-0"
+                  }
+                `}
+                >
+                  {section.lessons && (
+                    <ul className="tw:bg-white tw:divide-y tw:divide-gray-100">
+                      {section.lessons.map(
+                        (lesson: Lesson, lessonIndex: number) => {
+                          const isCurrentLesson =
+                            lesson.slug === currentLessonSlug;
+
+                          return (
+                            <li key={lesson.id}>
+                              <Link
+                                href={`/courses/${courseSlug}/lessons/${lesson.slug}`}
+                                onClick={(e) => {
+                                  // Prevent event bubbling to avoid triggering section toggle
+                                  e.stopPropagation();
+                                }}
+                                className={`
+                                tw:flex tw:items-center tw:gap-3 tw:p-4 tw:pl-6 tw:text-sm
+                                tw:transition-all tw:duration-200 tw:group 
+                                ${
+                                  isCurrentLesson
+                                    ? "tw:bg-blue-100 tw:text-blue-800 tw:border-r-4 tw:border-blue-600"
+                                    : "hover:tw:bg-blue-50 hover:tw:text-blue-700"
+                                }
+                              `}
+                              >
+                                <div className="tw:flex-shrink-0">
+                                  {getLessonIcon(lesson.lesson_type)}
+                                </div>
+
+                                <div className="tw:flex-1 tw:min-w-0">
+                                  <div
+                                    className={`
+                                  tw:font-medium tw:truncate
+                                  ${
+                                    isCurrentLesson
+                                      ? "tw:text-blue-800"
+                                      : "tw:text-gray-700 group-hover:tw:text-blue-700"
+                                  }
+                                `}
+                                  >
+                                    {lesson.title}
+                                  </div>
+                                  {lesson.duration && (
+                                    <div className="tw:text-xs tw:text-gray-500 tw:mt-1">
+                                      {lesson.duration} min
+                                    </div>
+                                  )}
+                                </div>
+                              </Link>
+                            </li>
+                          );
+                        }
+                      )}
+                    </ul>
+                  )}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </aside>
   );
 };
 
-export default LessionSidebar;
+export default LessonSidebar;

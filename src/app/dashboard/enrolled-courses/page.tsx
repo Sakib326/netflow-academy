@@ -1,5 +1,4 @@
 import EnrolledCourse from "@/components/dashboard/EnrolledCourse";
-
 const EnrolledCoursesPage = () => {
   return (
     <>

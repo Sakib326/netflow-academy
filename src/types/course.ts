@@ -102,7 +102,7 @@ export interface InstructorDetail extends Instructor {
 }
 
 export interface SingleCourse extends Course {
-  short_description: string | null;
+  thumb_video_url?: string | null;
   requirements: string | null;
   what_you_will_learn: string | null;
   rating_distribution: RatingDistribution[];

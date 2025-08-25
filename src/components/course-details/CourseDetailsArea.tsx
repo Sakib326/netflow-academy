@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import VideoPopup from "../../modals/VideoPopup";
 import { SingleCourse } from "@/types/course";
 import Link from "next/link";
+import CourseCurriculum from "./components/CourseCurriculum";
 
 interface CourseDetailsAreaProps {
   course: SingleCourse;
@@ -19,7 +20,6 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
   // Null checks for all nested content
   const instructor = course?.instructor ?? {};
   const category = course?.category ?? {};
-  const modules = course?.modules ?? [];
   const rating_distribution = course?.rating_distribution ?? [];
   const recent_reviews = course?.recent_reviews ?? [];
 
@@ -29,7 +29,7 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
       <VideoPopup
         isVideoOpen={isVideoOpen}
         setIsVideoOpen={setIsVideoOpen}
-        videoUrl={"qmGYnJgCW1o"}
+        videoUrl={course?.thumb_video_url ?? ""}
       />
       {/* video modal end */}
 
@@ -37,18 +37,39 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
         <div className="container">
           <div className="row">
             <div className="col-xl-8 wow fadeIn">
-              <div className="scourse_image">
+              <div className="tw:relative tw:w-full tw:mb-6">
+                {/* Always show the thumbnail image */}
                 <img
                   src={course?.thumbnail ?? "/assets/img/courses/cdetails.jpg"}
                   alt={course?.title ?? "Course"}
+                  className="tw:w-full tw:rounded-xl tw:object-cover tw:aspect-video"
+                  onError={(e) => {
+                    e.currentTarget.src = "/assets/img/courses/cdetails.jpg";
+                  }}
                 />
-                <a
-                  onClick={() => setIsVideoOpen(true)}
-                  style={{ cursor: "pointer" }}
-                  className="scbtn vbtn"
-                >
-                  {/* ...video icon SVG... */}
-                </a>
+
+                {/* If video exists, show overlay and play button */}
+                {/* {course?.thumb_video_url && (
+                  <>
+                    <div className="tw:absolute tw:inset-0 tw:bg-black tw:bg-opacity-30 tw:rounded-xl tw:pointer-events-none tw:transition-opacity hover:tw:bg-opacity-40"></div>
+                    <button
+                      onClick={() => setIsVideoOpen(true)}
+                      className="tw:absolute tw:inset-0 tw:flex tw:items-center tw:justify-center tw:group focus:tw:outline-none focus:tw:ring-4 focus:tw:ring-blue-500/50 tw:rounded-xl tw:transition-all tw:duration-200"
+                      aria-label="Play course video"
+                      type="button"
+                    >
+                      <span className="tw:bg-white/90 tw:rounded-full tw:p-4 tw:flex tw:items-center tw:justify-center tw:transition-all tw:duration-200 tw:shadow-lg group-hover:tw:bg-white group-hover:tw:scale-110 group-hover:tw:shadow-xl">
+                        <svg
+                          className="tw:w-8 tw:h-8 tw:text-gray-800 tw:ml-1"
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                      </span>
+                    </button>
+                  </>
+                )} */}
               </div>
 
               <div className="scourse_meta">
@@ -167,7 +188,14 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                   aria-labelledby="nav-overview-tab"
                   tabIndex={0}
                 >
-                  <p>{course?.description ?? "No description available."}</p>
+                  {course.description && (
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          course?.description ?? "No description available.",
+                      }}
+                    />
+                  )}
                   {course?.what_you_will_learn && (
                     <div>
                       <h3>What you will learn</h3>
@@ -201,37 +229,7 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                   tabIndex={0}
                 >
                   <div className="cd_curriculum">
-                    {modules.length > 0 ? (
-                      modules.map((module) => (
-                        <div key={module.id}>
-                          <h3>{module.title ?? "Untitled Module"}</h3>
-                          <ul>
-                            {(module.lessons ?? []).map((lesson) => (
-                              <li key={lesson.id}>
-                                <span>
-                                  <Link
-                                    href={`/courses/${course?.slug}/lessons/${lesson?.title}`}
-                                  >
-                                    <i className="bx bx-play-circle"></i>{" "}
-                                    {lesson.title ?? "Untitled Lesson"}
-                                  </Link>
-                                </span>
-                                <span className="cd_cur_right">
-                                  {lesson.is_free && (
-                                    <a href="#" className="cbtn">
-                                      Preview
-                                    </a>
-                                  )}
-                                  {lesson.duration ?? "N/A"}
-                                </span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))
-                    ) : (
-                      <p>No curriculum available.</p>
-                    )}
+                    <CourseCurriculum course={course} />
                   </div>
                 </div>
 
@@ -374,14 +372,6 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                 <ul className="scourse_list">
                   <li>
                     <span className="cside-label">
-                      <i className="fa-regular fa-clock"></i> Duration
-                    </span>
-                    <span className="cside-value">
-                      {course?.duration ?? "N/A"}
-                    </span>
-                  </li>
-                  <li>
-                    <span className="cside-label">
                       <i className="fa-regular fa-file"></i> Lesson
                     </span>
                     <span className="cside-value">
@@ -396,29 +386,18 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                       {course?.total_students ?? 0}
                     </span>
                   </li>
-                  <li>
-                    <span className="cside-label">
-                      <i className="fa-solid fa-clapperboard"></i> Video
-                    </span>
-                    <span className="cside-value">
-                      {course?.duration ?? "N/A"}
-                    </span>
-                  </li>
+
                   <li>
                     <span className="cside-label">
                       <i className="fa-solid fa-chart-line"></i> Skill Level
                     </span>
-                    <span className="cside-value">
-                      {course?.level ?? "N/A"}
-                    </span>
+                    <span className="cside-value">Beginner to Advance</span>
                   </li>
                   <li>
                     <span className="cside-label">
                       <i className="fa-solid fa-language"></i> Language
                     </span>
-                    <span className="cside-value">
-                      {course?.language ?? "N/A"}
-                    </span>
+                    <span className="cside-value">Bangla</span>
                   </li>
                 </ul>
                 <div className="cd_price">
@@ -431,31 +410,6 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                   <a href="#" className="bg_btn bt">
                     Buy Course
                   </a>
-                </div>
-                <div className="cd_social">
-                  <span>Share on:</span>
-                  <ul>
-                    <li>
-                      <a href="#">
-                        <i className="fa-brands fa-facebook-f"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="fa-brands fa-x-twitter"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="fa-brands fa-linkedin-in"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="fa-brands fa-youtube"></i>
-                      </a>
-                    </li>
-                  </ul>
                 </div>
               </div>
             </div>
