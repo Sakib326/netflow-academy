@@ -11,6 +11,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { logout } from "@/redux/auth/authSlice";
+import { RiDiscussLine } from "react-icons/ri";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -24,7 +25,11 @@ const Sidebar = () => {
       label: "Enrolled Courses",
       icon: <MdLibraryBooks />,
     },
-    { href: "/dashboard/settings", label: "Settings", icon: <MdSettings /> },
+    {
+      href: "/dashboard/discussions",
+      label: "Discussions",
+      icon: <RiDiscussLine />,
+    },
   ];
 
   const handleLogout = () => {
@@ -35,7 +40,7 @@ const Sidebar = () => {
   return (
     <aside className="tw:py-6 tw:border-r tw:border-gray-200 tw:h-full tw:min-h-[60vh]">
       <ul className="tw:space-y-1">
-        {links.slice(0, 3).map((link) => (
+        {links.map((link) => (
           <li key={link.href}>
             <Link
               href={link.href}

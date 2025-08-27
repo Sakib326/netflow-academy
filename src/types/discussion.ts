@@ -40,13 +40,13 @@ export type Thread = {
   id: number;
   discussable_type: string;
   discussable_id: number;
-  parent_id: number | null;
   title: string;
   content: string;
   is_question: boolean;
   is_answered: boolean;
   upvotes: number;
   user: User;
+  replies_count: number;
   created_at: string;
   updated_at: string;
 };

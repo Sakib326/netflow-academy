@@ -55,6 +55,8 @@ export const apiSlice = createApi({
     "Module",
     "Submission",
     "EnrolledCourse",
+    "Discussions",
+    "Discussion",
   ],
   keepUnusedDataFor: 0,
   endpoints: (builder) => ({}),

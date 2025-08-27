@@ -37,6 +37,5 @@ async function fetchCourses(
 
 export default async function CoursesPage() {
   const courses = await fetchCourses({ page: 1, per_page: 20, sort: "latest" });
-
   return <Courses {...courses} />;
 }
