@@ -105,10 +105,10 @@ const EnrolledCourse = () => {
                         href={enrolled.batch.zoom_link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="tw:inline-flex tw:items-center tw:gap-1 tw:text-blue-600 tw:hover:text-blue-700 tw:text-xs tw:font-medium"
+                        className="tw:inline-flex tw:items-center tw:gap-1 tw:text-blue-600 tw:hover:text-blue-700 tw:text-2xl tw:font-medium"
                         onClick={(e) => e.stopPropagation()} // Prevent card click when clicking zoom link
                       >
-                        🔗 Join Class
+                        🔗 Join live Class
                       </a>
                     )}
                   </div>

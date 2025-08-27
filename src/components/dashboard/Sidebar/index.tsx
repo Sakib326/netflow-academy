@@ -6,6 +6,7 @@ import {
   MdLibraryBooks,
   MdSettings,
   MdLogout,
+  MdQuestionAnswer,
 } from "react-icons/md";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -24,6 +25,11 @@ const Sidebar = () => {
       label: "Enrolled Courses",
       icon: <MdLibraryBooks />,
     },
+    {
+      href: "/dashboard/live-classes",
+      label: "Solution Live Class",
+      icon: <MdQuestionAnswer />, // You can replace this with a more suitable icon if desired
+    },
     { href: "/dashboard/settings", label: "Settings", icon: <MdSettings /> },
   ];
 
@@ -35,7 +41,7 @@ const Sidebar = () => {
   return (
     <aside className="tw:py-6 tw:border-r tw:border-gray-200 tw:h-full tw:min-h-[60vh]">
       <ul className="tw:space-y-1">
-        {links.slice(0, 3).map((link) => (
+        {links.slice(0, 4).map((link) => (
           <li key={link.href}>
             <Link
               href={link.href}
