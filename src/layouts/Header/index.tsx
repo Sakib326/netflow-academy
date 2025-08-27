@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import NavMenu from "./NavMenu";
 import MobileMenu from "./MobileMenu";
 import Link from "next/link";
@@ -57,17 +57,6 @@ export default function Header() {
                   />
                 </svg>
               </a>
-              {/* <div className="cart-icon">
-                  <a href="#" className="mcart_open" data-menu="#mini_cart">
-                    <svg fill="none" viewBox="0 0 17 19">
-                      <path
-                        fill="#fff"
-                        d="M7.465.072C5.288.345 3.627 2.132 3.627 4.21v.446l-.811.018c-.777.013-.829.017-1.063.13A1.656 1.656 0 00.807 6.01c-.073.442-.832 11.316-.806 11.576.052.53.494 1.106 1.015 1.314l.247.1h13.489l.247-.1c.52-.208.963-.785 1.015-1.314.026-.26-.733-11.13-.807-11.572a1.786 1.786 0 00-.139-.451c-.143-.29-.485-.612-.784-.75-.26-.122-.296-.126-1.08-.14l-.816-.017v-.35c-.004-1.05-.477-2.157-1.258-2.942A4.32 4.32 0 008.484.068a3.492 3.492 0 00-1.019.004zm1.301 1.453C10.03 1.845 11 3.073 11 4.348v.317H5.015v-.317c0-.177.039-.468.082-.646a3.01 3.01 0 013.67-2.177zM3.648 7.883l-.03 1.835.1.148c.147.212.303.312.525.338.251.03.511-.1.646-.321l.104-.165.013-1.835.013-1.83h5.977l.013 1.83.013 1.835.104.165a.678.678 0 00.646.32c.217-.02.377-.125.52-.333.096-.143.096-.148.096-1.978V6.053h.672c.647 0 .673.004.733.095.048.074.16 1.475.46 5.713l.4 5.617-.096.078c-.091.073-.39.078-6.55.078-6.159 0-6.458-.005-6.549-.078l-.095-.078.399-5.617c.299-4.238.412-5.639.46-5.713.06-.09.082-.095.758-.095h.699l-.03 1.83z"
-                      />
-                    </svg>
-                  </a>
-                  <span>3</span>
-                </div> */}
             </div>
             {token ? (
               <div
@@ -159,115 +148,6 @@ export default function Header() {
           </div>
         </div>
       </div>
-
-      {/* <div id="mini_cart" className="cart_drawer">
-          <div className="cart_top">
-            <a href="#" className="cart_close">
-              <i className="bx bx-x"></i>
-            </a>
-            <h3 className="title">Courses List</h3>
-            <span className="cart_number">3</span>
-          </div>
-
-          <div className="mini_cart_list">
-            <ul>
-              <li className="d-flex">
-                <div className="thumb_img_cartmini">
-                  <a href="course-details.html" className="mc_img">
-                    <img src="assets/img/mcart/1.jpg" alt="Product Name" />
-                  </a>
-                </div>
-
-                <div className="product-detail">
-                  <h3 className="product_name_mini">
-                    <a href="course-details.html">Photography Crash Course</a>
-                  </h3>
-                  <div className="product_info">
-                    <div className="product_quanity">QTY : 1 </div>
-                    <div className="product_price">
-                      <span className="price_sale">$25.00</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="produc_remove">
-                  <a href="#" className="remove-product">
-                    <i className="bx bx-trash"></i>
-                  </a>
-                </div>
-              </li>
-
-              <li className="d-flex">
-                <div className="thumb_img_cartmini">
-                  <a href="course-details.html" className="mc_img">
-                    <img src="assets/img/mcart/2.jpg" alt="Product Name" />
-                  </a>
-                </div>
-
-                <div className="product-detail">
-                  <h3 className="product_name_mini">
-                    <a href="course-details.html">Photography Crash Course</a>
-                  </h3>
-                  <div className="product_info">
-                    <div className="product_quanity">QTY : 1 </div>
-                    <div className="product_price">
-                      <span className="price_sale">$25.00</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="produc_remove">
-                  <a href="#" className="remove-product">
-                    <i className="bx bx-trash"></i>
-                  </a>
-                </div>
-              </li>
-
-              <li className="d-flex">
-                <div className="thumb_img_cartmini">
-                  <a href="course-details.html" className="mc_img">
-                    <img src="assets/img/mcart/3.jpg" alt="Product Name" />
-                  </a>
-                </div>
-
-                <div className="product-detail">
-                  <h3 className="product_name_mini">
-                    <a href="course-details.html">Photography Crash Course</a>
-                  </h3>
-                  <div className="product_info">
-                    <div className="product_quanity">QTY : 1 </div>
-                    <div className="product_price">
-                      <span className="price_sale">$25.00</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="produc_remove">
-                  <a href="#" className="remove-product">
-                    <i className="bx bx-trash"></i>
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </div>
-
-          <div className="cart_drawer_btm">
-            <div className="sub-total">
-              <span className="total-title float-start">Total:</span>
-              <span className="total-price float-end">$75.00</span>
-            </div>
-
-            <div className="bottom_group">
-              <a href="cart.html" className="button-viewcart">
-                <span>View Cart</span>
-              </a>
-              <a href="checkout.html" className="button-checkout">
-                <span>Checkout</span>
-              </a>
-            </div>
-          </div>
-        </div> */}
-
       <div className={`search_box ${open ? "active" : ""}`}>
         <div
           className="close-btn"

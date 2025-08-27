@@ -13,7 +13,5 @@ export default async function InstructorsPage() {
   }
 
   const [instructors] = await Promise.all([fetchInstructors()]);
-  console.log("instructors", instructors);
-
   return <Instructors instructors={instructors} />;
 }
