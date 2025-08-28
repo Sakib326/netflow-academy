@@ -38,7 +38,7 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="tw:py-6 tw:border-r tw:border-gray-200 tw:h-full tw:min-h-[60vh]">
+    <aside className="tw:py-6 tw:border-r tw:border-gray-200 tw:h-full tw:min-h-[60vh] tw:hidden tw:md:block">
       <ul className="tw:space-y-1">
         {links.map((link) => (
           <li key={link.href}>

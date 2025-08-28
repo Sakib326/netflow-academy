@@ -1,13 +1,13 @@
 export default function FeatureHome() {
   return (
     <>
-      <section className={`features section-padding`}>
+      <section className="features md:tw:py-[70px] tw:py-10">
         <div className="container">
           <div className="row">
             <div className="col-12 wow fadeInUp">
               <div className="section-title text-center">
                 <span>Features</span>
-                <h2>One Platform Many Course</h2>
+                <h2 className="">One Platform Many Course</h2>
               </div>
             </div>
 

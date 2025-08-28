@@ -20,7 +20,7 @@ export default function BrandHome() {
   const slides = partners.concat(partners);
 
   return (
-    <section className="container pt120 wow fadeIn mb-5 tw:bg-gray-50">
+    <section className="container tw:pt-12 wow fadeIn mb-5 tw:bg-gray-50">
       <div className="row tw:bg-white">
         <Swiper
           slidesPerView={4}
@@ -29,7 +29,7 @@ export default function BrandHome() {
           modules={[Autoplay]}
           autoplay={{ delay: 4000, disableOnInteraction: false }}
           breakpoints={{
-            0: { slidesPerView: 2 },
+            0: { slidesPerView: 1 },
             768: { slidesPerView: 3 },
             1200: { slidesPerView: 4 },
           }}

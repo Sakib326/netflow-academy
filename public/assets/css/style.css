@@ -14,19 +14,17 @@ Version      : 1.0
 @import url("https://fonts.googleapis.com");
 @import url("https://fonts.gstatic.com");
 
-body {
+html {
+  overflow-x: hidden;
+}
+/* body {
   color: #555;
   font-family: "Urbanist", sans-serif;
   font-size: 17px;
   line-height: 1.9;
   font-weight: 400;
-  overflow-x: hidden;
-  position: relative;
-}
-html,
-body {
-  height: 100%;
-}
+} */
+
 h1,
 h2,
 h3,
@@ -84,7 +82,7 @@ img {
   padding: 120px 0;
 }
 .section-title {
-  margin-bottom: 60px;
+  margin-bottom: 40px;
   position: relative;
   z-index: 1;
 }
@@ -99,6 +97,49 @@ img {
   font-size: 35px;
 }
 
+.section-title h2 {
+  font-size: 35px; /* default for large screens */
+}
+
+@media (max-width: 1024px) {
+  .section-title h2 {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-title h2 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title h2 {
+    font-size: 20px;
+  }
+}
+
+.section-padding {
+  padding: 120px 0; /* default for large screens */
+}
+
+@media (max-width: 1024px) {
+  .section-padding {
+    padding: 80px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 60px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-padding {
+    padding: 40px 0;
+  }
+}
 .white-title h2 {
   color: #fff;
 }

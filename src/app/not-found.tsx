@@ -1,6 +1,6 @@
-"use client";
-import Error from "@/components/error";
+import NotFound from "@/components/common/NotFound";
 
-export default function NotFound() {
-  return <Error />;
-}
+const NotFoundPage = () => {
+  return <NotFound />;
+};
+export default NotFoundPage;
