@@ -10,6 +10,26 @@ export interface Instructor {
   avatar: string | null;
 }
 
+export interface GroupCourseSummary {
+  id: number;
+  title: string;
+  slug: string;
+}
+
+export interface BundleCourse {
+  id: number;
+  title: string;
+  slug: string;
+  description?: string | null;
+  thumbnail?: string | null;
+  price?: string | null;
+  discounted_price?: string | null;
+  effective_price?: number | null;
+  duration?: string | null;
+  level?: string | null;
+  total_lessons?: number | null;
+}
+
 export interface Course {
   id: number;
   title: string;
@@ -30,6 +50,10 @@ export interface Course {
   instructor: Instructor;
   created_at: string;
   updated_at: string;
+  is_bundle: boolean;
+  bundle_savings?: string | null;
+  group_courses?: GroupCourseSummary[]; // For bundle courses
+  bundle_courses?: BundleCourse[]; // New: detailed bundle courses
 }
 
 export interface PaginationLink {
@@ -109,4 +133,9 @@ export interface SingleCourse extends Course {
   instructor: InstructorDetail;
   modules: Module[];
   recent_reviews: RecentReview[];
+
+  bundle_courses?: BundleCourse[];
+  bundle_original_price?: number | null;
+  course_type?: string | null;
+  group_courses?: GroupCourseSummary[];
 }

@@ -117,18 +117,21 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                   >
                     Overview
                   </button>
-                  <button
-                    className="nav-link"
-                    id="nav-curriculum-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#nav-curriculum"
-                    type="button"
-                    role="tab"
-                    aria-controls="nav-profile"
-                    aria-selected="false"
-                  >
-                    Curriculum
-                  </button>
+                  {/* Only show Curriculum tab if not a bundle */}
+                  {!course.is_bundle && (
+                    <button
+                      className="nav-link"
+                      id="nav-curriculum-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#nav-curriculum"
+                      type="button"
+                      role="tab"
+                      aria-controls="nav-curriculum"
+                      aria-selected="false"
+                    >
+                      Curriculum
+                    </button>
+                  )}
                   <button
                     className="nav-link"
                     id="nav-review-tab"
@@ -195,20 +198,86 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                       </ul>
                     </div>
                   )}
+
+                  {course.is_bundle &&
+                    course.bundle_courses &&
+                    course.bundle_courses.length > 0 && (
+                      <div className="tw:mt-6">
+                        <h3 className="tw:mb-4 tw:text-lg tw:font-semibold">
+                          Included Courses
+                        </h3>
+                        <div className="tw:grid tw:grid-cols-1 md:tw:grid-cols-2 tw:gap-4">
+                          {course.bundle_courses.map((bundle) => (
+                            <div
+                              key={bundle.id}
+                              className="tw:flex tw:items-center tw:bg-gray-50 tw:p-3 tw:rounded tw:shadow-sm"
+                            >
+                              <div className="tw:flex-shrink-0">
+                                <img
+                                  src={
+                                    bundle.thumbnail ??
+                                    "/assets/img/courses/cdetails.jpg"
+                                  }
+                                  alt={bundle.title}
+                                  className="tw:w-20 tw:h-20 tw:object-cover tw:rounded-md tw:border tw:border-gray-200"
+                                  style={{
+                                    minWidth: 80,
+                                    minHeight: 80,
+                                    maxWidth: 80,
+                                    maxHeight: 80,
+                                  }}
+                                  onError={(e) => {
+                                    e.currentTarget.src =
+                                      "/assets/img/courses/cdetails.jpg";
+                                  }}
+                                />
+                              </div>
+                              <div className="tw:ml-4 tw:flex-1">
+                                <a
+                                  href={`/courses/${bundle.slug}`}
+                                  className="tw:font-semibold tw:text-blue-700 hover:tw:underline tw:block tw:text-base"
+                                >
+                                  {bundle.title}
+                                </a>
+                                <div className="tw:text-xs tw:text-gray-500 tw:mt-1">
+                                  {bundle.price && (
+                                    <>
+                                      <span>৳{bundle.price}</span>
+                                      {bundle.discounted_price && (
+                                        <span className="tw:line-through tw:ml-2">
+                                          ৳{bundle.discounted_price}
+                                        </span>
+                                      )}
+                                    </>
+                                  )}
+                                </div>
+                                <div className="tw:text-xs tw:text-gray-400 tw:mt-1">
+                                  {typeof bundle.total_lessons === "number"
+                                    ? `${bundle.total_lessons} Lessons`
+                                    : ""}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                 </div>
 
-                {/* Curriculum Tab */}
-                <div
-                  className="tab-pane fade"
-                  id="nav-curriculum"
-                  role="tabpanel"
-                  aria-labelledby="nav-curriculum-tab"
-                  tabIndex={0}
-                >
-                  <div className="cd_curriculum">
-                    <CourseCurriculum course={course} />
+                {/* Curriculum Tab (only if not bundle) */}
+                {!course.is_bundle && (
+                  <div
+                    className="tab-pane fade"
+                    id="nav-curriculum"
+                    role="tabpanel"
+                    aria-labelledby="nav-curriculum-tab"
+                    tabIndex={0}
+                  >
+                    <div className="cd_curriculum">
+                      <CourseCurriculum course={course} />
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {/* Review Tab */}
                 <div
@@ -378,9 +447,17 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                   </li>
                 </ul>
                 <div className="cd_price">
-                  ৳{course?.price ?? "N/A"}{" "}
-                  {course?.discounted_price && (
-                    <span>৳{course.discounted_price}</span>
+                  {course.discounted_price ? (
+                    <>
+                      <span className="tw:line-through tw:text-gray-400 tw:mr-2">
+                        ৳{course.price}
+                      </span>
+                      <span className="tw:text-red-500">
+                        ৳{course.discounted_price}
+                      </span>
+                    </>
+                  ) : (
+                    <>৳{course.price ?? "N/A"}</>
                   )}
                 </div>
                 <div className="text-center">
