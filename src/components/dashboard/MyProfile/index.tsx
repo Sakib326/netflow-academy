@@ -7,8 +7,8 @@ const MyProfile = async () => {
 
   return (
     <>
-      <h4 className="tw:w-xl tw:mb-4">My Profile</h4>
-      <table className="tw:w-full tw:border-collapse">
+      <h4 className="tw:py-4">My Profile</h4>
+      <table className="tw:w-full tw:border-collapse tw:overflow-x-scroll">
         <tbody>
           <tr className="">
             <td className="tw:py-2 tw:font-semibold">User ID</td>

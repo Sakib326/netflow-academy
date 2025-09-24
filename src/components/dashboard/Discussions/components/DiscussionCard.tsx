@@ -28,11 +28,11 @@ const DiscussionCard = ({ thread, lineclamp = false }: Props) => {
         </div>
       </div>
       <div className=" tw:px-4">
-        <h3 className="tw:font-bold tw:text-xl tw:mt-3">{thread?.title}</h3>
+        <h3 className="tw:font-bold tw:text-base tw:md:text-xl tw:mt-3 tw:line-clamp-1">
+          {thread?.title}
+        </h3>
         <div
-          className={`${
-            lineclamp ? "tw:line-clamp-1" : ""
-          } tw:mt-4 tw:min-h-10 tw:text-slate-400 tw:pl-2`}
+          className={`tw:line-clamp-2 tw:text-sm tw:md:text-base tw:mt-4 tw:min-h-10 tw:text-slate-400 tw:pl-2`}
           dangerouslySetInnerHTML={{ __html: thread?.content ?? "" }}
         ></div>
       </div>
@@ -43,10 +43,10 @@ const DiscussionCard = ({ thread, lineclamp = false }: Props) => {
             <span>{thread?.is_question ? "Question" : "Discussion"}</span>
           </span>
 
-          <span className="tw:flex tw:items-center tw:space-x-1">
+          {/* <span className="tw:flex tw:items-center tw:space-x-1">
             <BiUpvote className="tw:text-xl" />
             <span>{thread?.upvotes}</span>
-          </span>
+          </span> */}
         </div>
 
         <MarkAnswered thread={thread} />

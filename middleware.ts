@@ -1,12 +1,14 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
+export const middleware = (request: NextRequest) => {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("token")?.value;
 
+  console.log("pathname: ", pathname);
+  console.log("token: ", token);
   // Protect all /user/** routes
-  if (pathname.startsWith("/user") && !token) {
+  if (pathname.startsWith("/dashboard") && !token) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
@@ -16,8 +18,8 @@ export function middleware(request: NextRequest) {
   }
 
   return NextResponse.next();
-}
+};
 
 export const config = {
-  matcher: ["/user/:path*"],
+  matcher: ["/dashboard", "/dashboard/:path*"],
 };

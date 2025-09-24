@@ -47,29 +47,6 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                     e.currentTarget.src = "/assets/img/courses/cdetails.jpg";
                   }}
                 />
-
-                {/* If video exists, show overlay and play button */}
-                {/* {course?.thumb_video_url && (
-                  <>
-                    <div className="tw:absolute tw:inset-0 tw:bg-black tw:bg-opacity-30 tw:rounded-xl tw:pointer-events-none tw:transition-opacity hover:tw:bg-opacity-40"></div>
-                    <button
-                      onClick={() => setIsVideoOpen(true)}
-                      className="tw:absolute tw:inset-0 tw:flex tw:items-center tw:justify-center tw:group focus:tw:outline-none focus:tw:ring-4 focus:tw:ring-blue-500/50 tw:rounded-xl tw:transition-all tw:duration-200"
-                      aria-label="Play course video"
-                      type="button"
-                    >
-                      <span className="tw:bg-white/90 tw:rounded-full tw:p-4 tw:flex tw:items-center tw:justify-center tw:transition-all tw:duration-200 tw:shadow-lg group-hover:tw:bg-white group-hover:tw:scale-110 group-hover:tw:shadow-xl">
-                        <svg
-                          className="tw:w-8 tw:h-8 tw:text-gray-800 tw:ml-1"
-                          fill="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </span>
-                    </button>
-                  </>
-                )} */}
               </div>
 
               <div className="scourse_meta">

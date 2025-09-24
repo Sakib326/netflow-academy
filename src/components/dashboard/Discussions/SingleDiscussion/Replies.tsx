@@ -24,9 +24,10 @@ const Replies = ({ replies }: Props) => {
                 className="tw:w-8 tw:h-8 tw:rounded-full tw:border tw:border-gray-200"
               />
 
-              <h4 className="tw:m-0 tw:text-sm tw:flex tw:font-normal tw:items-center tw:gap-[2px]">
-                {reply.user.name} <LuDot className="tw:text-sm" />
-                {moment(reply.created_at).fromNow()}
+              <h4 className="tw:m-0 tw:text-sm tw:flex tw:flex-col tw:sm:flex-row tw:font-normal tw:items-center tw:gap-[2px]">
+                <span>{reply.user.name}</span>
+                <LuDot className="tw:text-sm  tw:hidden tw:sm:inline-block" />
+                <span>{moment(reply.created_at).fromNow()}</span>
               </h4>
             </div>
             <div

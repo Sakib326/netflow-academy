@@ -22,13 +22,17 @@ type DiscId = {
 
 export const discussionApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getDiscussions: builder.query<PaginatedResponse<Discussion>, CourseId>({
-      query: ({ courseId }) => ({
-        url: `/courses/${courseId}/discussions`,
+    getDiscussions: builder.query<
+      PaginatedResponse<Discussion>,
+      { courseId: number; page?: number }
+    >({
+      query: ({ courseId, page = 1 }) => ({
+        url: `/courses/${courseId}/discussions?page=${page}`,
         method: "GET",
       }),
       providesTags: ["Discussions"],
     }),
+
     createDiscussion: builder.mutation<Discussion, CreateDiscussionRequest>({
       query: ({ courseId, ...body }) => ({
         url: `/courses/${courseId}/discussions`,
@@ -51,7 +55,7 @@ export const discussionApi = apiSlice.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["Discussions", "Discussion"],
+      invalidatesTags: ["Discussion"],
     }),
 
     createUpvote: builder.mutation({
@@ -59,7 +63,7 @@ export const discussionApi = apiSlice.injectEndpoints({
         url: `/discussions/${discId}/upvote`,
         method: "POST",
       }),
-      invalidatesTags: ["Discussions", "Discussion"],
+      invalidatesTags: ["Discussion"],
     }),
 
     markAnswered: builder.mutation({
@@ -67,13 +71,14 @@ export const discussionApi = apiSlice.injectEndpoints({
         url: `/discussions/${discId}/mark-answered`,
         method: "POST",
       }),
-      invalidatesTags: ["Discussions", "Discussion"],
+      invalidatesTags: ["Discussion"],
     }),
   }),
 });
 
 export const {
   useGetDiscussionsQuery,
+  useLazyGetDiscussionsQuery,
   useCreateDiscussionMutation,
   useGetDiscussionQuery,
   useCreateReplyMutation,

@@ -78,26 +78,22 @@ const Setting = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="tw:w-full tw:max-w-3xl tw:flex tw:flex-col tw:gap-6"
+      className="tw:w-full tw:max-w-3xl tw:flex tw:flex-col tw:gap-3"
     >
-      {/* Cover Photo */}
-      <div
-        className="tw:relative tw:h-[245px] tw:rounded-lg tw:bg-cover tw:bg-center"
-        style={{ backgroundImage: "url('/assets/img/bg/cover-photo.jpg')" }}
-      >
-        {/* Avatar */}
-        <div className="tw:absolute tw:left-10 tw:-bottom-10 tw:w-[160px] tw:h-[160px] tw:p-1 tw:bg-white tw:rounded-full tw:flex tw:items-center tw:justify-center tw:shadow-lg">
+      <div className="tw:flex tw:justify-center">
+        <div className="tw:border tw:relative tw:border-gray-200 tw:w-36 tw:h-36 tw:rounded-full tw:overflow-hidden">
           <img
             src={preview || "/assets/img/default-avatar.jpg"}
             alt={user?.name}
             className="tw:w-full tw:h-full tw:rounded-full tw:object-cover"
           />
-          <fieldset className="tw:absolute tw:bottom-0 tw:right-0 tw:bg-[#359093] tw:w-10 tw:h-10 tw:rounded-full tw:flex tw:items-center tw:justify-center tw:cursor-pointer tw:text-white tw:shadow-md hover:tw:bg-[#2a6c74]">
+          <fieldset className="">
             <label
               htmlFor="avatar"
-              className="tw-flex tw-items-center tw-justify-center tw-w-full tw-h-full"
+              // className="tw-flex tw-items-center tw-justify-center tw-w-full"
+              className="tw:absolute tw:bottom-0 tw:bg-[#359093] tw:opacity-80 tw:overflow-hidden tw:w-full tw:py-4 tw:flex tw:items-center tw:justify-center tw:cursor-pointer tw:text-white tw:shadow-md hover:tw:bg-[#2a6c74]"
             >
-              <FaCamera className="tw-w-5 tw-h-5" />
+              <FaCamera className="tw:text-xl" />
             </label>
             <input
               type="file"
@@ -112,7 +108,7 @@ const Setting = () => {
       </div>
 
       {/* User Info */}
-      <div className="tw:mt-20 tw:px-10 tw:py-6 tw:bg-white tw:rounded-lg tw:shadow-md tw:flex tw:flex-col tw:gap-4">
+      <div className=" tw:px-10 tw:py-6 tw:bg-white tw:rounded-lg tw:shadow-md tw:flex tw:flex-col tw:gap-4">
         <div className="tw:flex tw:flex-col">
           <label
             htmlFor="name"

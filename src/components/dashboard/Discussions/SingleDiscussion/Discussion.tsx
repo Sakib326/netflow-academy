@@ -21,6 +21,7 @@ type Props = {
 const Discussion = ({ thread }: Props) => {
   const [markAnswered] = useMarkAnsweredMutation();
   const user = useSelector((state: RootState) => state.auth.user);
+
   return (
     <div className="tw:border tw:border-gray-200 tw:rounded-lg tw:bg-white">
       <div className="tw:flex tw:items-center tw:gap-2 tw:mb-3 tw:px-4 tw:pt-4">
@@ -51,11 +52,11 @@ const Discussion = ({ thread }: Props) => {
             {thread?.is_question ? <FaQuestion /> : <FaRegCommentAlt />}
             <span>{thread?.is_question ? "Question" : "Discussion"}</span>
           </span>
-          <UpVotes thread={thread} />
+          {/* <UpVotes thread={thread} /> */}
         </div>
 
         <div className="tw:flex tw:items-center tw:gap-3">
-          {user?.role !== "student" &&
+          {thread?.user.id === user?.id &&
             thread?.is_question &&
             !thread?.is_answered && (
               <span className="tw:flex tw:items-center tw:space-x-1">
@@ -64,7 +65,7 @@ const Discussion = ({ thread }: Props) => {
               </span>
             )}
 
-          {user?.role !== "student" && thread?.is_question && (
+          {thread?.user.id === user?.id && thread?.is_question && (
             <button
               onClick={() => markAnswered({ discId: thread.id })}
               className="tw:flex tw:items-center tw:space-x-1 tw-text-blue-600 hover:tw:underline"

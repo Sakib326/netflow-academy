@@ -34,7 +34,7 @@ export default function InstructorsHome({ instructors }: Props) {
                     <img
                       src={instructor?.avatar || "/assets/img/instructor/1.png"}
                       alt={instructor?.name || "Instructor"}
-                      className="tw:rounded"
+                      className="tw:rounded tw:aspect-square"
                     />
                   </div>
 

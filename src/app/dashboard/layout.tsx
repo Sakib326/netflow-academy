@@ -1,3 +1,4 @@
+import BottomBar from "@/components/dashboard/Discussions/BottomBar";
 import Header from "@/components/dashboard/Header";
 import Sidebar from "@/components/dashboard/Sidebar";
 import { cookies } from "next/headers";
@@ -15,11 +16,14 @@ const DashboardLayout = async ({ children }: Props) => {
   }
 
   return (
-    <div className="container">
+    <div className="container tw:top-0">
       <Header />
-      <div className="tw:grid tw:grid-cols-[220px_1fr] md:tw:grid-cols-[300px_1fr]">
+      <div className="tw:grid tw:grid-cols-1 tw:md:grid-cols-[220px_1fr]">
         <Sidebar />
-        <div className="tw:p-6 tw:pr-0">{children}</div>
+        <div className="tw:md:p-6 tw:pr-0 tw:md:overflow-y-auto tw:md:h-[80vh]">
+          {children}
+        </div>
+        <BottomBar />
       </div>
     </div>
   );

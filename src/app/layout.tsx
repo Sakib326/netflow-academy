@@ -22,14 +22,21 @@ type Props = {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="en">
-      <body>
+    <html
+      lang="en"
+      className="tw:overflow-x-hidden tw:m-0 tw:p-0"
+      style={{ padding: 0, margin: 0, overflowX: "hidden" }}
+    >
+      <body
+        className="tw:overflow-x-hidden tw:m-0 tw:p-0"
+        style={{ overflowX: "hidden" }}
+      >
         <StoreProvider>
           <Header />
           {children}
-          <Footer />
           <Toaster position="top-right" />
-          <ScrollToTop />
+          <Footer />
+          {/* <ScrollToTop /> */}
           <ScrollTop />
         </StoreProvider>
       </body>

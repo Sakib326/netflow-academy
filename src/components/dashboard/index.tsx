@@ -11,8 +11,8 @@ const Dashboard = () => {
 
   return (
     <>
-      <h4 className="tw:w-xl tw:mb-4">Dashboard</h4>
-      <div className="tw:grid tw:grid-cols-3 tw:gap-6">
+      <h4 className="tw:py-4">Dashboard</h4>
+      <div className="tw:grid tw:grid-cols-1 tw:md:grid-cols-3 tw:gap-6 tw:py-3">
         <div className="tw:border tw:border-gray-200 tw:rounded tw:p-4 tw:flex tw:flex-col tw:justify-center tw:items-center tw:gap-2">
           <FaBookOpen className="tw:text-4xl tw:text-[#348f92]" />
           <span className="tw:text-3xl tw:font-bold">

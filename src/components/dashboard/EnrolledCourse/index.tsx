@@ -35,7 +35,9 @@ const EnrolledCourse = () => {
   return (
     <div className="tw:max-w-4xl">
       <div className="tw:flex tw:items-center tw:justify-between tw:mb-6">
-        <h4 className="tw:text-xl tw:font-bold tw:text-gray-900">My Courses</h4>
+        <h4 className="tw:text-xl tw:py-3 tw:font-bold tw:text-gray-900">
+          My Courses
+        </h4>
         {data && (
           <span className="tw:text-sm tw:text-gray-500">
             {data.data.length} course{data.data.length !== 1 ? "s" : ""}

@@ -12,15 +12,6 @@ type Props = {
 
 const SingleDiscussion = ({ discId }: Props) => {
   const { data: discussion, isFetching } = useGetDiscussionQuery({ discId });
-
-  if (isFetching) {
-    return (
-      <div className="tw:flex tw:items-center tw:justify-center tw:h-40">
-        <div className="tw:w-8 tw:h-8 tw:border-4 tw:border-orange-600 tw:border-t-transparent tw:rounded-full tw:animate-spin"></div>
-      </div>
-    );
-  }
-
   const { thread, replies } = discussion ?? {};
 
   return (
