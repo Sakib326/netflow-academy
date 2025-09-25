@@ -17,6 +17,7 @@
     "axios": "^1.11.0",
     "bootstrap": "^5.3.3",
     "formik": "^2.4.6",
+    "framer-motion": "^12.23.22",
     "js-cookie": "^3.0.5",
     "media-chrome": "^4.13.0",
     "moment": "^2.30.1",
