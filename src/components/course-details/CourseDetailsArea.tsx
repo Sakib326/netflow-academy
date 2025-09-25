@@ -3,6 +3,7 @@ import VideoPopup from "../../modals/VideoPopup";
 import { SingleCourse } from "@/types/course";
 import Link from "next/link";
 import CourseCurriculum from "./components/CourseCurriculum";
+import { useRouter } from "next/navigation";
 
 interface CourseDetailsAreaProps {
   course: SingleCourse;
@@ -10,6 +11,8 @@ interface CourseDetailsAreaProps {
 
 export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -22,6 +25,40 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
   const category = course?.category ?? {};
   const rating_distribution = course?.rating_distribution ?? [];
   const recent_reviews = course?.recent_reviews ?? [];
+
+  // Simple auth check (replace with your actual logic)
+  const isLoggedIn = () => {
+    if (typeof window === "undefined") return false;
+    return !!localStorage.getItem("token");
+  };
+
+  // Buy Now handler
+  const handleBuyNow = async () => {
+    if (!isLoggedIn()) {
+      router.push("/login");
+      return;
+    }
+    const notes = window.prompt("Any special request? (optional)", "");
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/orders/create/${course.slug}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ notes }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert("Order placed! Order Number: " + data.order_number);
+        router.push("/orders/" + data.order_number);
+      } else {
+        alert(data.message || "Could not place order.");
+      }
+    } catch (e) {
+      alert("Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -219,7 +256,7 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                                     "/assets/img/courses/cdetails.jpg"
                                   }
                                   alt={bundle.title}
-                                  className="tw:w-20 tw:h-20 tw:object-cover tw:rounded-md tw:border tw:border-gray-200"
+                                  className="tw:w-20 tw:h-20 tw-object-cover tw:rounded-md tw-border tw-border-gray-200"
                                   style={{
                                     minWidth: 80,
                                     minHeight: 80,
@@ -235,7 +272,7 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                               <div className="tw:ml-4 tw:flex-1">
                                 <a
                                   href={`/courses/${bundle.slug}`}
-                                  className="tw:font-semibold tw:text-blue-700 hover:tw:underline tw:block tw:text-base"
+                                  className="tw:font-semibold tw:text-blue-700 hover:tw-underline tw:block tw:text-base"
                                 >
                                   {bundle.title}
                                 </a>
@@ -449,10 +486,10 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                 <div className="cd_price">
                   {course.discounted_price ? (
                     <>
-                      <span className="tw:line-through tw:text-gray-400 tw:mr-2">
+                      <span className="tw-line-through tw:text-gray-400 tw-mr-2">
                         ৳{course.price}
                       </span>
-                      <span className="tw:text-red-500">
+                      <span className="tw-text-red-500">
                         ৳{course.discounted_price}
                       </span>
                     </>
@@ -461,9 +498,13 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                   )}
                 </div>
                 <div className="text-center">
-                  <a href="#" className="bg_btn bt">
-                    Buy Course
-                  </a>
+                  <button
+                    className="bg_btn bt"
+                    onClick={handleBuyNow}
+                    disabled={loading}
+                  >
+                    {loading ? "Processing..." : "Buy Course"}
+                  </button>
                 </div>
               </div>
             </div>
