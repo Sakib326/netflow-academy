@@ -7,6 +7,7 @@ import {
   MdSettings,
   MdLogout,
   MdQuestionAnswer,
+  MdCardTravel,
 } from "react-icons/md";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -25,6 +26,11 @@ const Sidebar = () => {
       href: "/dashboard/enrolled-courses",
       label: "Enrolled Courses",
       icon: <MdLibraryBooks />,
+    },
+    {
+      href: "/dashboard/orders",
+      label: "Orders",
+      icon: <MdCardTravel />,
     },
     {
       href: "/dashboard/discussions",

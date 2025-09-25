@@ -1,9 +1,12 @@
+"use client";
 import { useEffect, useState } from "react";
 import VideoPopup from "../../modals/VideoPopup";
 import { SingleCourse } from "@/types/course";
 import Link from "next/link";
 import CourseCurriculum from "./components/CourseCurriculum";
 import { useRouter } from "next/navigation";
+import Modal from "react-modal";
+import { useCreateOrderMutation } from "@/redux/orders/orderApi";
 
 interface CourseDetailsAreaProps {
   course: SingleCourse;
@@ -12,7 +15,10 @@ interface CourseDetailsAreaProps {
 export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
   const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [note, setNote] = useState("");
   const router = useRouter();
+  const [createOrder] = useCreateOrderMutation();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -33,30 +39,34 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
   };
 
   // Buy Now handler
-  const handleBuyNow = async () => {
-    if (!isLoggedIn()) {
-      router.push("/login");
-      return;
-    }
-    const notes = window.prompt("Any special request? (optional)", "");
+  const handleBuyNow = () => {
+    // if (!isLoggedIn()) {
+    //   router.push("/login");
+    //   return;
+    // }
+    setModalOpen(true);
+  };
+
+  const handleOrderSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch(`/api/orders/create/${course.slug}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ notes }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        alert("Order placed! Order Number: " + data.order_number);
-        router.push("/orders/" + data.order_number);
+      const res: any = await createOrder({
+        slug: course.slug!,
+        notes: note,
+      }).unwrap();
+      if (res.success) {
+        setModalOpen(false);
+        alert("Order placed! Order Number: " + res.order_number);
+        router.push("/orders/" + res.order_number);
       } else {
-        alert(data.message || "Could not place order.");
+        alert(res.message || "Could not place order.");
       }
-    } catch (e) {
-      alert("Something went wrong.");
+    } catch (err: any) {
+      alert(err?.data?.message || "Something went wrong.");
     } finally {
       setLoading(false);
+      setNote("");
     }
   };
 
@@ -70,8 +80,48 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
       />
       {/* video modal end */}
 
+      {/* Buy Now Modal */}
+
       <section className="courses-details section-padding">
         <div className="container">
+          <Modal
+            isOpen={modalOpen}
+            onRequestClose={() => setModalOpen(false)}
+            ariaHideApp={false}
+            className="tw:bg-white tw:rounded tw:p-6 tw:max-w-md tw:mx-auto tw:mt-32 tw:shadow-lg"
+            overlayClassName="tw:fixed tw:inset-0 tw:bg-black tw:bg-opacity-10 tw:flex tw:items-center tw:justify-center"
+          >
+            <form onSubmit={handleOrderSubmit}>
+              <h2 className="tw:text-lg tw:font-semibold tw:mb-4">
+                Special Request (optional)
+              </h2>
+              <textarea
+                className="tw:w-full tw:border tw:rounded tw:p-2 tw:mb-4"
+                rows={3}
+                placeholder="Any special request?"
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                disabled={loading}
+              />
+              <div className="tw:flex tw:justify-end tw:gap-2">
+                <button
+                  type="button"
+                  className="tw:bg-gray-200 tw:px-4 tw:py-2 tw:rounded"
+                  onClick={() => setModalOpen(false)}
+                  disabled={loading}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="tw:bg-blue-600 tw:text-white tw:px-4 tw:py-2 tw:rounded"
+                  disabled={loading}
+                >
+                  {loading ? "Processing..." : "Place Order"}
+                </button>
+              </div>
+            </form>
+          </Modal>
           <div className="row">
             <div className="col-xl-8 wow fadeIn">
               <div className="tw:relative tw:w-full tw:mb-6">
@@ -256,7 +306,7 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                                     "/assets/img/courses/cdetails.jpg"
                                   }
                                   alt={bundle.title}
-                                  className="tw:w-20 tw:h-20 tw-object-cover tw:rounded-md tw-border tw-border-gray-200"
+                                  className="tw:w-20 tw:h-20 tw:object-cover tw:rounded-md tw:border tw:border-gray-200"
                                   style={{
                                     minWidth: 80,
                                     minHeight: 80,
@@ -272,7 +322,7 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                               <div className="tw:ml-4 tw:flex-1">
                                 <a
                                   href={`/courses/${bundle.slug}`}
-                                  className="tw:font-semibold tw:text-blue-700 hover:tw-underline tw:block tw:text-base"
+                                  className="tw:font-semibold tw:text-blue-700 hover:tw:underline tw:block tw:text-base"
                                 >
                                   {bundle.title}
                                 </a>
@@ -486,10 +536,10 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                 <div className="cd_price">
                   {course.discounted_price ? (
                     <>
-                      <span className="tw-line-through tw:text-gray-400 tw-mr-2">
+                      <span className="tw:line-through tw:text-gray-400 tw:mr-2">
                         ৳{course.price}
                       </span>
-                      <span className="tw-text-red-500">
+                      <span className="tw:text-red-500">
                         ৳{course.discounted_price}
                       </span>
                     </>
@@ -506,6 +556,12 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                     {loading ? "Processing..." : "Buy Course"}
                   </button>
                 </div>
+                {/* Bundle savings in sidebar */}
+                {course.is_bundle && course.bundle_savings && (
+                  <div className="tw:mt-3 tw:text-green-600 tw:text-center">
+                    Save ৳{course.bundle_savings} on this bundle!
+                  </div>
+                )}
               </div>
             </div>
           </div>
