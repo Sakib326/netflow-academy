@@ -57,8 +57,7 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
       }).unwrap();
       if (res.success) {
         setModalOpen(false);
-        alert("Order placed! Order Number: " + res.order_number);
-        router.push("/orders/" + res.order_number);
+        router.push("/dashboard/orders/" + res.order_number);
       } else {
         alert(res.message || "Could not place order.");
       }
