@@ -74,7 +74,12 @@ export default function OrdersDashboardPage() {
                 </td>
                 <td>{order.course?.title}</td>
                 <td>{order.status}</td>
-                <td>৳{order.amount}</td>
+                <td>
+                  ৳
+                  {order.discount_amount
+                    ? order?.discount_amount
+                    : order?.amount}
+                </td>
                 <td>{new Date(order.created_at).toLocaleDateString()}</td>
                 <td>
                   {order.status === "pending" && (
