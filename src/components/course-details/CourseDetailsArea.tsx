@@ -510,14 +510,6 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                       {course?.total_lessons ?? 0}
                     </span>
                   </li>
-                  <li>
-                    <span className="cside-label">
-                      <i className="fa-solid fa-graduation-cap"></i> Student’s
-                    </span>
-                    <span className="cside-value">
-                      {course?.total_students ?? 0}
-                    </span>
-                  </li>
 
                   <li>
                     <span className="cside-label">
