@@ -59,7 +59,7 @@ export default function VideoHome() {
       <VideoPopup
         isVideoOpen={isVideoOpen}
         setIsVideoOpen={setIsVideoOpen}
-        videoUrl={"/assets/video/video-1.mp4"}
+        videoUrl={"https://youtu.be/Ewady5OXZv4?si=9sstaRf49JOytBkM"}
       />
     </>
   );
