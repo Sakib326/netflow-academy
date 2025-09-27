@@ -22,7 +22,7 @@ const HeroHome = () => {
               alt="review"
               width={1320}
               height={600}
-              className="tw:w-full tw:h-[250px] tw:sm:h-[400px] tw:md:h-[500px] tw:lg:h-[600px] tw:xl:h-[700px] tw:object-cover tw:object-center"
+              className="tw:w-full tw:h-[250px] tw:sm:h-[400px] tw:md:h-[500px] tw:lg:h-[600px] tw:object-cover tw:object-center"
             />
           </SwiperSlide>
           <SwiperSlide className="owl-item">
