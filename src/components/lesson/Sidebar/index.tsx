@@ -111,7 +111,7 @@ const LessonSidebar = () => {
   }
 
   return (
-    <aside className="tw:w-full tw:bg-white tw:shadow-lg tw:rounded-lg tw:min-h-[85vh] tw:overflow-hidden">
+    <aside className="tw:w-full tw:bg-white tw:shadow-lg tw:rounded-lg tw:max-h-[85vh] tw:overflow-y-auto">
       {/* Header */}
       <div className="tw:bg-gradient-to-r tw:from-blue-600 tw:to-indigo-600 tw:p-6 tw:text-white">
         <h2 className="tw:text-xl tw:font-bold tw:flex tw:items-center tw:gap-3">
@@ -195,13 +195,13 @@ const LessonSidebar = () => {
                 {/* Lessons List with CSS Animation */}
                 <div
                   className={`
-                  tw:transition-all tw:duration-300 tw:ease-in-out tw:overflow-hidden
-                  ${
-                    isOpen
-                      ? "tw:max-h-96 tw:opacity-100"
-                      : "tw:max-h-0 tw:opacity-0"
-                  }
-                `}
+  tw:transition-all tw:duration-300 tw:ease-in-out tw:overflow-hidden
+  ${
+    isOpen
+      ? "tw:max-h-[2000px] tw:opacity-100" // Increased from tw:max-h-96
+      : "tw:max-h-0 tw:opacity-0"
+  }
+`}
                 >
                   {section.lessons && (
                     <ul className="tw:bg-white tw:divide-y tw:divide-gray-100">
