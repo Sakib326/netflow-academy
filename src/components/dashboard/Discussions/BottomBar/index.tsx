@@ -6,6 +6,8 @@ import {
   MdLibraryBooks,
   MdSettings,
   MdLogout,
+  MdCardTravel,
+  MdQuestionAnswer,
 } from "react-icons/md";
 import { RiDiscussLine } from "react-icons/ri";
 import Link from "next/link";
@@ -21,6 +23,16 @@ const BottomBar = () => {
   const links = [
     { href: "/dashboard", icon: <MdSpaceDashboard />, label: "Dashboard" },
     { href: "/dashboard/my-profile", icon: <MdPerson />, label: "Profile" },
+    {
+      href: "/dashboard/orders",
+      icon: <MdCardTravel />,
+      label: "Orders",
+    },
+    {
+      href: "/dashboard/live-support",
+      icon: <MdQuestionAnswer />,
+      label: "Live Support",
+    },
     {
       href: "/dashboard/enrolled-courses",
       icon: <MdLibraryBooks />,
