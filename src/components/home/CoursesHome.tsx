@@ -123,31 +123,6 @@ export default function CoursesHome({ courses }: Props) {
                             <i className="bx bx-file"></i>
                             {course?.total_lessons} Lessons
                           </div>
-                        </div>
-
-                        <div className="course_btm">
-                          <div className="cauthor">
-                            <a href="#">
-                              <img
-                                src={
-                                  course?.instructor?.avatar ||
-                                  "/assets/img/instructor/1.png"
-                                }
-                                alt={course?.instructor?.name || "Instructor"}
-                                onError={(
-                                  e: React.SyntheticEvent<HTMLImageElement>
-                                ) => {
-                                  e.currentTarget.onerror = null; // prevent infinite loop
-                                  e.currentTarget.src =
-                                    "/assets/img/instructor/1.png";
-                                }}
-                              />
-                              <span>
-                                {course?.instructor?.name || "Instructor"}
-                              </span>
-                            </a>
-                          </div>
-
                           <div className="ccategory">
                             <Link href={`/courses/${course?.category?.slug}`}>
                               {course?.category?.name}

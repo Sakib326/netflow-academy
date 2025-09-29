@@ -75,32 +75,12 @@ export default function CoursesArea({ courses, pagination }: CoursesAreaProps) {
 
                       {/* Meta */}
                       <div className="cmeta">
-                        <div className="smeta">
-                          <i className="bx bx-user"></i>
-                          {course.total_students} Students
+                        <div className="ccategory">
+                          <a href="#">{course.category.name}</a>
                         </div>
                         <div className="smeta">
                           <i className="bx bx-file"></i>
                           {course.total_lessons} Lessons
-                        </div>
-                      </div>
-
-                      {/* Bottom (always sticks at bottom) */}
-                      <div className="course_btm tw:mt-auto">
-                        <div className="cauthor">
-                          <a href="#">
-                            <img
-                              src={
-                                course.instructor.avatar ??
-                                "/assets/img/review/default.jpg"
-                              }
-                              alt=""
-                            />
-                            <span>{course.instructor.name}</span>
-                          </a>
-                        </div>
-                        <div className="ccategory">
-                          <a href="#">{course.category.name}</a>
                         </div>
                       </div>
                     </div>

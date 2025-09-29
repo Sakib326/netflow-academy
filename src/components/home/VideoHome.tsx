@@ -1,66 +1,89 @@
 "use client";
 
-import { useState } from "react";
-import VideoPopup from "../../modals/VideoPopup";
+import { useRef, useEffect, useState } from "react";
+import YouTube from "react-youtube";
+import type { YouTubePlayer } from "react-youtube";
 
 export default function VideoHome() {
-  const [isVideoOpen, setIsVideoOpen] = useState<boolean>(false);
+  const playerRef = useRef<YouTubePlayer | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => setIsClient(true), []);
+
+  useEffect(() => {
+    if (!isClient || !containerRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // If the player is ready and in the viewport, play it.
+        if (entry.isIntersecting) {
+          playerRef.current?.playVideo();
+        } else {
+          // If it's not in the viewport, pause it to save resources.
+          playerRef.current?.pauseVideo();
+        }
+      },
+      {
+        // Trigger when 50% of the video is visible
+        threshold: 0.5,
+      }
+    );
+
+    const currentContainer = containerRef.current;
+    observer.observe(currentContainer);
+
+    return () => {
+      if (currentContainer) {
+        observer.unobserve(currentContainer);
+      }
+    };
+  }, [isClient]);
+
+  const onReady = (event: { target: YouTubePlayer }) => {
+    // Store the player instance so we can control it
+    playerRef.current = event.target;
+  };
 
   return (
-    <>
-      <section className="container pb170 wow fadeIn">
-        <div className="row">
-          <div className="col-xl-10 mx-auto">
-            <div className="video-area">
-              <img src="assets/img/bg/video.png" alt="video" />
-              <a
-                onClick={() => setIsVideoOpen(true)}
-                style={{ cursor: "pointer" }}
-                className="vbtn"
-              >
-                <svg
-                  id="play_icon"
-                  viewBox="0 0 163 163"
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlnsXlink="http://www.w3.org/1999/xlink"
-                  x="0px"
-                  y="0px"
-                >
-                  <g fill="none">
-                    <g
-                      transform="translate(2.000000, 2.000000)"
-                      strokeWidth="4"
-                    >
-                      <path
-                        d="M10,80 C10,118.107648 40.8923523,149 79,149 L79,149 C117.107648,149 148,118.107648 148,80 C148,41.8923523 117.107648,11 79,11"
-                        id="lineOne"
-                        stroke="#A5CB43"
-                      ></path>
-                      <path
-                        d="M105.9,74.4158594 L67.2,44.2158594 C63.5,41.3158594 58,43.9158594 58,48.7158594 L58,109.015859 C58,113.715859 63.4,116.415859 67.2,113.515859 L105.9,83.3158594 C108.8,81.1158594 108.8,76.6158594 105.9,74.4158594 L105.9,74.4158594 Z"
-                        id="triangle"
-                        stroke="#A3CD3A"
-                      ></path>
-                      <path
-                        d="M159,79.5 C159,35.5933624 123.406638,0 79.5,0 C35.5933624,0 0,35.5933624 0,79.5 C0,123.406638 35.5933624,159 79.5,159 L79.5,159"
-                        id="lineTwo"
-                        stroke="#A5CB43"
-                      ></path>
-                    </g>
-                  </g>
-                </svg>
-              </a>
-            </div>
-          </div>
+    <section className="tw:container tw:mx-auto tw:pb-20 tw:px-4">
+      <div className="tw:max-w-4xl tw:mx-auto">
+        <div
+          ref={containerRef}
+          className="tw:relative tw:w-full tw:aspect-video tw:rounded-lg tw:overflow-hidden tw:shadow-2xl tw:bg-black"
+        >
+          {isClient && (
+            <YouTube
+              videoId="Ewady5OXZv4"
+              onReady={onReady}
+              opts={{
+                width: "100%",
+                height: "100%",
+                playerVars: {
+                  // Set to 0 because we control playback with the observer
+                  autoplay: 0,
+                  // Mute is required for autoplay to work in modern browsers
+                  mute: 1,
+                  controls: 1,
+                  rel: 0,
+                  modestbranding: 1,
+                },
+              }}
+              className="tw:w-full tw:h-full"
+            />
+          )}
         </div>
-      </section>
 
-      <VideoPopup
-        isVideoOpen={isVideoOpen}
-        setIsVideoOpen={setIsVideoOpen}
-        videoUrl={"https://youtu.be/Ewady5OXZv4?si=9sstaRf49JOytBkM"}
-      />
-    </>
+        <div className="tw:mt-6 tw:text-center">
+          <h3 className="tw:text-2xl tw:font-bold tw:text-gray-800 tw:mb-2">
+            Welcome to NetFlow Academy
+          </h3>
+          <p className="tw:text-gray-600 tw:max-w-2xl tw:mx-auto">
+            Discover our comprehensive courses and start your learning journey
+            today.
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }
