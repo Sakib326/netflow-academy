@@ -28,6 +28,11 @@ const Sidebar = () => {
       icon: <MdLibraryBooks />,
     },
     {
+      href: "/dashboard/live-support",
+      label: "Live Support",
+      icon: <MdQuestionAnswer />,
+    },
+    {
       href: "/dashboard/orders",
       label: "Orders",
       icon: <MdCardTravel />,
