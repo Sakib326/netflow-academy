@@ -5,22 +5,6 @@ import Link from "next/link";
 import React from "react";
 import { FaCheckCircle, FaClock, FaPaperPlane } from "react-icons/fa";
 
-// const resultData = {
-//   id: 1,
-//   exam_id: 1,
-//   batch_id: 1,
-//   user_id: 3,
-//   content: [{}],
-//   total_time_taken: 25,
-//   score: 3,
-//   max_score: 3,
-//   percentage: 100,
-//   status: "graded",
-//   started_at: "2025-10-08T15:37:35.933Z",
-//   submitted_at: "2025-10-08T15:37:35.933Z",
-//   graded_at: "2025-10-08T15:37:35.933Z",
-// };
-
 type Props = {
   params: {
     slug: string;
@@ -103,7 +87,7 @@ const ResultPage = ({ params }: Props) => {
       </div>
       <div className="tw:flex tw:gap-4">
         <Link
-          href={`/courses/digital-marketing-mavericks-pro/exams/1/result/details`}
+          href={`/courses/digital-marketing-mavericks-pro/exams/${params?.exam}/result/details`}
           className="tw:bg-[#2957FB] tw:text-white tw:px-4 tw:py-2 tw:rounded hover:tw:bg-blue-600"
         >
           View Details
