@@ -1,0 +1,83 @@
+{
+  "id": 1,
+  "batch_id": 1,
+  "course_id": 1,
+  "title": "PHP Basics MCQ Exam",
+  "description": "An exam to test fundamental PHP knowledge.",
+  "content": [
+    {
+      "question": "What does PHP stand for?",
+      "options": [
+        "Personal Home Page",
+        "Private Hypertext Processor",
+        "PHP: Hypertext Preprocessor",
+        "Public Hosting Project"
+      ],
+      "answer": 2
+    },
+    {
+      "question": "Which symbol is used to start a PHP variable?",
+      "options": ["#", "$", "&", "%"],
+      "answer": 1
+    },
+    {
+      "question": "Which function is used to output data in PHP?",
+      "options": ["echo()", "print()", "Both echo() and print()", "write()"],
+      "answer": 2
+    },
+    {
+      "question": "Which of the following is a correct way to create a comment in PHP?",
+      "options": [
+        "// This is a comment",
+        "# This is a comment",
+        "/* This is a comment */",
+        "All of the above"
+      ],
+      "answer": 3
+    },
+    {
+      "question": "What is the correct way to include another PHP file?",
+      "options": [
+        "import 'file.php';",
+        "require 'file.php';",
+        "include 'file.php';",
+        "Both require and include"
+      ],
+      "answer": 3
+    },
+    {
+      "question": "Which superglobal is used to collect form data with GET method?",
+      "options": ["$_GET", "$_POST", "$_REQUEST", "$_FORM"],
+      "answer": 0
+    },
+    {
+      "question": "Which function is used to start a session in PHP?",
+      "options": [
+        "session_start()",
+        "start_session()",
+        "init_session()",
+        "create_session()"
+      ],
+      "answer": 0
+    },
+    {
+      "question": "Which operator is used for concatenation in PHP?",
+      "options": ["+", "&", ".", "concat()"],
+      "answer": 2
+    },
+    {
+      "question": "What will `strlen('PHP')` return?",
+      "options": ["2", "3", "4", "Error"],
+      "answer": 1
+    },
+    {
+      "question": "Which keyword is used to define a constant in PHP?",
+      "options": ["define", "const", "fixed", "Both define and const"],
+      "answer": 3
+    }
+  ],
+  "total_time": 30,
+  "status": "active",
+  "created_at": "2025-10-08T14:16:02.246Z",
+  "updated_at": "2025-10-08T14:16:02.246Z"
+}

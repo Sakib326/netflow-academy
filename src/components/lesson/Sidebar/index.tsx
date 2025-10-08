@@ -13,6 +13,8 @@ import { FiChevronDown, FiChevronRight } from "react-icons/fi";
 import Link from "next/link";
 import { useGetModulesByCourseSlugQuery } from "@/redux/lesson/lessonApi";
 import type { Module, Lesson } from "@/types/moduleLessons";
+import { useGetExamsByCourseAndBatchQuery } from "@/redux/exam/examApi";
+import Exam from "./Exam";
 
 const LessonSidebar = () => {
   const router = useRouter();
@@ -21,12 +23,21 @@ const LessonSidebar = () => {
 
   const courseSlug = params.slug as string;
 
-  console.log("Current Lesson Slug:", currentLessonSlug);
-
   const { data, isLoading, isError } =
     useGetModulesByCourseSlugQuery(courseSlug);
   const modules: Module[] = data?.modules ?? [];
   const [openSections, setOpenSections] = useState<number[]>([]);
+
+  const examSlug = {
+    course_id: 2,
+    batch_id: 1,
+  };
+  const {
+    data: examData,
+    isLoading: examsLoading,
+    isError: examsError,
+  } = useGetExamsByCourseAndBatchQuery(examSlug);
+  const exams = examData?.exams ?? [];
 
   // Auto-expand section containing current lesson and validate lesson slug
   useEffect(() => {
@@ -195,13 +206,13 @@ const LessonSidebar = () => {
                 {/* Lessons List with CSS Animation */}
                 <div
                   className={`
-  tw:transition-all tw:duration-300 tw:ease-in-out tw:overflow-hidden
-  ${
-    isOpen
-      ? "tw:max-h-[2000px] tw:opacity-100" // Increased from tw:max-h-96
-      : "tw:max-h-0 tw:opacity-0"
-  }
-`}
+                    tw:transition-all tw:duration-300 tw:ease-in-out tw:overflow-hidden
+                    ${
+                      isOpen
+                        ? "tw:max-h-[2000px] tw:opacity-100" // Increased from tw:max-h-96
+                        : "tw:max-h-0 tw:opacity-0"
+                    }
+                  `}
                 >
                   {section.lessons && (
                     <ul className="tw:bg-white tw:divide-y tw:divide-gray-100">
@@ -264,6 +275,8 @@ const LessonSidebar = () => {
           })}
         </ul>
       </div>
+
+      <Exam />
     </aside>
   );
 };

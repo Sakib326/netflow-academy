@@ -1,0 +1,62 @@
+{
+  "course_id": 1,
+  "batch_id": 1,
+  "batch_name": "Batch A",
+  "exams": [
+    {
+      "id": 1,
+      "title": "PHP Basics MCQ Exam",
+      "description": "An exam to test fundamental PHP knowledge.",
+      "total_time": 30,
+      "status": "active",
+      "total_questions": 3,
+      "has_attempted": false,
+      "is_attended": true,
+      "created_at": "2025-10-08T14:01:15.658Z"
+    },
+    {
+      "id": 2,
+      "title": "JavaScript Fundamentals Quiz",
+      "description": "Covers core JavaScript syntax, DOM, and ES6 basics.",
+      "total_time": 40,
+      "status": "active",
+      "total_questions": 5,
+      "has_attempted": true,
+      "is_attended": true,
+      "created_at": "2025-10-08T15:12:20.102Z"
+    },
+    {
+      "id": 3,
+      "title": "Laravel Framework Test",
+      "description": "Assess your understanding of Laravel MVC and routing.",
+      "total_time": 45,
+      "status": "inactive",
+      "total_questions": 4,
+      "has_attempted": false,
+      "is_attended": false,
+      "created_at": "2025-10-07T11:05:30.658Z"
+    },
+    {
+      "id": 4,
+      "title": "React Components Assessment",
+      "description": "Exam on React components, hooks, and state management.",
+      "total_time": 35,
+      "status": "active",
+      "total_questions": 6,
+      "has_attempted": false,
+      "is_attended": true,
+      "created_at": "2025-10-06T09:42:55.231Z"
+    },
+    {
+      "id": 5,
+      "title": "MySQL Database Quiz",
+      "description": "Test your knowledge of SQL queries and database design.",
+      "total_time": 25,
+      "status": "completed",
+      "total_questions": 5,
+      "has_attempted": true,
+      "is_attended": true,
+      "created_at": "2025-10-05T12:10:45.852Z"
+    }
+  ]
+}
