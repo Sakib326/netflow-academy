@@ -140,11 +140,10 @@ const ExamPage = ({ params }: Props) => {
   const currentQuestion = examData.content[currentQuestionIndex];
   const isLast = currentQuestionIndex === examData.content.length - 1;
 
-  // Your existing design below 👇 (unchanged)
   return (
     <div className="tw:p-6 tw:max-w-4xl tw:mx-auto tw:shadow-lg tw:my-6 tw:bg-white tw:rounded-lg">
       {/* Header */}
-      <div className="tw:flex tw:justify-between tw:items-center tw:mb-6 tw:pb-4 tw:border-b">
+      <div className="tw:flex tw:justify-between tw:items-center tw:mb-6 tw:pb-4 tw:border-b tw:border-gray-200">
         <div>
           <h1 className="tw:text-2xl tw:font-bold tw:text-gray-800">
             {examData.title}
@@ -154,8 +153,8 @@ const ExamPage = ({ params }: Props) => {
           </p>
         </div>
 
-        <div className="tw:bg-red-500 tw:text-white tw:px-4 tw:py-2 tw:rounded-lg tw:font-semibold">
-          <div className="tw:text-sm">Time Remaining</div>
+        <div className="tw:bg-red-600 tw:text-white tw:px-2 tw:py-2 tw:rounded tw:font-semibold tw:grid tw:grid-cols-2 tw:gap-1 tw:items-center tw:text-center">
+          <div className="tw:text-lg">Time</div>
           <div className="tw:text-xl tw:font-mono">
             {formatTime(timeRemaining)}
           </div>
@@ -165,7 +164,7 @@ const ExamPage = ({ params }: Props) => {
       {/* Progress */}
       <div className="tw:w-full tw:bg-gray-200 tw:rounded-full tw:h-2 tw:mb-6">
         <div
-          className="tw:bg-green-500 tw:h-2 tw:rounded-full tw:transition-all"
+          className="tw:bg-green-700 tw:h-2 tw:rounded-full tw:transition-all"
           style={{
             width: `${
               ((currentQuestionIndex + 1) / examData.content.length) * 100
@@ -186,7 +185,7 @@ const ExamPage = ({ params }: Props) => {
               onClick={() => handleAnswerSelect(index)}
               className={`tw:w-full tw:text-left tw:p-4 tw:rounded-lg tw:border tw:transition-all ${
                 userAnswers[currentQuestionIndex] === index
-                  ? "tw:bg-blue-500 tw:text-white tw:border-blue-600"
+                  ? "tw:bg-[#4F3AF5] tw:text-white tw:border-[#4F3AF5] hover:tw:bg-[#3e2dcf]"
                   : "tw:bg-white tw:text-gray-800 tw:border-gray-300 hover:tw:bg-gray-50"
               }`}
             >
@@ -206,16 +205,16 @@ const ExamPage = ({ params }: Props) => {
         <button
           onClick={() => navigateToQuestion("prev")}
           disabled={currentQuestionIndex === 0}
-          className="tw:flex tw:items-center tw:gap-2 tw:px-6 tw:py-3 tw:bg-gray-500 tw:text-white tw:rounded-lg disabled:tw:opacity-50 disabled:tw:cursor-not-allowed hover:tw:bg-gray-600"
+          className="tw:flex tw:items-center tw:gap-1 tw:px-4 tw:py-2 tw:bg-gray-500 tw:text-white tw:rounded disabled:tw:opacity-50 disabled:tw:cursor-not-allowed hover:tw:bg-gray-600"
         >
           <MdSkipPrevious className="tw:text-xl" />
-          Previous
+          Prev
         </button>
 
         {!isLast ? (
           <button
             onClick={() => navigateToQuestion("next")}
-            className="tw:flex tw:items-center tw:gap-2 tw:px-6 tw:py-3 tw:bg-blue-500 tw:text-white tw:rounded-lg hover:tw:bg-blue-600"
+            className="tw:flex tw:items-center tw:gap-1 tw:px-4 tw:py-2 tw:bg-[#4F3AF5] tw:hover:bg-[#3e2dcf] tw:text-white tw:rounded"
           >
             Next
             <MdSkipNext className="tw:text-xl" />
@@ -224,7 +223,7 @@ const ExamPage = ({ params }: Props) => {
           <button
             onClick={handleExamSubmission}
             disabled={submittingExam}
-            className="tw:px-8 tw:py-3 tw:bg-green-500 tw:text-white tw:rounded-lg disabled:tw:opacity-50 hover:tw:bg-green-600"
+            className="tw:px-4 tw:py-2 tw:bg-green-700 tw:text-white tw:rounded disabled:tw:opacity-50 hover:tw:bg-green-600"
           >
             {submittingExam ? "Submitting..." : "Submit Exam"}
           </button>
@@ -232,16 +231,16 @@ const ExamPage = ({ params }: Props) => {
       </div>
 
       {/* Navigation Dots */}
-      <div className="tw:flex tw:justify-center tw:gap-2 tw:mt-6 tw:pt-4 tw:border-t">
+      <div className="tw:flex tw:justify-center tw:gap-2 tw:mt-6 tw:pt-4 tw:border-t tw:border-y-gray-200">
         {examData.content.map((_: any, index: number) => (
           <button
             key={index}
             onClick={() => setCurrentQuestionIndex(index)}
             className={`tw:w-8 tw:h-8 tw:rounded-full tw:text-sm ${
               index === currentQuestionIndex
-                ? "tw:bg-blue-500 tw:text-white"
+                ? "tw:bg-[#4F3AF5] tw:text-white"
                 : userAnswers[index] !== -1
-                ? "tw:bg-green-500 tw:text-white"
+                ? "tw:bg-green-700 tw:text-white"
                 : "tw:bg-gray-300 tw:text-gray-600"
             }`}
           >
