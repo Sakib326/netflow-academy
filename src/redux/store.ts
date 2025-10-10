@@ -2,10 +2,12 @@ import { configureStore } from "@reduxjs/toolkit/react";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { apiSlice } from "./api/apiSlice";
 import authReducer from "./auth/authSlice";
+import examReducer from "./exam/examSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    exam: examReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   devTools: process.env.NODE_ENV !== "production",

@@ -1,4 +1,5 @@
 import { apiSlice } from "../api/apiSlice";
+import { setCurrentExam } from "./examSlice";
 
 export const examApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -12,7 +13,15 @@ export const examApi = apiSlice.injectEndpoints({
         url: `/exams/${exam_id}/start`,
         method: "POST",
       }),
-      invalidatesTags: ["Exams"],
+      async onQueryStarted(exam_id, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          // Dispatch an action to save exam data into examSlice
+          dispatch(setCurrentExam(data));
+        } catch (error) {
+          console.error("Error starting exam:", error);
+        }
+      },
     }),
     finishExam: builder.mutation({
       query: ({ exam_id, answers }) => ({

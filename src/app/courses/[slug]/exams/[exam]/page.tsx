@@ -2,24 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useSelector, useDispatch } from "react-redux";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import {
-  useFinishExamMutation,
   useStartExamMutation,
+  useFinishExamMutation,
 } from "@/redux/exam/examApi";
-
-interface Question {
-  question: string;
-  options: string[];
-  answer: number;
-}
-
-interface ExamData {
-  id: number;
-  title: string;
-  total_time: number;
-  content: Question[];
-}
 
 interface AnswerSubmission {
   question_id: number;
@@ -40,54 +28,55 @@ const ExamPage = ({ params }: Props) => {
   const [startExam, { isLoading: startingExam }] = useStartExamMutation();
   const [finishExam, { isLoading: submittingExam }] = useFinishExamMutation();
 
-  // State
-  const [examData, setExamData] = useState<ExamData | null>(null);
+  // Local states
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState<number[]>([]);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const examData = useSelector((state: any) => state.exam.examData);
 
-  // Initialize exam on component mount
+  // Fetch exam on mount if not already in Redux
   useEffect(() => {
-    initializeExam();
-  }, []);
+    if (!examData) {
+      initializeExam();
+    } else {
+      // If data already in Redux, setup timer and answers
+      setUserAnswers(new Array(examData.content.length).fill(-1));
+      setTimeRemaining(examData.total_time * 60);
+    }
+  }, [examData]);
 
+  // Initialize exam function
+  const initializeExam = () => {
+    try {
+      setError(null);
+      startExam(params?.exam);
+    } catch (err: any) {
+      console.error("Failed to start exam:", err);
+      setError(err?.data?.message || "Failed to initialize exam");
+    }
+  };
   // Timer effect
   useEffect(() => {
     if (timeRemaining <= 0 || !examData) return;
-
-    const timerId = setTimeout(() => {
-      setTimeRemaining((prev) => prev - 1);
-    }, 1000);
-
+    const timerId = setTimeout(
+      () => setTimeRemaining((prev) => prev - 1),
+      1000
+    );
     return () => clearTimeout(timerId);
   }, [timeRemaining, examData]);
 
-  // Auto-submit when time runs out
+  // Auto-submit when time ends
   useEffect(() => {
     if (timeRemaining === 0 && examData && userAnswers.length > 0) {
       handleExamSubmission();
     }
   }, [timeRemaining, examData, userAnswers]);
 
-  const initializeExam = async () => {
-    try {
-      setError(null);
-      const response = await startExam(params.exam).unwrap();
-
-      setExamData(response);
-      setUserAnswers(new Array(response.content.length).fill(-1)); // -1 means unanswered
-      setTimeRemaining(response.total_time * 60); // Convert to seconds
-    } catch (err: any) {
-      console.error("Failed to start exam:", err);
-      setError(err?.data?.message || "Failed to initialize exam");
-    }
-  };
-
   const handleAnswerSelect = (optionIndex: number) => {
-    const updatedAnswers = [...userAnswers];
-    updatedAnswers[currentQuestionIndex] = optionIndex;
-    setUserAnswers(updatedAnswers);
+    const updated = [...userAnswers];
+    updated[currentQuestionIndex] = optionIndex;
+    setUserAnswers(updated);
   };
 
   const navigateToQuestion = (direction: "prev" | "next") => {
@@ -109,14 +98,12 @@ const ExamPage = ({ params }: Props) => {
       const submissionData = {
         exam_id: params.exam,
         answers: userAnswers.map((selected, index) => ({
-          question_id: index,
-          selected: selected !== -1 ? selected : null, // Handle unanswered questions
+          question_id: examData.content[index].question_id,
+          selected: selected !== -1 ? String(selected) : null,
         })),
       };
 
-      await finishExam(submissionData).unwrap();
-
-      // Redirect to results page
+      await finishExam(submissionData);
       router.push(`/courses/${params.slug}/exams/${params.exam}/result`);
     } catch (err: any) {
       console.error("Exam submission failed:", err);
@@ -126,73 +113,59 @@ const ExamPage = ({ params }: Props) => {
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes.toString().padStart(2, "0")}:${remainingSeconds
+    const remaining = seconds % 60;
+    return `${minutes.toString().padStart(2, "0")}:${remaining
       .toString()
       .padStart(2, "0")}`;
   };
 
-  // Render loading state
-  if (startingExam) {
+  // Loading
+  if (startingExam || !examData) {
     return (
-      <div className="tw-p-6 tw-text-center">
+      <div className="tw:p-6 tw:text-center">
         <div className="tw-text-lg">Starting exam...</div>
       </div>
     );
   }
 
-  // Render error state
+  // Error
   if (error) {
     return (
-      <div className="tw-p-6 tw-text-center">
-        <div className="tw-text-red-600 tw-text-lg tw-mb-4">{error}</div>
-        <button
-          onClick={initializeExam}
-          className="tw-bg-blue-500 tw-text-white tw-px-4 tw-py-2 tw-rounded hover:tw-bg-blue-600"
-        >
-          Retry
-        </button>
-      </div>
-    );
-  }
-
-  // Render exam not ready state
-  if (!examData) {
-    return (
-      <div className="tw-p-6 tw-text-center">
-        <div className="tw-text-lg">Exam not available</div>
+      <div className="tw:p-6 tw:text-center">
+        <div className="tw-text-red-600 tw-text-lg tw:mb-4">{error}</div>
       </div>
     );
   }
 
   const currentQuestion = examData.content[currentQuestionIndex];
-  const isLastQuestion = currentQuestionIndex === examData.content.length - 1;
+  const isLast = currentQuestionIndex === examData.content.length - 1;
 
+  // Your existing design below 👇 (unchanged)
   return (
-    <div className="tw-p-6 tw-max-w-4xl tw-mx-auto tw-shadow-lg tw-my-6 tw-bg-white tw-rounded-lg">
+    <div className="tw:p-6 tw:max-w-4xl tw:mx-auto tw:shadow-lg tw:my-6 tw:bg-white tw:rounded-lg">
       {/* Header */}
-      <div className="tw-flex tw-justify-between tw-items-center tw-mb-6 tw-pb-4 tw-border-b">
+      <div className="tw:flex tw:justify-between tw:items-center tw:mb-6 tw:pb-4 tw:border-b">
         <div>
-          <h1 className="tw-text-2xl tw-font-bold tw-text-gray-800">
+          <h1 className="tw:text-2xl tw:font-bold tw:text-gray-800">
             {examData.title}
           </h1>
-          <p className="tw-text-gray-600">
+          <p className="tw:text-gray-600">
             Question {currentQuestionIndex + 1} of {examData.content.length}
           </p>
         </div>
 
-        <div className="tw-bg-red-500 tw-text-white tw-px-4 tw-py-2 tw-rounded-lg tw-font-semibold">
-          <div className="tw-text-sm">Time Remaining</div>
-          <div className="tw-text-xl tw-font-mono">
+        <div className="tw:bg-red-500 tw:text-white tw:px-4 tw:py-2 tw:rounded-lg tw:font-semibold">
+          <div className="tw:text-sm">Time Remaining</div>
+          <div className="tw:text-xl tw:font-mono">
             {formatTime(timeRemaining)}
           </div>
         </div>
       </div>
 
-      {/* Progress Bar */}
-      <div className="tw-w-full tw-bg-gray-200 tw-rounded-full tw-h-2 tw-mb-6">
+      {/* Progress */}
+      <div className="tw:w-full tw:bg-gray-200 tw:rounded-full tw:h-2 tw:mb-6">
         <div
-          className="tw-bg-green-500 tw-h-2 tw-rounded-full tw-transition-all"
+          className="tw:bg-green-500 tw:h-2 tw:rounded-full tw:transition-all"
           style={{
             width: `${
               ((currentQuestionIndex + 1) / examData.content.length) * 100
@@ -202,24 +175,23 @@ const ExamPage = ({ params }: Props) => {
       </div>
 
       {/* Question */}
-      <div className="tw-mb-8">
-        <h3 className="tw-text-lg tw-font-semibold tw-mb-4">
+      <div className="tw:mb-8">
+        <h3 className="tw:text-lg tw:font-semibold tw:mb-4">
           {currentQuestion.question}
         </h3>
-
-        <div className="tw-space-y-3">
-          {currentQuestion.options.map((option, index) => (
+        <div className="tw:space-y-3">
+          {currentQuestion.options.map((option: string, index: number) => (
             <button
               key={index}
               onClick={() => handleAnswerSelect(index)}
-              className={`tw-w-full tw-text-left tw-p-4 tw-rounded-lg tw-border tw-transition-all ${
+              className={`tw:w-full tw:text-left tw:p-4 tw:rounded-lg tw:border tw:transition-all ${
                 userAnswers[currentQuestionIndex] === index
-                  ? "tw-bg-blue-500 tw-text-white tw-border-blue-600"
-                  : "tw-bg-white tw-text-gray-800 tw-border-gray-300 hover:tw-bg-gray-50"
+                  ? "tw:bg-blue-500 tw:text-white tw:border-blue-600"
+                  : "tw:bg-white tw:text-gray-800 tw:border-gray-300 hover:tw:bg-gray-50"
               }`}
             >
-              <div className="tw-flex tw-items-center">
-                <span className="tw-font-medium tw-mr-3">
+              <div className="tw:flex tw:items-center">
+                <span className="tw:font-medium tw:mr-3">
                   {String.fromCharCode(65 + index)}.
                 </span>
                 <span>{option}</span>
@@ -230,47 +202,47 @@ const ExamPage = ({ params }: Props) => {
       </div>
 
       {/* Navigation */}
-      <div className="tw-flex tw-justify-between tw-items-center">
+      <div className="tw:flex tw:justify-between tw:items-center">
         <button
           onClick={() => navigateToQuestion("prev")}
           disabled={currentQuestionIndex === 0}
-          className="tw-flex tw-items-center tw-gap-2 tw-px-6 tw-py-3 tw-bg-gray-500 tw-text-white tw-rounded-lg disabled:tw-opacity-50 disabled:tw-cursor-not-allowed hover:tw-bg-gray-600"
+          className="tw:flex tw:items-center tw:gap-2 tw:px-6 tw:py-3 tw:bg-gray-500 tw:text-white tw:rounded-lg disabled:tw:opacity-50 disabled:tw:cursor-not-allowed hover:tw:bg-gray-600"
         >
-          <MdSkipPrevious className="tw-text-xl" />
+          <MdSkipPrevious className="tw:text-xl" />
           Previous
         </button>
 
-        {!isLastQuestion ? (
+        {!isLast ? (
           <button
             onClick={() => navigateToQuestion("next")}
-            className="tw-flex tw-items-center tw-gap-2 tw-px-6 tw-py-3 tw-bg-blue-500 tw-text-white tw-rounded-lg hover:tw-bg-blue-600"
+            className="tw:flex tw:items-center tw:gap-2 tw:px-6 tw:py-3 tw:bg-blue-500 tw:text-white tw:rounded-lg hover:tw:bg-blue-600"
           >
             Next
-            <MdSkipNext className="tw-text-xl" />
+            <MdSkipNext className="tw:text-xl" />
           </button>
         ) : (
           <button
             onClick={handleExamSubmission}
             disabled={submittingExam}
-            className="tw-px-8 tw-py-3 tw-bg-green-500 tw-text-white tw-rounded-lg disabled:tw-opacity-50 hover:tw-bg-green-600"
+            className="tw:px-8 tw:py-3 tw:bg-green-500 tw:text-white tw:rounded-lg disabled:tw:opacity-50 hover:tw:bg-green-600"
           >
             {submittingExam ? "Submitting..." : "Submit Exam"}
           </button>
         )}
       </div>
 
-      {/* Quick Navigation Dots */}
-      <div className="tw-flex tw-justify-center tw-gap-2 tw-mt-6 tw-pt-4 tw-border-t">
-        {examData.content.map((_, index) => (
+      {/* Navigation Dots */}
+      <div className="tw:flex tw:justify-center tw:gap-2 tw:mt-6 tw:pt-4 tw:border-t">
+        {examData.content.map((_: any, index: number) => (
           <button
             key={index}
             onClick={() => setCurrentQuestionIndex(index)}
-            className={`tw-w-8 tw-h-8 tw-rounded-full tw-text-sm ${
+            className={`tw:w-8 tw:h-8 tw:rounded-full tw:text-sm ${
               index === currentQuestionIndex
-                ? "tw-bg-blue-500 tw-text-white"
+                ? "tw:bg-blue-500 tw:text-white"
                 : userAnswers[index] !== -1
-                ? "tw-bg-green-500 tw-text-white"
-                : "tw-bg-gray-300 tw-text-gray-600"
+                ? "tw:bg-green-500 tw:text-white"
+                : "tw:bg-gray-300 tw:text-gray-600"
             }`}
           >
             {index + 1}

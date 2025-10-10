@@ -29,9 +29,9 @@ const DetailsPage = ({ params }: Props) => {
               <li
                 key={index}
                 className={`${
-                  index === q.correct_answer
+                  index == q.correct_answer
                     ? "tw:text-green-600 tw:font-semibold"
-                    : index === q.user_answer
+                    : index == q.user_answer
                     ? "tw:text-red-500"
                     : "tw:text-gray-700"
                 }`}
