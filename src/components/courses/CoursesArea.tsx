@@ -1,5 +1,6 @@
 import { Course, PaginationLink } from "@/types/course";
 import Link from "next/link";
+import CourseMeta from "../home/CourseMeta";
 
 interface CoursesAreaProps {
   courses: Course[];
@@ -49,7 +50,7 @@ export default function CoursesArea({ courses, pagination }: CoursesAreaProps) {
                     </div>
 
                     {/* Content */}
-                    <div className="course_content tw:p-6 tw:flex tw:flex-col tw:flex-grow">
+                    <div className="course_content tw:py-6 tw:px-3 tw:flex tw:flex-col tw:flex-grow">
                       <div className="crating">
                         <span>
                           {[...Array(5)].map((_, i) => (
@@ -76,12 +77,11 @@ export default function CoursesArea({ courses, pagination }: CoursesAreaProps) {
                       {/* Meta */}
                       <div className="cmeta">
                         <div className="ccategory">
-                          <a href="#">{course.category.name}</a>
+                          <a href="#" className="tw:text-sm">
+                            {course.category.name}
+                          </a>
                         </div>
-                        <div className="smeta">
-                          <i className="bx bx-file"></i>
-                          {course.total_lessons} Lessons
-                        </div>
+                        <CourseMeta slug={course?.slug} />
                       </div>
                     </div>
                   </div>

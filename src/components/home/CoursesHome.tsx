@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Course } from "@/types/course";
+import CourseMeta from "./CourseMeta";
 
 type Props = {
   courses: Course[];
@@ -120,11 +121,13 @@ export default function CoursesHome({ courses }: Props) {
 
                         <div className="cmeta">
                           <div className="smeta">
-                            <i className="bx bx-file"></i>
-                            {course?.total_lessons} Lessons
+                            <CourseMeta slug={course?.slug} />
                           </div>
                           <div className="ccategory">
-                            <Link href={`/courses/${course?.category?.slug}`}>
+                            <Link
+                              className="tw:text-sm"
+                              href={`/courses/${course?.category?.slug}`}
+                            >
                               {course?.category?.name}
                             </Link>
                           </div>
