@@ -187,8 +187,6 @@ const LessonSidebar = () => {
         <ul className="tw:space-y-2">
           {modules.map((section, index) => {
             const isOpen = openSections.includes(section.id);
-            const lessonCount = section.lessons?.length || 0;
-
             return (
               <li
                 key={section.id}
@@ -277,7 +275,7 @@ const LessonSidebar = () => {
                   <div className="tw:flex tw:items-center tw:gap-2">
                     <div
                       className={`
-                      tw-w-8 tw-h-1 tw:rounded-full tw:bg-gray-200 tw:overflow-hidden
+                      tw-w-8 tw-h-1 tw:rounded-full tw:bg-gray-200
                     `}
                     ></div>
                     {isOpen ? (
@@ -294,7 +292,7 @@ const LessonSidebar = () => {
                     tw:transition-all tw:duration-300 tw:ease-in-out tw:overflow-hidden
                     ${
                       isOpen
-                        ? "tw:max-h-[2000px] tw:opacity-100" // Increased from tw:max-h-96
+                        ? "tw:max-h-none tw:opacity-100" // Increased from tw:max-h-96
                         : "tw:max-h-0 tw:opacity-0"
                     }
                   `}
