@@ -33,6 +33,8 @@ const ExamPage = ({ params }: Props) => {
   const [userAnswers, setUserAnswers] = useState<number[]>([]);
   const [timeRemaining, setTimeRemaining] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [hasStarted, setHasStarted] = useState(false);
+
   const examData = useSelector((state: any) => state.exam.examData);
 
   // Fetch exam on mount if not already in Redux
@@ -43,6 +45,7 @@ const ExamPage = ({ params }: Props) => {
       // If data already in Redux, setup timer and answers
       setUserAnswers(new Array(examData.content.length).fill(-1));
       setTimeRemaining(examData.total_time * 60);
+      setHasStarted(true);
     }
   }, [examData]);
 
@@ -56,6 +59,7 @@ const ExamPage = ({ params }: Props) => {
       setError(err?.data?.message || "Failed to initialize exam");
     }
   };
+
   // Timer effect
   useEffect(() => {
     if (timeRemaining <= 0 || !examData) return;
@@ -68,10 +72,10 @@ const ExamPage = ({ params }: Props) => {
 
   // Auto-submit when time ends
   useEffect(() => {
-    if (timeRemaining === 0 && examData && userAnswers.length > 0) {
+    if (hasStarted && timeRemaining === 0 && examData) {
       handleExamSubmission();
     }
-  }, [timeRemaining, examData, userAnswers]);
+  }, [timeRemaining, examData, hasStarted]);
 
   const handleAnswerSelect = (optionIndex: number) => {
     const updated = [...userAnswers];

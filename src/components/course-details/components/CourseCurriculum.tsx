@@ -193,8 +193,34 @@ export default function CourseCurriculum({ course }: CourseCurriculumProps) {
       ) as SingleCourseModule[]) || [];
 
   // Calculate totals
-  const getTotalLessons = () =>
-    modules.reduce((total, module) => total + (module.lessons?.length || 0), 0);
+  const getTotalLessons = () => {
+    return modules.reduce(
+      (total, module) =>
+        total +
+        (module?.lessons?.filter(
+          (lesson) =>
+            lesson.lesson_type !== "assignment" && lesson.lesson_type !== "quiz"
+        )?.length || 0),
+      0
+    );
+  };
+  const getTotalAssignments = () =>
+    modules.reduce(
+      (total, module) =>
+        total +
+        (module.lessons?.filter((lesson) => lesson.lesson_type === "assignment")
+          .length || 0),
+      0
+    );
+
+  const getTotalQuizzes = () =>
+    modules.reduce(
+      (total, module) =>
+        total +
+        (module.lessons?.filter((lesson) => lesson.lesson_type === "quiz")
+          .length || 0),
+      0
+    );
 
   // --- Modal Content ---
   function renderLessonModal(lesson: SingleCourseLesson) {
@@ -551,9 +577,13 @@ export default function CourseCurriculum({ course }: CourseCurriculumProps) {
           Course Content
         </h2>
         <div className="tw:flex tw:flex-wrap tw:items-center tw:gap-4 tw:text-sm tw:text-gray-600">
-          <span>{modules.length} sections</span>
+          <span>{modules?.length} Modules</span>
           <span>•</span>
-          <span>{getTotalLessons()} lectures</span>
+          <span>{getTotalLessons()} Lessons</span>
+          <span>•</span>
+          <span>{getTotalAssignments()} Assignments</span>
+          <span>•</span>
+          <span>{getTotalQuizzes()} Quizzes</span>
         </div>
       </div>
 
@@ -577,12 +607,54 @@ export default function CourseCurriculum({ course }: CourseCurriculumProps) {
                     <i className="bx bx-chevron-right"></i>
                   )}
                 </button>
-                <h3 className="tw:font-semibold tw:text-gray-900">
-                  Section {moduleIndex + 1}: {module.title ?? "Untitled Module"}
-                </h3>
+                <h4 className="tw:font-semibold tw:text-lg tw:mb-0 tw:text-gray-900">
+                  Module {moduleIndex + 1}: {module.title ?? "Untitled Module"}
+                </h4>
               </div>
               <div className="tw:flex tw:items-center tw:gap-4 tw:text-sm tw:text-gray-600">
-                <span>{module.lessons?.length || 0} lectures</span>
+                {module.lessons &&
+                  module.lessons.filter(
+                    (lesson) =>
+                      lesson.lesson_type !== "assignment" &&
+                      lesson.lesson_type !== "quiz"
+                  ).length > 0 && (
+                    <span>
+                      {module.lessons
+                        ? module.lessons.filter(
+                            (l) =>
+                              l.lesson_type !== "assignment" &&
+                              l.lesson_type !== "quiz"
+                          ).length
+                        : 0}{" "}
+                      Lessons
+                    </span>
+                  )}
+
+                {module.lessons &&
+                  module.lessons.filter(
+                    (lesson) => lesson.lesson_type === "assignment"
+                  ).length > 0 && (
+                    <span>
+                      {module.lessons
+                        ? module.lessons.filter(
+                            (l) => l.lesson_type === "assignment"
+                          ).length
+                        : 0}{" "}
+                      Assignments
+                    </span>
+                  )}
+                {module.lessons &&
+                  module.lessons.filter(
+                    (lesson) => lesson.lesson_type === "quiz"
+                  ).length > 0 && (
+                    <span>
+                      {module.lessons
+                        ? module.lessons.filter((l) => l.lesson_type === "quiz")
+                            .length
+                        : 0}{" "}
+                      Quizzes
+                    </span>
+                  )}
                 {module.description && (
                   <span className="tw:text-xs tw:bg-blue-100 tw:text-blue-700 tw:px-2 tw:py-0.5 tw:rounded">
                     Info

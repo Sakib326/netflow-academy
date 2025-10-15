@@ -7,6 +7,14 @@ import CourseCurriculum from "./components/CourseCurriculum";
 import { useRouter } from "next/navigation";
 import Modal from "react-modal";
 import { useCreateOrderMutation } from "@/redux/orders/orderApi";
+import { SingleCourseModule } from "@/types/singleCourse";
+import {
+  FaBookOpen,
+  FaChartLine,
+  FaClipboardList,
+  FaLanguage,
+  FaQuestionCircle,
+} from "react-icons/fa";
 
 interface CourseDetailsAreaProps {
   course: SingleCourse;
@@ -68,6 +76,45 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
       setNote("");
     }
   };
+
+  // Sort modules and lessons
+  const modules: SingleCourseModule[] =
+    (course?.modules
+      ?.slice()
+      .sort(
+        (a, b) => (a.order || 0) - (b.order || 0)
+      ) as SingleCourseModule[]) || [];
+
+  // Calculate totals
+  const getTotalLessons = () => {
+    return modules.reduce(
+      (total, module) =>
+        total +
+        (module?.lessons?.filter(
+          (lesson) =>
+            lesson.lesson_type !== "assignment" && lesson.lesson_type !== "quiz"
+        )?.length || 0),
+      0
+    );
+  };
+
+  const getTotalAssignments = () =>
+    modules.reduce(
+      (total, module) =>
+        total +
+        (module.lessons?.filter((lesson) => lesson.lesson_type === "assignment")
+          .length || 0),
+      0
+    );
+
+  const getTotalQuizzes = () =>
+    modules.reduce(
+      (total, module) =>
+        total +
+        (module.lessons?.filter((lesson) => lesson.lesson_type === "quiz")
+          .length || 0),
+      0
+    );
 
   return (
     <>
@@ -503,23 +550,41 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                 <h3>Course Features</h3>
                 <ul className="scourse_list">
                   <li>
-                    <span className="cside-label">
-                      <i className="fa-regular fa-file"></i> Lesson
+                    <span className="cside-label  tw:gap-2 tw:flex tw:items-center">
+                      <FaBookOpen /> Lesson
                     </span>
-                    <span className="cside-value">
-                      {course?.total_lessons ?? 0}
+                    <span className="cside-value ">
+                      {getTotalLessons() ?? 0}
                     </span>
                   </li>
 
                   <li>
-                    <span className="cside-label">
-                      <i className="fa-solid fa-chart-line"></i> Skill Level
+                    <span className="cside-label tw:gap-2 tw:flex tw:items-center">
+                      <FaClipboardList /> Assingments
+                    </span>
+                    <span className="cside-value">
+                      {getTotalAssignments() ?? 0}
+                    </span>
+                  </li>
+
+                  <li>
+                    <span className="cside-label tw:gap-2 tw:flex tw:items-center">
+                      <FaQuestionCircle /> Quizzes
+                    </span>
+                    <span className="cside-value">
+                      {getTotalQuizzes() ?? 0}
+                    </span>
+                  </li>
+
+                  <li>
+                    <span className="cside-label tw:gap-2 tw:flex tw:items-center">
+                      <FaChartLine /> Skill Level
                     </span>
                     <span className="cside-value">Beginner to Advance</span>
                   </li>
                   <li>
-                    <span className="cside-label">
-                      <i className="fa-solid fa-language"></i> Language
+                    <span className="cside-label tw:gap-2 tw:flex tw:items-center">
+                      <FaLanguage /> Language
                     </span>
                     <span className="cside-value">Bangla</span>
                   </li>

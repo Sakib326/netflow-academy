@@ -90,6 +90,37 @@ const LessonSidebar = () => {
     }
   };
 
+  // Calculate totals
+  const getTotalLessons = () => {
+    return modules.reduce(
+      (total, module) =>
+        total +
+        (module?.lessons?.filter(
+          (lesson) =>
+            lesson.lesson_type !== "assignment" && lesson.lesson_type !== "quiz"
+        )?.length || 0),
+      0
+    );
+  };
+
+  const getTotalAssignments = () =>
+    modules.reduce(
+      (total, module) =>
+        total +
+        (module.lessons?.filter((lesson) => lesson.lesson_type === "assignment")
+          .length || 0),
+      0
+    );
+
+  const getTotalQuizzes = () =>
+    modules.reduce(
+      (total, module) =>
+        total +
+        (module.lessons?.filter((lesson) => lesson.lesson_type === "quiz")
+          .length || 0),
+      0
+    );
+
   if (isLoading) {
     return (
       <aside className="tw:w-full tw:bg-white tw:shadow-lg tw:rounded-lg tw:min-h-[85vh] tw:flex tw:items-center tw:justify-center">
@@ -131,14 +162,24 @@ const LessonSidebar = () => {
           </div>
           Course Content
         </h2>
-        <p className="tw:text-blue-100 tw:text-sm tw:mt-2">
+        {/* <p className="tw:text-blue-100 tw:text-sm tw:mt-2">
           {modules.length} module{modules.length !== 1 ? "s" : ""} •{" "}
           {modules.reduce(
             (total, module) => total + (module.lessons?.length || 0),
             0
           )}{" "}
           lessons
-        </p>
+        </p> */}
+
+        <div className="tw:flex tw:flex-wrap tw:items-center tw:gap-1 tw:text-sm tw:text-blue-100">
+          <span>{modules?.length} Modules</span>
+          <span>•</span>
+          <span>{getTotalLessons()} Lessons</span>
+          <span>•</span>
+          <span>{getTotalAssignments()} Assignments</span>
+          <span>•</span>
+          <span>{getTotalQuizzes()} Quizzes</span>
+        </div>
       </div>
 
       {/* Content */}
@@ -183,8 +224,52 @@ const LessonSidebar = () => {
                       <div className="tw:text-base tw:font-semibold">
                         {section.title}
                       </div>
-                      <div className="tw:text-xs tw:text-gray-500 tw:mt-1">
-                        {lessonCount} lessons
+                      <div className="tw:text-xs tw:text-gray-500 tw:mt-1 tw:flex tw:items-center tw:gap-2">
+                        {section.lessons &&
+                          section.lessons.filter(
+                            (lesson) =>
+                              lesson.lesson_type !== "assignment" &&
+                              lesson.lesson_type !== "quiz"
+                          ).length > 0 && (
+                            <span>
+                              {section.lessons
+                                ? section.lessons.filter(
+                                    (l) =>
+                                      l.lesson_type !== "assignment" &&
+                                      l.lesson_type !== "quiz"
+                                  ).length
+                                : 0}{" "}
+                              Lessons{" "}
+                            </span>
+                          )}
+
+                        {section.lessons &&
+                          section.lessons.filter(
+                            (lesson) => lesson.lesson_type === "assignment"
+                          ).length > 0 && (
+                            <span>
+                              {section.lessons
+                                ? section.lessons.filter(
+                                    (l) => l.lesson_type === "assignment"
+                                  ).length
+                                : 0}{" "}
+                              Assignments{" "}
+                            </span>
+                          )}
+
+                        {section.lessons &&
+                          section.lessons.filter(
+                            (lesson) => lesson.lesson_type === "quiz"
+                          ).length > 0 && (
+                            <span>
+                              {section.lessons
+                                ? section.lessons.filter(
+                                    (l) => l.lesson_type === "quiz"
+                                  ).length
+                                : 0}{" "}
+                              Quizzes
+                            </span>
+                          )}
                       </div>
                     </div>
                   </div>
