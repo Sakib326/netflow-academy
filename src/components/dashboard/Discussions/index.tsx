@@ -14,35 +14,67 @@ const Discussions = () => {
 
   const loaderRef = useRef<HTMLDivElement | null>(null);
 
+  // keep latest isFetching in a ref so observer callback sees current value
+  const isFetchingRef = useRef<boolean>(false);
+  useEffect(() => {
+    isFetchingRef.current = !!isFetching;
+  }, [isFetching]);
+
   // fetch when page changes
   useEffect(() => {
-    trigger({ courseId: 3, page }).then((res: any) => {
-      if (res?.data?.data) {
-        setAllDiscussions((prev) => [...prev, ...res.data.data]);
-        setHasMore(res.data.current_page < res.data.last_page);
-      }
-    });
+    let mounted = true;
+
+    trigger({ courseId: 3, page })
+      .then((res: any) => {
+        if (!mounted) return;
+        const payload = res?.data;
+        if (payload?.data && Array.isArray(payload.data)) {
+          // avoid duplicates
+          setAllDiscussions((prev) => {
+            const newItems = payload.data.filter(
+              (d: any) => !prev.some((p) => p.id === d.id)
+            );
+            return [...prev, ...newItems];
+          });
+
+          const current = payload.current_page ?? page;
+          const last = payload.last_page ?? current;
+          setHasMore(current < last);
+        } else {
+          // no data -> stop further loads
+          setHasMore(false);
+        }
+      })
+      .catch(() => {
+        if (mounted) setHasMore(false);
+      });
+
+    return () => {
+      mounted = false;
+    };
   }, [page, trigger]);
 
   // infinite scroll observer
   useEffect(() => {
-    if (!loaderRef.current || !hasMore || isFetching) return;
+    if (!loaderRef.current || !hasMore) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
+        if (entries[0].isIntersecting && !isFetchingRef.current && hasMore) {
           setPage((prev) => prev + 1);
         }
       },
-      { threshold: 1 }
+      { root: null, rootMargin: "0px 0px 200px 0px", threshold: 0 }
     );
 
     observer.observe(loaderRef.current);
 
     return () => {
       if (loaderRef.current) observer.unobserve(loaderRef.current);
+      observer.disconnect();
     };
-  }, [hasMore, isFetching]);
+  }, [hasMore]);
+
   console.log("data", data);
   return (
     <>
@@ -71,7 +103,7 @@ const Discussions = () => {
       </div>
 
       {/* Hidden div to trigger infinite scroll */}
-      {hasMore && <div ref={loaderRef} />}
+      {hasMore && <div ref={loaderRef} style={{ minHeight: 1 }} />}
     </>
   );
 };
