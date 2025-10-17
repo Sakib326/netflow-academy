@@ -11,7 +11,7 @@ type Props = {
 const DetailsPage = ({ params }: Props) => {
   const { data, isLoading } = useGetExamResultDetailsQuery(params.exam);
   return (
-    <div className="tw:w-6xl tw:mx-auto tw:my-6 tw:border tw:border-gray-200 tw:rounded-lg tw:p-6 tw:bg-gray-50">
+    <div className="tw:md:w-6xl tw:mx-auto tw:my-6 tw:border tw:border-gray-200 tw:rounded-lg tw:p-6 tw:bg-gray-50">
       <h2 className="tw:text-lg tw:font-semibold tw:mb-4">
         {data?.exam_title} - Details
       </h2>

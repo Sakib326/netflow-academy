@@ -41,8 +41,6 @@ export default async function CourseDetailsPage({
     });
     if (!res.ok) throw new Error(`Status: ${res.status}`);
     const course: SingleCourse = await res.json();
-
-    console.log("course", course);
     return <CourseDetails course={course} />;
   } catch {
     notFound();

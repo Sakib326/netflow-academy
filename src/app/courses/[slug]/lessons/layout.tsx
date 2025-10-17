@@ -6,7 +6,7 @@ type Props = {
 
 const LessonLayout = ({ children }: Props) => {
   return (
-    <div className="tw:grid tw:grid-cols-[400px_1fr]">
+    <div className="tw:grid tw:lg:grid-cols-[400px_1fr] tw:grid-cols-1">
       <LessionSidebar />
       {children}
     </div>

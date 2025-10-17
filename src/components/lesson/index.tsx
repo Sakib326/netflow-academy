@@ -12,6 +12,14 @@ import type {
   FileItem,
   Submission,
 } from "@/types/moduleLessons";
+import { FaBars } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  closeLessionSidebar,
+  openLessionSidebar,
+  toggleLessionSidebar,
+} from "@/redux/theme/themeSlice";
+import { MdClose } from "react-icons/md";
 
 // Define proper types for detailed quiz answers
 interface DetailedQuizAnswer {
@@ -109,7 +117,8 @@ export default function LessonPage() {
   const [submitSuccess, setSubmitSuccess] = useState<string | null>(null);
   const [files, setFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  const dispatch = useDispatch();
+  const { isLessionSidebarOpen } = useSelector((state: any) => state.theme);
   const [submitLesson, { isLoading: isSubmitting }] =
     useSubmitLessonBySlugMutation();
 
@@ -278,11 +287,27 @@ export default function LessonPage() {
     totalQuestions > 0 && currentQuestionIndex === totalQuestions - 1;
 
   return (
-    <div className="tw:max-w-4xl tw:mx-auto tw:py-8 tw:space-y-10 tw:h-[calc(100vh-100px)] tw:overflow-y-auto">
+    <div className="">
       {/* Title */}
-      <h1 className="tw:text-3xl tw:font-bold tw:mb-4 tw:text-gray-900">
-        {lesson.title}
-      </h1>
+      <div className="tw:px-4 tw:h-[64px] tw:max-h-[64px] tw:mb-4 tw:text-start tw:bg-gradient-to-r tw:to-blue-600 tw:from-indigo-600 tw:flex tw:justify-between tw:items-center">
+        <h1 className="tw:text-xl tw:font-bold tw:text-slate-50 tw:mb-0">
+          {lesson.title}
+        </h1>
+
+        <div className="tw:lg:hidden">
+          {isLessionSidebarOpen ? (
+            <button onClick={() => dispatch(closeLessionSidebar())}>
+              {/* hamberger maneu */}
+              <MdClose className="tw:text-2xl tw:text-white" />
+            </button>
+          ) : (
+            <button onClick={() => dispatch(openLessionSidebar())}>
+              {/* hamberger maneu */}
+              <FaBars className="tw:text-2xl tw:text-white" />
+            </button>
+          )}
+        </div>
+      </div>
 
       {/* Description/Content */}
       {(lesson.content || lesson.description) && (
@@ -302,7 +327,7 @@ export default function LessonPage() {
         lesson.questions.length > 0 &&
         !hasSubmitted && (
           <form
-            className="tw:bg-white tw:p-8 tw:rounded-xl tw:shadow-sm tw:border tw:border-gray-200 tw:space-y-6"
+            className="tw:bg-white  tw:p-8 tw:rounded-xl tw:shadow-sm tw:border tw:border-gray-200 tw:space-y-6"
             onSubmit={handleQuizSubmit}
           >
             <h2 className="tw:font-bold tw:text-2xl tw:mb-2 tw:text-gray-900">
@@ -496,11 +521,7 @@ export default function LessonPage() {
 
       {/* Files & Media */}
       {lesson.files && lesson.files.length > 0 && (
-        <div className="tw:bg-white tw:p-8 tw:rounded-xl tw:shadow-sm tw:border tw:border-gray-200">
-          <h2 className="tw:font-bold tw:text-2xl tw:mb-6 tw:text-gray-900">
-            📂 Lesson Files & Media
-          </h2>
-
+        <div className="tw:bg-white tw:xl:max-w-6xl tw:m-6 tw:mx-auto tw:p-8 tw:rounded-xl tw:shadow-sm tw:border tw:border-gray-200">
           <div className="tw:space-y-6">
             {lesson.files
               .map((file: any) => ({
@@ -516,16 +537,16 @@ export default function LessonPage() {
                 return (
                   <div
                     key={idx}
-                    className="tw:bg-gray-50 tw:p-6 tw:rounded-lg tw:border tw:border-gray-100"
+                    className="tw:bg-gray-50 tw:rounded-lg tw:border tw:border-gray-100"
                   >
-                    <h3 className="tw:font-semibold tw:text-lg tw:mb-4 tw:text-gray-900">
+                    {/* <h3 className="tw:font-semibold tw:text-lg tw:mb-4 tw:text-gray-900">
                       {file.name || `File ${idx + 1}`}
                       {ext ? (
                         <span className="tw:text-sm tw:text-gray-500 tw:ml-2">
                           ({ext.toUpperCase()})
                         </span>
                       ) : null}
-                    </h3>
+                    </h3> */}
 
                     {/* Video */}
                     {isVideo && (

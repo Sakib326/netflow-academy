@@ -29,10 +29,10 @@ const ResultPage = ({ params }: Props) => {
   const formatDate = (dateStr: string) => new Date(dateStr).toLocaleString();
 
   return (
-    <div className="tw:w-6xl tw:h-[560px] tw:mx-auto tw:p-6 tw:my-6 tw:bg-white tw:shadow-md tw:rounded-lg">
+    <div className="tw:max-w-6xl tw:mx-auto tw:p-6 tw:my-6 tw:bg-white tw:shadow-md tw:rounded-lg">
       <h1 className="tw:text-2xl tw:font-bold tw:mb-4">Exam Result</h1>
 
-      <div className="tw:grid tw:grid-cols-2 tw:gap-4 tw:mb-6">
+      <div className="tw:grid tw:grid-cols-1 tw:md:grid-cols-2 tw:gap-4 tw:mb-6">
         <div className=" tw:bg-gradient-to-r tw:from-green-100 tw:to-green-200 tw:p-4 tw:rounded">
           <p className="tw:text-gray-500 tw:text-sm tw:font-semibold">Score</p>
           <p className="tw:text-xl tw:font-semibold">
