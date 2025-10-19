@@ -127,7 +127,7 @@ const ExamPage = ({ params }: Props) => {
   if (startingExam || !examData) {
     return (
       <div className="tw:p-6 tw:text-center">
-        <div className="tw-text-lg">Starting exam...</div>
+        <div className="tw:text-lg">Starting exam...</div>
       </div>
     );
   }
@@ -136,7 +136,7 @@ const ExamPage = ({ params }: Props) => {
   if (error) {
     return (
       <div className="tw:p-6 tw:text-center">
-        <div className="tw-text-red-600 tw-text-lg tw:mb-4">{error}</div>
+        <div className="tw:text-red-600 tw:text-lg tw:mb-4">{error}</div>
       </div>
     );
   }
@@ -189,8 +189,8 @@ const ExamPage = ({ params }: Props) => {
               onClick={() => handleAnswerSelect(index)}
               className={`tw:w-full tw:text-left tw:p-4 tw:rounded-lg tw:border tw:transition-all ${
                 userAnswers[currentQuestionIndex] === index
-                  ? "tw:bg-[#4F3AF5] tw:text-white tw:border-[#4F3AF5] hover:tw:bg-[#3e2dcf]"
-                  : "tw:bg-white tw:text-gray-800 tw:border-gray-300 hover:tw:bg-gray-50"
+                  ? "tw:bg-[#4F3AF5] tw:text-white tw:border-[#4F3AF5] tw:hover:bg-[#3e2dcf]"
+                  : "tw:bg-white tw:text-gray-800 tw:border-gray-300 tw:hover:bg-gray-50"
               }`}
             >
               <div className="tw:flex tw:items-center">
@@ -209,7 +209,7 @@ const ExamPage = ({ params }: Props) => {
         <button
           onClick={() => navigateToQuestion("prev")}
           disabled={currentQuestionIndex === 0}
-          className="tw:flex tw:items-center tw:gap-1 tw:px-4 tw:py-2 tw:bg-gray-500 tw:text-white tw:rounded disabled:tw:opacity-50 disabled:tw:cursor-not-allowed hover:tw:bg-gray-600"
+          className="tw:flex tw:items-center tw:gap-1 tw:px-4 tw:py-2 tw:bg-gray-500 tw:text-white tw:rounded disabled:tw:opacity-50 disabled:tw:cursor-not-allowed tw:hover:bg-gray-600"
         >
           <MdSkipPrevious className="tw:text-xl" />
           Prev
@@ -227,7 +227,7 @@ const ExamPage = ({ params }: Props) => {
           <button
             onClick={handleExamSubmission}
             disabled={submittingExam}
-            className="tw:px-4 tw:py-2 tw:bg-green-700 tw:text-white tw:rounded disabled:tw:opacity-50 hover:tw:bg-green-600"
+            className="tw:px-4 tw:py-2 tw:bg-green-700 tw:text-white tw:rounded disabled:tw:opacity-50 tw:hover:bg-green-600"
           >
             {submittingExam ? "Submitting..." : "Submit Exam"}
           </button>

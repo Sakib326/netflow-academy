@@ -87,12 +87,12 @@ const VideoPopup = ({ isVideoOpen, setIsVideoOpen, videoUrl }: Props) => {
         <div className="tw:absolute tw:top-0 tw:left-0 tw:right-0 tw:h-12 tw:bg-gradient-to-b tw:from-black/50 tw:to-transparent tw:z-10 tw:flex tw:justify-end tw:items-start tw:p-3">
           <button
             onClick={handleClose}
-            className="tw:group tw:w-10 tw:h-10 tw:flex tw:items-center tw:justify-center tw:rounded-full tw:bg-black/20 hover:tw:bg-black/40 tw:text-white/80 hover:tw:text-white tw:transition-all tw:duration-200 tw:backdrop-blur-sm hover:tw:scale-110"
+            className="tw:group tw:w-10 tw:h-10 tw:flex tw:items-center tw:justify-center tw:rounded-full tw:bg-black/20 tw:hover:bg-black/40 tw:text-white/80 tw:hover:text-white tw:transition-all tw:duration-200 tw:backdrop-blur-sm tw:hover:scale-110"
             aria-label="Close video"
             type="button"
           >
             <svg
-              className="tw:w-5 tw:h-5 tw:transition-transform group-hover:tw:rotate-90 tw:duration-200"
+              className="tw:w-5 tw:h-5 tw:transition-transform group-tw:hover:rotate-90 tw:duration-200"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

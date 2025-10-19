@@ -1,6 +1,6 @@
 "use client";
 
-import { useResetPasswordMutation } from "@/redux/auth/authApi";
+import { useUpdatePasswordMutation } from "@/redux/auth/authApi";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -9,7 +9,8 @@ const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [resetPassword, { isLoading, isSuccess }] = useResetPasswordMutation();
+  const [updatePassword, { isLoading, isSuccess }] =
+    useUpdatePasswordMutation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,7 +20,7 @@ const ResetPassword = () => {
     }
 
     try {
-      resetPassword({
+      updatePassword({
         current_password: currentPassword,
         password: newPassword,
         password_confirmation: confirmPassword,
@@ -34,52 +35,60 @@ const ResetPassword = () => {
   };
 
   return (
-    <form
-      className="tw:space-y-4 tw:w-full tw:max-w-2xl"
-      onSubmit={handleSubmit}
-    >
+    <form className="tw:space-y-5 tw:max-w-xl" onSubmit={handleSubmit}>
+      {/* Current Password */}
       <div>
-        <label className="tw:block tw:mb-1 tw:font-medium">
+        <label className="tw:block tw:text-sm tw:font-medium tw:text-gray-700 tw:mb-2">
           Current Password
         </label>
         <input
           type="password"
           value={currentPassword}
           onChange={(e) => setCurrentPassword(e.target.value)}
-          className="tw:w-full tw:p-2 tw:border tw:rounded"
+          placeholder="Enter current password"
+          className="tw:w-full tw:px-4 tw:py-2 tw:border tw:border-gray-300 tw:rounded-lg focus:tw:ring-2 focus:tw:ring-blue-500 focus:tw:border-transparent tw:transition tw:outline-0"
           required
         />
       </div>
 
+      {/* New Password */}
       <div>
-        <label className="tw:block tw:mb-1 tw:font-medium">New Password</label>
+        <label className="tw:block tw:text-sm tw:font-medium tw:text-gray-700 tw:mb-2">
+          New Password
+        </label>
         <input
           type="password"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
-          className="tw:w-full tw:p-2 tw:border tw:rounded"
+          placeholder="Enter new password"
+          className="tw:w-full tw:px-4 tw:py-2 tw:border tw:border-gray-300 tw:rounded-lg focus:tw:ring-2 focus:tw:ring-blue-500 focus:tw:border-transparent tw:transition tw:outline-0"
           required
         />
       </div>
 
+      {/* Confirm New Password */}
       <div>
-        <label className="tw:block tw:mb-1 tw:font-medium">
+        <label className="tw:block tw:text-sm tw:font-medium tw:text-gray-700 tw:mb-2">
           Confirm New Password
         </label>
         <input
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
-          className="tw:w-full tw:p-2 tw:border tw:rounded"
+          placeholder="Confirm new password"
+          className="tw:w-full tw:px-4 tw:py-2 tw:border tw:border-gray-300 tw:rounded-lg focus:tw:ring focus:tw:ring-blue-500 focus:tw:border-transparent tw:transition tw:outline-0"
           required
         />
       </div>
 
       <button
         type="submit"
-        className="tw:w-full tw:px-4 tw:py-2 tw:text-white tw:rounded"
-        style={{ backgroundColor: "#359093" }}
         disabled={isLoading}
+        className={`tw:w-full tw:py-2 tw:text-white tw:font-medium tw:rounded-lg tw:transition-all ${
+          isLoading
+            ? "tw:bg-gray-400 tw:cursor-not-allowed"
+            : "tw:bg-gradient-to-r tw:from-blue-500 tw:to-indigo-600 tw:hover:from-blue-600 tw:hover:to-indigo-700"
+        }`}
       >
         {isLoading ? "Updating..." : "Update Password"}
       </button>

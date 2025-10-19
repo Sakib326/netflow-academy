@@ -368,7 +368,7 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                               <div className="tw:ml-4 tw:flex-1">
                                 <a
                                   href={`/courses/${bundle.slug}`}
-                                  className="tw:font-semibold tw:text-blue-700 hover:tw:underline tw:block tw:text-base"
+                                  className="tw:font-semibold tw:text-blue-700 tw:hover:underline tw:block tw:text-base"
                                 >
                                   {bundle.title}
                                 </a>

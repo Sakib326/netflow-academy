@@ -31,7 +31,7 @@ const Exam = () => {
         ${
           openSections.includes(-1)
             ? "tw:bg-green-50 tw:text-green-800 tw:border-b tw:border-green-200"
-            : "tw:bg-gray-50 hover:tw:bg-gray-100 tw:text-gray-700 hover:tw:text-gray-900"
+            : "tw:bg-gray-50 tw:hover:bg-gray-100 tw:text-gray-700 tw:hover:text-gray-900"
         }`}
         >
           <div className="tw:flex tw:items-center tw:gap-3">
@@ -78,7 +78,7 @@ const Exam = () => {
                           : `/courses/digital-marketing-mavericks-pro/exams/${exam?.id}`
                       }
                       className={`tw:flex tw:items-center tw:gap-3 tw:p-4 tw:pl-6 tw:text-sm
-                        hover:tw:bg-green-50 hover:tw:text-green-700 tw:transition-all
+                        tw:hover:bg-green-50 tw:hover:text-green-700 tw:transition-all
                         ${isActive ? "tw:bg-green-100 tw:text-green-800" : ""}`}
                     >
                       {/* Conditional icon */}

@@ -140,8 +140,8 @@ export default function RegisterForm() {
 
   return (
     <div className="tw:min-h-screen tw:bg-gradient-to-br tw:from-blue-50 tw:to-indigo-100 tw:flex tw:items-center tw:justify-center tw:p-4">
-      <div className="tw:max-w-md tw:w-full">
-        <div className="tw:bg-white tw:rounded-2xl tw:shadow-xl tw:p-8">
+      <div className="tw:max-w-xl tw:w-full">
+        <div className="tw:bg-white tw:rounded-2xl tw:shadow-lg tw:p-8">
           {/* Header */}
           <div className="tw:text-center tw:mb-8">
             <div className="tw:mx-auto tw:w-16 tw:h-16 tw:bg-gradient-to-r tw:from-blue-500 tw:to-indigo-600 tw:rounded-full tw:flex tw:items-center tw:justify-center tw:mb-4">
@@ -193,7 +193,7 @@ export default function RegisterForm() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`tw:w-full tw:px-4 tw:py-3 tw:border tw:rounded-lg tw:focus:ring-2 tw:focus:ring-blue-500 tw:focus:border-transparent tw:transition-all ${
+                className={`tw:w-full tw:outline-0 tw:px-4 tw:py-3 tw:border tw:rounded-lg tw:focus:ring-2 tw:focus:ring-blue-500 tw:focus:border-transparent tw:transition-all ${
                   errors.name
                     ? "tw:border-red-300 tw:bg-red-50"
                     : "tw:border-gray-300"
@@ -222,7 +222,7 @@ export default function RegisterForm() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className={`tw:w-full tw:px-4 tw:py-3 tw:border tw:rounded-lg tw:focus:ring-2 tw:focus:ring-blue-500 tw:focus:border-transparent tw:transition-all ${
+                className={`tw:w-full tw:outline-0 tw:px-4 tw:py-3 tw:border tw:rounded-lg tw:focus:ring-2 tw:focus:ring-blue-500 tw:focus:border-transparent tw:transition-all ${
                   errors.phone
                     ? "tw:border-red-300 tw:bg-red-50"
                     : "tw:border-gray-300"
@@ -251,7 +251,7 @@ export default function RegisterForm() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`tw:w-full tw:px-4 tw:py-3 tw:border tw:rounded-lg tw:focus:ring-2 tw:focus:ring-blue-500 tw:focus:border-transparent tw:transition-all ${
+                className={`tw:w-full tw:outline-0 tw:px-4 tw:py-3 tw:border tw:rounded-lg tw:focus:ring-2 tw:focus:ring-blue-500 tw:focus:border-transparent tw:transition-all ${
                   errors.email
                     ? "tw:border-red-300 tw:bg-red-50"
                     : "tw:border-gray-300"
@@ -280,7 +280,7 @@ export default function RegisterForm() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className={`tw:w-full tw:px-4 tw:py-3 tw:border tw:rounded-lg tw:focus:ring-2 tw:focus:ring-blue-500 tw:focus:border-transparent tw:transition-all ${
+                className={`tw:w-full tw:outline-0 tw:px-4 tw:py-3 tw:border tw:rounded-lg tw:focus:ring-2 tw:focus:ring-blue-500 tw:focus:border-transparent tw:transition-all ${
                   errors.password
                     ? "tw:border-red-300 tw:bg-red-50"
                     : "tw:border-gray-300"
@@ -309,7 +309,7 @@ export default function RegisterForm() {
                 name="password_confirmation"
                 value={formData.password_confirmation}
                 onChange={handleChange}
-                className={`tw:w-full tw:px-4 tw:py-3 tw:border tw:rounded-lg tw:focus:ring-2 tw:focus:ring-blue-500 tw:focus:border-transparent tw:transition-all ${
+                className={`tw:w-full tw:outline-0 tw:px-4 tw:py-3 tw:border tw:rounded-lg tw:focus:ring-2 tw:focus:ring-blue-500 tw:focus:border-transparent tw:transition-all ${
                   errors.password_confirmation
                     ? "tw:border-red-300 tw:bg-red-50"
                     : "tw:border-gray-300"
@@ -331,7 +331,7 @@ export default function RegisterForm() {
               className={`tw:w-full tw:py-3 tw:px-4 tw:rounded-lg tw:font-medium tw:text-white tw:transition-all tw:duration-200 ${
                 isLoading
                   ? "tw:bg-gray-400 tw:cursor-not-allowed"
-                  : "tw:bg-gradient-to-r tw:from-blue-500 tw:to-indigo-600 hover:tw:from-blue-600 hover:tw:to-indigo-700 tw:focus:outline-none tw:focus:ring-2 tw:focus:ring-blue-500 tw:focus:ring-offset-2 tw:transform hover:tw:scale-[1.02] active:tw:scale-[0.98]"
+                  : "tw:bg-gradient-to-r tw:from-blue-500 tw:to-indigo-600 tw:hover:from-blue-600 tw:hover:to-indigo-700 tw:focus:outline-none tw:focus:ring-2 tw:focus:ring-blue-500 tw:focus:ring-offset-2 tw:transform tw:hover:scale-[1.02] active:tw:scale-[0.98]"
               }`}
             >
               {isLoading ? (
@@ -369,9 +369,9 @@ export default function RegisterForm() {
               Already have an account?{" "}
               <Link
                 href="/login"
-                className="tw:font-medium tw:text-blue-600 hover:tw:text-blue-500 tw:transition-colors"
+                className="tw:font-medium tw:text-blue-600 tw:hover:text-blue-500 tw:transition-colors"
               >
-                Sign in
+                Login
               </Link>
             </p>
           </div>

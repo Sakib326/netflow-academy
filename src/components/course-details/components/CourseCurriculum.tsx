@@ -301,7 +301,7 @@ export default function CourseCurriculum({ course }: CourseCurriculumProps) {
                               className={`tw:flex tw:items-center tw:gap-3 tw:p-4 tw:rounded-lg tw:border-2 tw:cursor-pointer tw:transition-all tw:duration-200 ${
                                 examState.answers[idx] === option.key
                                   ? "tw:border-blue-500 tw:bg-blue-50 tw:shadow-md"
-                                  : "tw:border-gray-200 tw:bg-white hover:tw:border-gray-300 hover:tw:shadow-sm"
+                                  : "tw:border-gray-200 tw:bg-white tw:hover:border-gray-300 tw:hover:shadow-sm"
                               }`}
                             >
                               <input
@@ -333,7 +333,7 @@ export default function CourseCurriculum({ course }: CourseCurriculumProps) {
                         Object.keys(examState.answers).length !==
                         lesson.questions.length
                       }
-                      className="tw:px-8 tw:py-3 tw:bg-gradient-to-r tw:from-blue-600 tw:to-blue-700 tw:text-white tw:rounded-xl tw:font-semibold tw:shadow-lg hover:tw:shadow-xl tw:transition-all tw:duration-200 disabled:tw:opacity-50 disabled:tw:cursor-not-allowed disabled:tw:from-gray-400 disabled:tw:to-gray-500"
+                      className="tw:px-8 tw:py-3 tw:bg-gradient-to-r tw:from-blue-600 tw:to-blue-700 tw:text-white tw:rounded-xl tw:font-semibold tw:shadow-lg tw:hover:shadow-xl tw:transition-all tw:duration-200 disabled:tw:opacity-50 disabled:tw:cursor-not-allowed disabled:tw:from-gray-400 disabled:tw:to-gray-500"
                     >
                       🎯 Submit Exam
                     </button>
@@ -431,7 +431,7 @@ export default function CourseCurriculum({ course }: CourseCurriculumProps) {
                   <div className="tw:flex tw:justify-center">
                     <button
                       onClick={resetExam}
-                      className="tw:px-6 tw:py-3 tw:bg-gradient-to-r tw:from-purple-600 tw:to-purple-700 tw:text-white tw:rounded-xl tw:font-semibold tw:shadow-lg hover:tw:shadow-xl tw:transition-all tw:duration-200"
+                      className="tw:px-6 tw:py-3 tw:bg-gradient-to-r tw:from-purple-600 tw:to-purple-700 tw:text-white tw:rounded-xl tw:font-semibold tw:shadow-lg tw:hover:shadow-xl tw:transition-all tw:duration-200"
                     >
                       🔄 Retake Exam
                     </button>
@@ -543,7 +543,7 @@ export default function CourseCurriculum({ course }: CourseCurriculumProps) {
                         href={file.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="tw:inline-flex tw:items-center tw:gap-2 tw:px-4 tw:py-2 tw:bg-blue-600 tw:text-white tw:rounded-lg hover:tw:bg-blue-700 tw:transition-colors tw:font-medium tw:shadow-md hover:tw:shadow-lg"
+                        className="tw:inline-flex tw:items-center tw:gap-2 tw:px-4 tw:py-2 tw:bg-blue-600 tw:text-white tw:rounded-lg tw:hover:bg-blue-700 tw:transition-colors tw:font-medium tw:shadow-md tw:hover:shadow-lg"
                       >
                         <i className="bx bx-link-external"></i>
                         Open Link
@@ -553,7 +553,7 @@ export default function CourseCurriculum({ course }: CourseCurriculumProps) {
                         href={`${FILE_BASE_URL}/${file.file}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="tw:inline-flex tw:items-center tw:gap-2 tw:px-4 tw:py-2 tw:bg-green-600 tw:text-white tw:rounded-lg hover:tw:bg-green-700 tw:transition-colors tw:font-medium tw:shadow-md hover:tw:shadow-lg"
+                        className="tw:inline-flex tw:items-center tw:gap-2 tw:px-4 tw:py-2 tw:bg-green-600 tw:text-white tw:rounded-lg tw:hover:bg-green-700 tw:transition-colors tw:font-medium tw:shadow-md tw:hover:shadow-lg"
                       >
                         <i className="bx bx-download"></i>
                         Download
@@ -596,7 +596,7 @@ export default function CourseCurriculum({ course }: CourseCurriculumProps) {
           >
             {/* Module Header */}
             <div
-              className="tw:bg-gray-50 tw:px-4 tw:py-3 tw:cursor-pointer tw:flex tw:items-center tw:justify-between hover:tw:bg-gray-100 tw:transition-colors"
+              className="tw:bg-gray-50 tw:px-4 tw:py-3 tw:cursor-pointer tw:flex tw:items-center tw:justify-between tw:hover:bg-gray-100 tw:transition-colors"
               onClick={() => toggleModule(module.id)}
             >
               <div className="tw:flex tw:items-center tw:gap-3">
@@ -681,7 +681,7 @@ export default function CourseCurriculum({ course }: CourseCurriculumProps) {
                   .map((lesson, lessonIndex) => (
                     <div
                       key={lesson?.id}
-                      className="tw:px-4 tw:py-3 tw:border-t tw:border-gray-100 tw:flex tw:items-center tw:justify-between hover:tw:bg-gray-50 tw:transition-colors"
+                      className="tw:px-4 tw:py-3 tw:border-t tw:border-gray-100 tw:flex tw:items-center tw:justify-between tw:hover:bg-gray-50 tw:transition-colors"
                     >
                       <div className="tw:flex tw:items-center tw:gap-3 tw:flex-1">
                         <div className="tw:w-8 tw:h-8 tw:flex tw:items-center tw:justify-center tw:bg-gray-100 tw:rounded-full tw:text-xs tw:font-medium tw:text-gray-600">
@@ -697,7 +697,7 @@ export default function CourseCurriculum({ course }: CourseCurriculumProps) {
                           {lesson?.slug && course?.slug ? (
                             <Link
                               href={`/courses/${course.slug}/lessons/${lesson.slug}`}
-                              className="tw:font-medium tw:text-gray-900 hover:tw:text-blue-600 tw:transition-colors"
+                              className="tw:font-medium tw:text-gray-900 tw:hover:text-blue-600 tw:transition-colors"
                             >
                               {lesson.title ?? "Untitled Lesson"}
                             </Link>
@@ -731,7 +731,7 @@ export default function CourseCurriculum({ course }: CourseCurriculumProps) {
                         )}
 
                         <button
-                          className="tw:text-sm tw:text-blue-600 hover:tw:text-blue-700 tw:font-medium tw:underline tw:transition-colors"
+                          className="tw:text-sm tw:text-blue-600 tw:hover:text-blue-700 tw:font-medium tw:underline tw:transition-colors"
                           onClick={() => {
                             resetExam();
                             setModalState({
@@ -787,7 +787,7 @@ export default function CourseCurriculum({ course }: CourseCurriculumProps) {
                 setModalState({ isOpen: false, lesson: null });
                 resetExam();
               }}
-              className="tw:w-8 tw:h-8 tw:flex tw:items-center tw:justify-center tw:rounded-full tw:text-gray-400 hover:tw:text-gray-600 hover:tw:bg-gray-100 tw:transition-colors"
+              className="tw:w-8 tw:h-8 tw:flex tw:items-center tw:justify-center tw:rounded-full tw:text-gray-400 tw:hover:text-gray-600 tw:hover:bg-gray-100 tw:transition-colors"
               aria-label="Close modal"
             >
               <i className="bx bx-x tw:text-xl"></i>
@@ -806,7 +806,7 @@ export default function CourseCurriculum({ course }: CourseCurriculumProps) {
                 setModalState({ isOpen: false, lesson: null });
                 resetExam();
               }}
-              className="tw:px-6 tw:py-2 tw:bg-gray-600 tw:text-white tw:rounded-lg hover:tw:bg-gray-700 tw:transition-colors tw:font-medium"
+              className="tw:px-6 tw:py-2 tw:bg-gray-600 tw:text-white tw:rounded-lg tw:hover:bg-gray-700 tw:transition-colors tw:font-medium"
             >
               Close
             </button>

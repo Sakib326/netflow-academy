@@ -52,7 +52,7 @@ const ReplyForm = ({ discId }: Props) => {
 
             <button
               type="submit"
-              className="tw:mt-2 tw:bg-orange-600 tw:text-white tw:font-medium tw:px-8 tw:py-1 tw:rounded hover:tw:bg-orange-500"
+              className="tw:mt-2 tw:bg-orange-600 tw:text-white tw:font-medium tw:px-8 tw:py-1 tw:rounded tw:hover:bg-orange-500"
             >
               Reply
             </button>

@@ -58,7 +58,7 @@ const SingleDiscussion = ({ discussion }: Props) => {
           className="tw:w-full tw:focus:outline-gray-300 tw:border tw:border-gray-200 tw:rounded-md tw:p-2 tw:resize-none focus:tw:outline-none focus:tw:ring focus:tw:ring-blue-400"
           rows={2}
         />
-        <button className="tw:mt-2 tw:bg-orange-600 tw:text-white tw:font-medium tw:px-8 tw:py-1 tw:rounded hover:tw:bg-orange-500">
+        <button className="tw:mt-2 tw:bg-orange-600 tw:text-white tw:font-medium tw:px-8 tw:py-1 tw:rounded tw:hover:bg-orange-500">
           Reply
         </button>
       </div>

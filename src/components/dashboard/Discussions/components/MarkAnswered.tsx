@@ -23,7 +23,7 @@ const MarkAnswered = ({ thread }: Props) => {
         )}
 
       {user?.role !== "student" && thread?.is_question && (
-        <button className="tw:flex tw:items-center tw:space-x-1 tw-text-blue-600 hover:tw:underline">
+        <button className="tw:flex tw:items-center tw:space-x-1 tw:text-blue-600 tw:hover:underline">
           {thread?.is_answered ? (
             <FaCheckSquare className="tw:text-green-500" />
           ) : (

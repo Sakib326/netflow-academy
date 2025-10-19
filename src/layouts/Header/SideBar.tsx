@@ -1,65 +1,88 @@
-import React from "react";
+"use client";
+
 import Link from "next/link";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion } from "framer-motion";
 import { HiOutlineXMark } from "react-icons/hi2";
 
-const SideBar = ({ openSidebar, setOpenSidebar, navItems }: any) => {
+interface NavItem {
+  id: number;
+  label: string;
+  href: string;
+}
+
+interface SideBarProps {
+  openSidebar: boolean;
+  setOpenSidebar: (val: boolean) => void;
+  navItems: NavItem[];
+}
+
+const SideBar = ({ openSidebar, setOpenSidebar, navItems }: SideBarProps) => {
   return (
     <AnimatePresence>
       {openSidebar && (
         <>
+          {/* Background overlay */}
           <motion.div
-            className="tw:fixed tw:inset-0 tw:bg-black tw:bg-opacity-50 tw:z-1000"
+            className="tw:fixed tw:inset-0 tw:bg-black/50 tw:backdrop-blur-sm tw:z-[9998]"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.5 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setOpenSidebar(false)}
           />
 
-          {/* Sidebar */}
-          <motion.div
-            className="tw:fixed tw:top-0 tw:left-0 tw:w-64 tw:h-full tw:bg-white tw:shadow-xl tw:flex tw:flex-col tw:gap-4 tw:z-1000"
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            variants={{
-              hidden: { x: "-100%" },
-              visible: { x: 0 },
-            }}
-            transition={{ type: "tween" }}
+          {/* Sidebar container */}
+          <motion.aside
+            className="tw:fixed tw:top-0 tw:left-0 tw:h-full tw:w-72 tw:bg-gradient-to-b tw:from-white tw:to-gray-100 tw:shadow-2xl tw:z-[9999] tw:flex tw:flex-col tw:py-6 tw:px-5"
+            initial={{ x: "-100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "-100%" }}
+            transition={{ type: "spring", stiffness: 100, damping: 20 }}
           >
-            <div className="tw:border-b tw:py-2 tw:border-gray-200 tw:flex tw:justify-between tw:items-center">
-              <Link href="/">
+            {/* Header */}
+            <div className="tw:flex tw:items-center tw:justify-between tw:mb-6 tw:border-b tw:border-gray-200 tw:pb-3">
+              <Link href="/" onClick={() => setOpenSidebar(false)}>
                 <img
                   src="/assets/img/logo-edited.png"
                   alt="Netflow Academy"
-                  className="w-[100px] tw:max-h-[60px]"
+                  className="tw:w-[120px] tw:h-auto"
                 />
               </Link>
               <button
-                className="tw:self-center tw:p-2 tw:mr-3 tw:rounded tw:bg-gray-100"
                 onClick={() => setOpenSidebar(false)}
+                className="tw:p-2 tw:rounded-full tw:bg-gray-100 tw:hover:bg-gray-200 tw:transition"
               >
-                <HiOutlineXMark size={18} />
+                <HiOutlineXMark size={20} className="tw:text-gray-700" />
               </button>
             </div>
 
-            <div className="tw:px-3 tw:flex tw:flex-col">
-              {navItems?.map((item: any) => (
-                <Link
+            {/* Navigation Links */}
+            <nav className="tw:flex-1 tw:flex tw:flex-col tw:gap-2">
+              {navItems?.map((item) => (
+                <motion.div
                   key={item.id}
-                  href={item.href}
-                  className="tw:font-semibold tw:text-gray-800 tw:py-2 tw:px-1 tw:hover:text-[#063576] tw:hover:underline tw:underline-offset-2 tw:transition-colors"
-                  onClick={() => setOpenSidebar(false)}
+                  whileHover={{ x: 6 }}
+                  transition={{ type: "tween", duration: 0.2 }}
                 >
-                  {item.label}
-                </Link>
+                  <Link
+                    href={item.href}
+                    className="tw:block tw:px-3 tw:py-2 tw:rounded-lg tw:font-medium tw:text-gray-700 tw:hover:bg-[#063576]/10 tw:hover:text-[#063576] tw:transition-all"
+                    onClick={() => setOpenSidebar(false)}
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
               ))}
+            </nav>
+
+            {/* Footer */}
+            <div className="tw:mt-auto tw:pt-4 tw:border-t tw:border-gray-200 tw:text-sm tw:text-gray-500 tw:text-center">
+              <p>© {new Date().getFullYear()} Netflow Academy</p>
             </div>
-          </motion.div>
+          </motion.aside>
         </>
       )}
     </AnimatePresence>
   );
 };
+
 export default SideBar;

@@ -59,7 +59,7 @@ const ResultPage = ({ params }: Props) => {
 
       <div className="tw:grid tw:grid-cols-1 md:tw:grid-cols-3 tw:gap-4 tw:my-6">
         {/* Started At */}
-        <div className="tw:flex tw:items-center tw:gap-3 tw:bg-blue-50 tw:p-2 tw:rounded-lg tw:shadow hover:tw:shadow-md tw:transition">
+        <div className="tw:flex tw:items-center tw:gap-3 tw:bg-blue-50 tw:p-2 tw:rounded-lg tw:shadow tw:hover:shadow-md tw:transition">
           <FaClock className="tw:text-blue-500 tw:w-4 tw:h-4" />
           <p className="tw:text-gray-700 tw:text-sm tw:m-0">
             <span className="tw:font-semibold">Started At:</span>{" "}
@@ -68,7 +68,7 @@ const ResultPage = ({ params }: Props) => {
         </div>
 
         {/* Submitted At */}
-        <div className="tw:flex tw:items-center tw:gap-3 tw:bg-yellow-50 tw:p-2 tw:rounded-lg tw:shadow hover:tw:shadow-md tw:transition">
+        <div className="tw:flex tw:items-center tw:gap-3 tw:bg-yellow-50 tw:p-2 tw:rounded-lg tw:shadow tw:hover:shadow-md tw:transition">
           <FaPaperPlane className="tw:text-yellow-500 tw:w-4 tw:h-4" />
           <p className="tw:text-gray-700 tw:text-sm tw:m-0">
             <span className="tw:font-semibold">Submitted At:</span>{" "}
@@ -77,7 +77,7 @@ const ResultPage = ({ params }: Props) => {
         </div>
 
         {/* Graded At */}
-        <div className="tw:flex tw:items-center tw:gap-3 tw:bg-green-50 tw:p-2 tw:rounded-lg tw:shadow hover:tw:shadow-md tw:transition">
+        <div className="tw:flex tw:items-center tw:gap-3 tw:bg-green-50 tw:p-2 tw:rounded-lg tw:shadow tw:hover:shadow-md tw:transition">
           <FaCheckCircle className="tw:text-green-500 tw:w-4 tw:h-4" />
           <p className="tw:text-gray-700 tw:text-sm tw:m-0">
             <span className="tw:font-semibold">Graded At:</span>{" "}
@@ -88,14 +88,14 @@ const ResultPage = ({ params }: Props) => {
       <div className="tw:flex tw:gap-4">
         <Link
           href={`/courses/digital-marketing-mavericks-pro/exams/${params?.exam}/result/details`}
-          className="tw:bg-[#2957FB] tw:text-white tw:px-4 tw:py-2 tw:rounded hover:tw:bg-blue-600"
+          className="tw:bg-[#2957FB] tw:text-white tw:px-4 tw:py-2 tw:rounded tw:hover:bg-blue-600"
         >
           View Details
         </Link>
 
         {/* <Link
           href="/dashboard"
-          className="tw:bg-gray-500 tw:text-white tw:px-4 tw:py-2 tw:rounded hover:tw:bg-gray-600"
+          className="tw:bg-gray-500 tw:text-white tw:px-4 tw:py-2 tw:rounded tw:hover:bg-gray-600"
         >
           Go to Dashboard
         </Link> */}

@@ -110,7 +110,7 @@ const DiscussionForm = ({ courseId = 3 }: Props) => {
 
               <button
                 type="submit"
-                className="tw:bg-orange-600 tw:text-white tw:text-sm tw:px-3 tw:py-2 tw:rounded hover:tw:bg-blue-700 disabled:tw:opacity-50"
+                className="tw:bg-orange-600 tw:text-white tw:text-sm tw:px-3 tw:py-2 tw:rounded tw:hover:bg-blue-700 disabled:tw:opacity-50"
                 disabled={isLoading}
               >
                 {isLoading ? "Submitting..." : "Create"}

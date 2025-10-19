@@ -9,6 +9,7 @@ import {
   MdQuestionAnswer,
   MdCardTravel,
 } from "react-icons/md";
+import { LiaCertificateSolid } from "react-icons/lia";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
@@ -41,6 +42,11 @@ const Sidebar = () => {
       href: "/dashboard/discussions",
       label: "Discussions",
       icon: <RiDiscussLine />,
+    },
+    {
+      href: "/dashboard/certificates",
+      label: "Certificates",
+      icon: <LiaCertificateSolid />,
     },
   ];
 

@@ -90,8 +90,8 @@ const Setting = () => {
           <fieldset className="">
             <label
               htmlFor="avatar"
-              // className="tw-flex tw-items-center tw-justify-center tw-w-full"
-              className="tw:absolute tw:bottom-0 tw:bg-[#359093] tw:opacity-80 tw:overflow-hidden tw:w-full tw:py-4 tw:flex tw:items-center tw:justify-center tw:cursor-pointer tw:text-white tw:shadow-md hover:tw:bg-[#2a6c74]"
+              // className="tw:flex tw:items-center tw:justify-center tw:w-full"
+              className="tw:absolute tw:bottom-0 tw:bg-[#359093] tw:opacity-80 tw:overflow-hidden tw:w-full tw:py-4 tw:flex tw:items-center tw:justify-center tw:cursor-pointer tw:text-white tw:shadow-md tw:hover:bg-[#2a6c74]"
             >
               <FaCamera className="tw:text-xl" />
             </label>
@@ -144,7 +144,7 @@ const Setting = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className="tw:mt-4 tw:px-6 tw:py-2 tw:bg-[#359093] tw:text-white tw:rounded-md hover:tw:bg-[#2a6c74] tw:disabled:tw:opacity-50"
+          className="tw:mt-4 tw:px-6 tw:py-2 tw:bg-[#359093] tw:text-white tw:rounded-md tw:hover:bg-[#2a6c74] tw:disabled:tw:opacity-50"
         >
           {isLoading ? "Updating..." : "Save Changes"}
         </button>

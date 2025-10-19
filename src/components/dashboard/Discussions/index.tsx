@@ -91,7 +91,7 @@ const Discussions = () => {
         ))}
       </ul>
 
-      <div className="tw-text-center tw-py-4 tw-text-gray-500">
+      <div className="tw:text-center tw:py-4 tw:text-gray-500">
         {isFetching && hasMore && (
           <h6 className="tw:text-center tw:py-4">Loading...</h6>
         )}

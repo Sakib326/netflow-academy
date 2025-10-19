@@ -61,6 +61,7 @@ export const apiSlice = createApi({
     "Exams",
     "ExamResult",
     "ExamResultDetails",
+    "Certificate",
   ],
   keepUnusedDataFor: 0,
   endpoints: (builder) => ({}),

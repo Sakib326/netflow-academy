@@ -216,7 +216,7 @@ const LessonSidebar = () => {
                     ${
                       isOpen
                         ? "tw:bg-blue-50 tw:text-blue-800 tw:border-b tw:border-blue-200"
-                        : "tw:bg-gray-50 hover:tw:bg-gray-100 tw:text-gray-700 hover:tw:text-gray-900"
+                        : "tw:bg-gray-50 tw:hover:bg-gray-100 tw:text-gray-700 tw:hover:text-gray-900"
                     }
                   `}
                   >
@@ -290,7 +290,7 @@ const LessonSidebar = () => {
                     <div className="tw:flex tw:items-center tw:gap-2">
                       <div
                         className={`
-                      tw-w-8 tw-h-1 tw:rounded-full tw:bg-gray-200
+                      tw:w-8 tw:h-1 tw:rounded-full tw:bg-gray-200
                     `}
                       ></div>
                       {isOpen ? (
@@ -330,7 +330,7 @@ const LessonSidebar = () => {
                                 ${
                                   isCurrentLesson
                                     ? "tw:bg-blue-100 tw:text-blue-800 tw:border-r-4 tw:border-blue-600"
-                                    : "hover:tw:bg-blue-50 hover:tw:text-blue-700"
+                                    : "tw:hover:bg-blue-50 tw:hover:text-blue-700"
                                 }
                               `}
                                 >
@@ -345,7 +345,7 @@ const LessonSidebar = () => {
                                   ${
                                     isCurrentLesson
                                       ? "tw:text-blue-800"
-                                      : "tw:text-gray-700 group-hover:tw:text-blue-700"
+                                      : "tw:text-gray-700 group-tw:hover:text-blue-700"
                                   }
                                 `}
                                     >
@@ -415,7 +415,7 @@ const LessonSidebar = () => {
                     ${
                       isOpen
                         ? "tw:bg-blue-50 tw:text-blue-800 tw:border-b tw:border-blue-200"
-                        : "tw:bg-gray-50 hover:tw:bg-gray-100 tw:text-gray-700 hover:tw:text-gray-900"
+                        : "tw:bg-gray-50 tw:hover:bg-gray-100 tw:text-gray-700 tw:hover:text-gray-900"
                     }
                   `}
                   >
@@ -489,7 +489,7 @@ const LessonSidebar = () => {
                     <div className="tw:flex tw:items-center tw:gap-2">
                       <div
                         className={`
-                      tw-w-8 tw-h-1 tw:rounded-full tw:bg-gray-200
+                      tw:w-8 tw:h-1 tw:rounded-full tw:bg-gray-200
                     `}
                       ></div>
                       {isOpen ? (
@@ -529,7 +529,7 @@ const LessonSidebar = () => {
                                 ${
                                   isCurrentLesson
                                     ? "tw:bg-blue-100 tw:text-blue-800 tw:border-r-4 tw:border-blue-600"
-                                    : "hover:tw:bg-blue-50 hover:tw:text-blue-700"
+                                    : "tw:hover:bg-blue-50 tw:hover:text-blue-700"
                                 }
                               `}
                                 >
@@ -544,7 +544,7 @@ const LessonSidebar = () => {
                                   ${
                                     isCurrentLesson
                                       ? "tw:text-blue-800"
-                                      : "tw:text-gray-700 group-hover:tw:text-blue-700"
+                                      : "tw:text-gray-700 group-tw:hover:text-blue-700"
                                   }
                                 `}
                                     >

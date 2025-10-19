@@ -380,7 +380,7 @@ export default function LessonPage() {
                           className={`tw:flex tw:items-center tw:gap-3 tw:p-4 tw:rounded-lg tw:border-2 tw:cursor-pointer tw:transition-all tw:duration-200 ${
                             isSelected
                               ? "tw:bg-blue-50 tw:border-blue-400 tw:shadow-sm"
-                              : "tw:bg-white tw:border-gray-200 hover:tw:border-gray-300 hover:tw:shadow-sm"
+                              : "tw:bg-white tw:border-gray-200 tw:hover:border-gray-300 tw:hover:shadow-sm"
                           }`}
                         >
                           <input
@@ -493,7 +493,7 @@ export default function LessonPage() {
               multiple
               onChange={handleFileChange}
               ref={fileInputRef}
-              className="tw:block tw:w-full tw:text-gray-800 tw:file:mr-4 tw:file:py-2 tw:file:px-4 tw:file:rounded-lg tw:file:border-0 tw:file:text-sm tw:file:font-semibold tw:file:bg-blue-50 tw:file:text-blue-700 hover:tw:file:bg-blue-100"
+              className="tw:block tw:w-full tw:text-gray-800 tw:file:mr-4 tw:file:py-2 tw:file:px-4 tw:file:rounded-lg tw:file:border-0 tw:file:text-sm tw:file:font-semibold tw:file:bg-blue-50 tw:file:text-blue-700 tw:hover:file:bg-blue-100"
             />
           </div>
 
@@ -511,7 +511,7 @@ export default function LessonPage() {
 
           <button
             type="submit"
-            className="tw:w-full tw:bg-green-600 tw:text-white tw:px-8 tw:py-4 tw:rounded-lg tw:font-semibold tw:text-lg tw:transition-colors tw:duration-200 disabled:tw:bg-gray-400 disabled:tw:cursor-not-allowed hover:tw:bg-green-700"
+            className="tw:w-full tw:bg-green-600 tw:text-white tw:px-8 tw:py-4 tw:rounded-lg tw:font-semibold tw:text-lg tw:transition-colors tw:duration-200 disabled:tw:bg-gray-400 disabled:tw:cursor-not-allowed tw:hover:bg-green-700"
             disabled={isSubmitting || !content.trim()}
           >
             {isSubmitting ? "Submitting..." : "Submit Assignment"}
@@ -590,7 +590,7 @@ export default function LessonPage() {
                           href={href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="tw:inline-flex tw:items-center tw:px-4 tw:py-2 tw:bg-blue-600 tw:text-white tw:rounded-lg tw:font-medium tw:transition-colors hover:tw:bg-blue-700"
+                          className="tw:inline-flex tw:items-center tw:px-4 tw:py-2 tw:bg-blue-600 tw:text-white tw:rounded-lg tw:font-medium tw:transition-colors tw:hover:bg-blue-700"
                         >
                           🔗 Open Link
                         </a>
@@ -603,7 +603,7 @@ export default function LessonPage() {
                           target="_blank"
                           rel="noopener noreferrer"
                           download
-                          className="tw:inline-flex tw:items-center tw:px-4 tw:py-2 tw:bg-green-600 tw:text-white tw:rounded-lg tw:font-medium tw:transition-colors hover:tw:bg-green-700"
+                          className="tw:inline-flex tw:items-center tw:px-4 tw:py-2 tw:bg-green-600 tw:text-white tw:rounded-lg tw:font-medium tw:transition-colors tw:hover:bg-green-700"
                         >
                           📥 Download
                         </a>
@@ -622,7 +622,7 @@ export default function LessonPage() {
         latestSubmission &&
         Array.isArray(latestSubmission.content?.answers) && (
           <div className="tw:bg-white tw:p-8 tw:rounded-xl tw:shadow-sm tw:border tw:border-gray-200">
-            <h2 className="tw-font-bold tw:text-2xl tw:mb-6 tw:text-gray-900">
+            <h2 className="tw:font-bold tw:text-2xl tw:mb-6 tw:text-gray-900">
               📊 Quiz Results
             </h2>
 
@@ -655,7 +655,7 @@ export default function LessonPage() {
                       }}
                     ></div>
                   </div>
-                  <div className="tw-text-center tw-text-blue-700 tw:font-medium tw:mt-2">
+                  <div className="tw:text-center tw:text-blue-700 tw:font-medium tw:mt-2">
                     {Math.round(
                       (Number(latestSubmission.score) /
                         Number(latestSubmission.max_score)) *
@@ -912,7 +912,7 @@ export default function LessonPage() {
                           href={fullFileUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="tw:flex-shrink-0 tw:ml-4 tw:inline-flex tw:items-center tw:px-4 tw:py-2 tw:bg-blue-600 tw:text-white tw:rounded-lg tw:font-medium tw:transition-colors hover:tw:bg-blue-700"
+                          className="tw:flex-shrink-0 tw:ml-4 tw:inline-flex tw:items-center tw:px-4 tw:py-2 tw:bg-blue-600 tw:text-white tw:rounded-lg tw:font-medium tw:transition-colors tw:hover:bg-blue-700"
                         >
                           <span className="tw:mr-2">📥</span>
                           Download

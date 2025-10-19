@@ -58,7 +58,7 @@ export default function OrdersDashboardPage() {
               <tr key={order.id}>
                 <td>
                   <button
-                    className="tw:text-blue-600 hover:tw:underline"
+                    className="tw:text-blue-600 tw:hover:underline"
                     onClick={() => setSelectedOrder(order.id)}
                   >
                     {order.id}
@@ -66,7 +66,7 @@ export default function OrdersDashboardPage() {
                 </td>
                 <td>
                   <button
-                    className="tw:text-blue-600 hover:tw:underline"
+                    className="tw:text-blue-600 tw:hover:underline"
                     onClick={() => setSelectedOrder(order.order_number)}
                   >
                     {order.order_number}
@@ -84,7 +84,7 @@ export default function OrdersDashboardPage() {
                 <td>
                   {order.status === "pending" && (
                     <button
-                      className="tw:text-red-600 hover:tw:underline"
+                      className="tw:text-red-600 tw:hover:underline"
                       onClick={() => handleCancelOrder(order.order_number)}
                       disabled={cancelLoading}
                     >

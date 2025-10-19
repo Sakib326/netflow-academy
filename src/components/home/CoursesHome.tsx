@@ -102,14 +102,14 @@ export default function CoursesHome({ courses }: Props) {
                         {course?.is_bundle &&
                           course?.group_courses &&
                           course?.group_courses?.length > 0 && (
-                            <div className="tw-mt-2 tw-mb-2 tw-text-xs tw-bg-gray-100 tw-p-2 tw-rounded">
+                            <div className="tw:mt-2 tw:mb-2 tw:text-xs tw:bg-gray-100 tw:p-2 tw:rounded">
                               <strong>Includes:</strong>
-                              <ul className="tw-list-disc tw-ml-4">
+                              <ul className="tw:list-disc tw:ml-4">
                                 {course.group_courses.map((gc) => (
                                   <li key={gc.id}>
                                     <Link
                                       href={`/courses/${gc.slug}`}
-                                      className="tw-underline"
+                                      className="tw:underline"
                                     >
                                       {gc.title}
                                     </Link>

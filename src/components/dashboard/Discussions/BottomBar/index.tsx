@@ -57,13 +57,13 @@ const BottomBar = () => {
         <Link
           key={link.href}
           href={link.href}
-          className={`tw:flex tw:flex-col tw:items-center tw-justify-center tw-text-sm ${
+          className={`tw:flex tw:flex-col tw:items-center tw:justify-center tw:text-sm ${
             pathname === link.href
-              ? "tw-text-[#359093]"
+              ? "tw:text-[#359093]"
               : "tw:text-gray-500 tw:hover:text-[#359093]"
           }`}
         >
-          <span className="tw-text-2xl">{link.icon}</span>
+          <span className="tw:text-2xl">{link.icon}</span>
           {/* <span>{link.label}</span> */}
         </Link>
       ))}

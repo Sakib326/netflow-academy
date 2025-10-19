@@ -93,7 +93,7 @@ export default function LiveSupportPage() {
               <p className="tw:text-white/80 tw:text-sm tw:mb-4">{error}</p>
               <button
                 onClick={() => window.location.reload()}
-                className="tw:w-full tw:bg-white/20 tw:backdrop-blur tw:text-white tw:font-semibold tw:py-2 tw:rounded-xl hover:tw:bg-white/30 tw:transition-all tw:duration-300"
+                className="tw:w-full tw:bg-white/20 tw:backdrop-blur tw:text-white tw:font-semibold tw:py-2 tw:rounded-xl tw:hover:bg-white/30 tw:transition-all tw:duration-300"
               >
                 Retry
               </button>
@@ -125,7 +125,7 @@ export default function LiveSupportPage() {
                 {formatDate(zoomData.created_at)}
               </div>
               <a href={zoomData.link} target="_blank" rel="noopener noreferrer">
-                <button className="tw:w-full tw:bg-white/20 tw:backdrop-blur tw:text-white tw:font-bold tw:py-2.5 tw:rounded-xl hover:tw:bg-white/30 tw:transition-all tw:duration-300 tw:shadow-lg hover:tw:shadow-xl tw:transform hover:tw:scale-105">
+                <button className="tw:w-full tw:bg-white/20 tw:backdrop-blur tw:text-white tw:font-bold tw:py-2.5 tw:rounded-xl tw:hover:bg-white/30 tw:transition-all tw:duration-300 tw:shadow-lg tw:hover:shadow-xl tw:transform tw:hover:scale-105">
                   Join Live Session
                 </button>
               </a>
