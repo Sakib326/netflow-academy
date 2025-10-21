@@ -171,6 +171,10 @@ export default function LessonPage() {
     formData.append("content", "");
     files.forEach((file) => formData.append("files[]", file));
 
+    console.log({
+      lessonSlug,
+    });
+
     try {
       await submitLesson({ slug: lesson.slug, data: formData }).unwrap();
       setSubmitSuccess("Quiz submitted successfully!");
@@ -190,11 +194,24 @@ export default function LessonPage() {
 
     const formData = new FormData();
     formData.append("content", content);
+    console.log({
+      content,
+    });
+
     formData.append("answers", "");
     files.forEach((file) => formData.append("files[]", file));
 
+    // Send as JSON object instead of FormData
+    const payload = {
+      content: content,
+      answers: "", // Empty string as required
+    };
+
     try {
-      await submitLesson({ slug: lesson.slug, data: formData }).unwrap();
+      await submitLesson({
+        slug: lesson.slug,
+        data: payload, // Send plain object (will be converted to JSON)
+      }).unwrap();
       setSubmitSuccess("Assignment submitted successfully!");
       setContent("");
       setFiles([]);
@@ -484,7 +501,7 @@ export default function LessonPage() {
             />
           </div>
 
-          <div className="tw:mb-6">
+          {/* <div className="tw:mb-6">
             <label className="tw:block tw:font-semibold tw:text-lg tw:mb-3 tw:text-gray-800">
               Attach Files (optional)
             </label>
@@ -495,7 +512,7 @@ export default function LessonPage() {
               ref={fileInputRef}
               className="tw:block tw:w-full tw:text-gray-800 tw:file:mr-4 tw:file:py-2 tw:file:px-4 tw:file:rounded-lg tw:file:border-0 tw:file:text-sm tw:file:font-semibold tw:file:bg-blue-50 tw:file:text-blue-700 tw:hover:file:bg-blue-100"
             />
-          </div>
+          </div> */}
 
           {submitError && (
             <div className="tw:bg-red-50 tw:border tw:border-red-200 tw:text-red-700 tw:px-4 tw:py-3 tw:rounded-lg tw:mb-4">

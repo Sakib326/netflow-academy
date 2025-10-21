@@ -40,15 +40,32 @@ export const lessonApi = apiSlice.injectEndpoints({
     // Submit lesson
     submitLessonBySlug: builder.mutation<
       { success: boolean; submission: Submission },
-      { slug: string; data: FormData }
+      { slug: string; data: any }
     >({
       query: ({ slug, data }) => ({
         url: `/lessons/${slug}/submit`,
         method: "POST",
+        // body is FormData; do not set Content-Type header here
         body: data,
       }),
-      invalidatesTags: (result, error, arg) =>
-        result ? [{ type: "Submission", id: arg.slug }] : [],
+      // optional: log success/failure without interfering with the request
+      onQueryStarted: async ({ slug }, { queryFulfilled }) => {
+        try {
+          const { data: response } = await queryFulfilled;
+          // handle success if needed, e.g. optimistic updates
+          // response.submission contains the saved submission
+        } catch (err) {
+          // handle error if needed
+        }
+      },
+      // invalidate the created submission and the submission list so queries refetch
+      invalidatesTags: (result, error) =>
+        result
+          ? [
+              { type: "Submission" as const, id: result.submission.id },
+              { type: "Submission" as const, id: "LIST" },
+            ]
+          : [{ type: "Submission" as const, id: "LIST" }],
     }),
 
     // Fetch submissions for a lesson

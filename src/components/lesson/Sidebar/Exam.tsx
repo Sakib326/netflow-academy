@@ -12,9 +12,12 @@ const Exam = () => {
   const [openSections, setOpenSections] = useState<number[]>([]);
   const pathname = usePathname(); // current URL path
 
+  const courseId = Number(localStorage.getItem("selectedCourseId"));
+  const batchId = Number(localStorage.getItem("selectedBatchId"));
+
   const { data } = useGetExamsByCourseAndBatchQuery({
-    course_id: 2,
-    batch_id: 3,
+    course_id: courseId,
+    batch_id: batchId,
   });
 
   return (

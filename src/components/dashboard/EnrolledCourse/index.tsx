@@ -21,7 +21,14 @@ const EnrolledCourse = () => {
     });
   };
 
-  const handleCourseClick = (courseSlug: string) => {
+  const handleCourseClick = (
+    courseSlug: string,
+    courseId?: number,
+    batchId?: number
+  ) => {
+    localStorage.setItem("selectedCourseSlug", courseSlug);
+    localStorage.setItem("selectedCourseId", String(courseId));
+    localStorage.setItem("selectedBatchId", String(batchId));
     // For Next.js App Router
     router.push(`/courses/${courseSlug}/lessons/start-now`);
 
@@ -65,7 +72,13 @@ const EnrolledCourse = () => {
             <div
               key={enrolled.enrollment_id}
               className="tw:bg-white tw:rounded-lg tw:border tw:border-gray-200 tw:p-4 tw:hover:shadow-md tw:transition-shadow tw:duration-200 tw:cursor-pointer"
-              onClick={() => handleCourseClick(enrolled.course.slug)}
+              onClick={() =>
+                handleCourseClick(
+                  enrolled.course.slug,
+                  enrolled.course.id,
+                  enrolled.batch.id
+                )
+              }
             >
               <div className="tw:flex tw:gap-4">
                 {/* Compact Thumbnail */}
