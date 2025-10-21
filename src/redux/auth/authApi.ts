@@ -2,6 +2,7 @@ import { User } from "@/types/user";
 import { apiSlice } from "../api/apiSlice";
 import { register, login, profile } from "./authSlice";
 import Cookies from "js-cookie";
+import ResetPassword from "@/app/reset-password/page";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
