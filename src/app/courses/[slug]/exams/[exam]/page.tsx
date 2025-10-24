@@ -101,10 +101,12 @@ const ExamPage = ({ params }: Props) => {
     try {
       const submissionData = {
         exam_id: params.exam,
-        answers: userAnswers.map((selected, index) => ({
-          question_id: examData.content[index].question_id,
-          selected: selected !== -1 ? String(selected) : null,
-        })),
+        answers: userAnswers
+          .map((selected, index) => ({
+            question_id: examData.content[index].question_id,
+            selected: selected !== -1 ? String(selected) : null,
+          }))
+          .filter((answer) => answer.selected !== null), // Filter out null selected values
       };
 
       await finishExam(submissionData);
