@@ -184,19 +184,6 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
 
               <div className="scourse_meta">
                 <div className="smeta">
-                  <img
-                    src={instructor.avatar ?? "/assets/img/instructor.jpg"}
-                    alt="author"
-                  />
-                  <div className="smeta_text">
-                    <span>Instructor:</span>
-                    <p>
-                      <a href="#">{instructor.name ?? "N/A"}</a>
-                    </p>
-                  </div>
-                </div>
-
-                <div className="smeta">
                   <span>Category:</span>
                   <p>{category.name ?? "N/A"}</p>
                 </div>
@@ -276,18 +263,6 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                     aria-selected="false"
                   >
                     Review
-                  </button>
-                  <button
-                    className="nav-link"
-                    id="nav-instructor-tab"
-                    data-bs-toggle="tab"
-                    data-bs-target="#nav-instructor"
-                    type="button"
-                    role="tab"
-                    aria-controls="nav-disabled"
-                    aria-selected="false"
-                  >
-                    Instructor
                   </button>
                 </div>
               </nav>
