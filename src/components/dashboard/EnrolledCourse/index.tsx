@@ -121,12 +121,58 @@ const EnrolledCourse = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="tw:inline-flex tw:items-center tw:gap-1 tw:text-blue-600 tw:hover:text-blue-700 tw:text-2xl tw:font-medium"
-                        onClick={(e) => e.stopPropagation()} // Prevent card click when clicking zoom link
+                        onClick={(e) => e.stopPropagation()}
                       >
                         🔗 Join live Class
                       </a>
                     )}
                   </div>
+
+                  {/* Class Routine Info */}
+                  {enrolled.batch.class_routine && (
+                    <div className="tw:mt-2 tw:pt-2 tw:border-t tw:border-gray-100">
+                      {/* Schedule Days */}
+                      <div className="tw:mb-2">
+                        <div className="tw:text-xs tw:font-medium tw:text-gray-500 tw:mb-1">
+                          Schedule:
+                        </div>
+                        <div className="tw:flex tw:flex-wrap tw:gap-2">
+                          {enrolled.batch.class_routine.days.map((day, idx) => (
+                            <span
+                              key={idx}
+                              className="tw:inline-flex tw:items-center tw:gap-1 tw:text-xs tw:bg-blue-50 tw:text-blue-700 tw:px-2 tw:py-1 tw:rounded"
+                            >
+                              📅 {day.day} • {day.start_time} - {day.end_time}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Today's Class Status */}
+                      {enrolled.batch.class_routine.is_class_today && (
+                        <div className="tw:text-xs tw:inline-flex tw:items-center tw:gap-1 tw:bg-green-50 tw:text-green-700 tw:px-2 tw:py-1 tw:rounded">
+                          ✅ Class today at{" "}
+                          {enrolled.batch.class_routine.today_class_time}
+                        </div>
+                      )}
+
+                      {enrolled.batch.class_routine.is_off_today && (
+                        <div className="tw:text-xs tw:inline-flex tw:items-center tw:gap-1 tw:bg-yellow-50 tw:text-yellow-700 tw:px-2 tw:py-1 tw:rounded">
+                          🔴 Off today
+                        </div>
+                      )}
+
+                      {/* Off Dates */}
+                      {enrolled.batch.class_routine.off_dates.length > 0 && (
+                        <div className="tw:mt-2 tw:text-xs tw:text-gray-500">
+                          <span className="tw:font-medium">Off dates:</span>{" "}
+                          {enrolled.batch.class_routine.off_dates
+                            .map((offDate) => offDate.date)
+                            .join(", ")}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

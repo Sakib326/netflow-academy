@@ -31,6 +31,26 @@ export interface EnrolledCourse {
   next_class_time: string | null;
 }
 
+export interface ClassDay {
+  day: string;
+  start_time: string;
+  end_time: string;
+}
+
+export interface OffDate {
+  date: string;
+  note: string | null;
+}
+
+export interface ClassRoutine {
+  id: number;
+  days: ClassDay[];
+  off_dates: OffDate[];
+  is_class_today: boolean;
+  is_off_today: boolean;
+  today_class_time: string | null;
+}
+
 export interface Batch {
   id: number;
   name: string;
@@ -44,6 +64,7 @@ export interface Batch {
   timezone: string | null;
   days_until_start: number | null;
   days_until_end: number | null;
+  class_routine?: ClassRoutine;
 }
 
 export interface Course {
