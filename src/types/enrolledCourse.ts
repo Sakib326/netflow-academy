@@ -48,7 +48,7 @@ export interface ClassRoutine {
   off_dates: OffDate[];
   is_class_today: boolean;
   is_off_today: boolean;
-  today_class_time: string | null;
+  today_class_time: any;
 }
 
 export interface Batch {

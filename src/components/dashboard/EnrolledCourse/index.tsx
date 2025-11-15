@@ -137,24 +137,38 @@ const EnrolledCourse = () => {
                           Schedule:
                         </div>
                         <div className="tw:flex tw:flex-wrap tw:gap-2">
-                          {enrolled.batch.class_routine.days.map((day, idx) => (
-                            <span
-                              key={idx}
-                              className="tw:inline-flex tw:items-center tw:gap-1 tw:text-xs tw:bg-blue-50 tw:text-blue-700 tw:px-2 tw:py-1 tw:rounded"
-                            >
-                              📅 {day.day} • {day.start_time} - {day.end_time}
-                            </span>
-                          ))}
+                          {enrolled.batch.class_routine.days
+                            .filter((day) => day && day.day)
+                            .map((day, idx) => (
+                              <span
+                                key={idx}
+                                className="tw:inline-flex tw:items-center tw:gap-1 tw:text-xs tw:bg-blue-50 tw:text-blue-700 tw:px-2 tw:py-1 tw:rounded"
+                              >
+                                📅 {day.day}
+                                {day.start_time &&
+                                  day.end_time &&
+                                  ` • ${day.start_time} - ${day.end_time}`}
+                              </span>
+                            ))}
                         </div>
                       </div>
 
                       {/* Today's Class Status */}
-                      {enrolled.batch.class_routine.is_class_today && (
-                        <div className="tw:text-xs tw:inline-flex tw:items-center tw:gap-1 tw:bg-green-50 tw:text-green-700 tw:px-2 tw:py-1 tw:rounded">
-                          ✅ Class today at{" "}
-                          {enrolled.batch.class_routine.today_class_time}
-                        </div>
-                      )}
+                      {enrolled.batch.class_routine.is_class_today &&
+                        enrolled.batch.class_routine.today_class_time && (
+                          <div className="tw:text-xs tw:inline-flex tw:items-center tw:gap-1 tw:bg-green-50 tw:text-green-700 tw:px-2 tw:py-1 tw:rounded">
+                            ✅ Class today at{" "}
+                            {
+                              enrolled.batch.class_routine.today_class_time
+                                .start_time
+                            }{" "}
+                            -{" "}
+                            {
+                              enrolled.batch.class_routine.today_class_time
+                                .end_time
+                            }
+                          </div>
+                        )}
 
                       {enrolled.batch.class_routine.is_off_today && (
                         <div className="tw:text-xs tw:inline-flex tw:items-center tw:gap-1 tw:bg-yellow-50 tw:text-yellow-700 tw:px-2 tw:py-1 tw:rounded">
