@@ -1,7 +1,5 @@
 "use client";
 import Link from "next/link";
-import { Autoplay, Navigation } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 import type { Course } from "@/types/course";
 import CourseMeta from "./CourseMeta";
 
@@ -10,154 +8,118 @@ type Props = {
 };
 export default function CoursesHome({ courses }: Props) {
   return (
-    <>
-      <section className="courses">
-        <div className="container">
-          <div className="row">
-            <div className="col-12 wow fadeInUp">
-              <div className="section-title">
-                <span>Our Courses List</span>
-                <h2>Most Popular Courses</h2>
-              </div>
-            </div>
-
-            <div className="col-12 wow fadeIn">
-              <div className="courses-slider owl-carousel owl-loaded owl-drag">
-                <Swiper
-                  slidesPerView={3}
-                  spaceBetween={30}
-                  loop={true}
-                  pagination={{ clickable: true }}
-                  modules={[Autoplay, Navigation]}
-                  autoplay={{ delay: 3000, disableOnInteraction: false }}
-                  navigation={{ nextEl: ".owl-next", prevEl: ".owl-prev" }}
-                  breakpoints={{
-                    0: {
-                      slidesPerView: 1,
-                    },
-                    768: {
-                      slidesPerView: 2,
-                    },
-                    1200: {
-                      slidesPerView: 3,
-                    },
-                  }}
-                  className="courses-slider owl-carousel owl-loaded owl-drag"
-                >
-                  {courses?.map((course) => (
-                    <SwiperSlide
-                      key={course?.id}
-                      className="single-course tw:shadow"
-                    >
-                      <div className="course-img tw:rounded-b-0 tw:relative">
-                        <img
-                          src={`${course?.thumbnail}`}
-                          alt="course image"
-                          className="tw:rounded-b-0"
-                        />
-                        {/* Discounted price display */}
-                        <span className="cprice">
-                          {course?.discounted_price ? (
-                            <>
-                              <span className="tw:line-through tw:text-gray-400 tw:mr-2">
-                                ৳{course?.price}
-                              </span>
-                              <span className="tw:text-red-500">
-                                ৳{course?.discounted_price}
-                              </span>
-                            </>
-                          ) : (
-                            <>৳{course?.price}</>
-                          )}
-                        </span>
-                        {/* Bundle badge */}
-                        {course?.is_bundle && (
-                          <span className="tw:absolute tw:top-2 tw:left-2 tw:bg-yellow-400 tw:text-xs tw:px-2 tw:py-1 tw:rounded">
-                            Bundle
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="course_content tw:p-4">
-                        <div className="crating">
-                          <a href="#">
-                            {new Array(course?.average_rating || 0)
-                              .fill(0)
-                              .map((_, i) => (
-                                <i key={i} className="bx bxs-star"></i>
-                              ))}
-                            <span>({course?.total_reviews})</span>
-                          </a>
-                        </div>
-                        <h2 className="tw:text-md">
-                          <Link
-                            href={`/courses/${course?.slug}`}
-                            className="tw:text-md"
-                          >
-                            {course?.title}
-                          </Link>
-                        </h2>
-
-                        {/* Grouped courses for bundles */}
-                        {course?.is_bundle &&
-                          course?.group_courses &&
-                          course?.group_courses?.length > 0 && (
-                            <div className="tw:mt-2 tw:mb-2 tw:text-xs tw:bg-gray-100 tw:p-2 tw:rounded">
-                              <strong>Includes:</strong>
-                              <ul className="tw:list-disc tw:ml-4">
-                                {course.group_courses.map((gc) => (
-                                  <li key={gc.id}>
-                                    <Link
-                                      href={`/courses/${gc.slug}`}
-                                      className="tw:underline"
-                                    >
-                                      {gc.title}
-                                    </Link>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
-
-                        <div className="cmeta">
-                          <div className="smeta">
-                            <CourseMeta slug={course?.slug} />
-                          </div>
-                          <div className="ccategory">
-                            <Link
-                              className="tw:text-sm"
-                              href={`/courses/${course?.category?.slug}`}
-                            >
-                              {course?.category?.name}
-                            </Link>
-                          </div>
-                        </div>
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-
-                <div className="owl-nav">
-                  <button
-                    type="button"
-                    role="presentation"
-                    className="owl-prev"
-                  >
-                    <i className="bx bx-chevrons-left"></i>
-                  </button>
-                  <button
-                    type="button"
-                    role="presentation"
-                    className="owl-next"
-                  >
-                    <i className="bx bx-chevrons-right"></i>
-                  </button>
-                </div>
-              </div>
+    <section className="courses">
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <div className="section-title tw:text-center tw:mb-10">
+              <span>Our Courses List</span>
+              <h2>Most Popular Courses</h2>
             </div>
           </div>
         </div>
-      </section>
-    </>
+
+        <div className="row">
+          {courses?.map((course) => (
+            <div key={course?.id} className="col-lg-4 col-md-6 col-sm-12">
+              <div className="single-course">
+                <div className="course-img tw:relative">
+                  <img
+                    src={`${course?.thumbnail}`}
+                    alt={course?.title || "course image"}
+                  />
+                  {/* Price Overlay */}
+                  <span className="cprice tw:bg-gradient-to-r tw:from-blue-600 tw:to-blue-800 tw:text-white tw:font-bold tw:shadow-lg">
+                    {course?.discounted_price ? (
+                      <span className="tw:flex tw:items-center tw:gap-2">
+                        <span className="tw:line-through tw:opacity-70 tw:text-sm">
+                          ৳{course?.price}
+                        </span>
+                        <span className="tw:text-yellow-300 tw:text-lg">
+                          ৳{course?.discounted_price}
+                        </span>
+                      </span>
+                    ) : (
+                      <span className="tw:text-lg">৳{course?.price}</span>
+                    )}
+                  </span>
+                  {/* Bundle Badge */}
+                  {course?.is_bundle && (
+                    <span className="tw:absolute tw:top-2 tw:right-2 tw:bg-yellow-400 tw:text-black tw:text-xs tw:font-bold tw:px-2 tw:py-1 tw:rounded">
+                      Bundle
+                    </span>
+                  )}
+                </div>
+
+                <div className="course_content">
+                  <div className="crating">
+                    <a href="#">
+                      {new Array(Math.floor(course?.average_rating || 0))
+                        .fill(0)
+                        .map((_, i) => (
+                          <i key={i} className="bx bxs-star"></i>
+                        ))}
+                      <span>({course?.total_reviews || 0})</span>
+                    </a>
+                  </div>
+                  <h2>
+                    <Link href={`/courses/${course?.slug}`}>
+                      {course?.title}
+                    </Link>
+                  </h2>
+
+                  {/* Grouped courses for bundles */}
+                  {course?.is_bundle &&
+                    course?.group_courses &&
+                    course?.group_courses?.length > 0 && (
+                      <div className="tw:mt-2 tw:mb-2 tw:text-xs tw:bg-gray-100 tw:p-2 tw:rounded">
+                        <strong>Includes:</strong>
+                        <ul className="tw:list-disc tw:ml-4">
+                          {course.group_courses.map((gc) => (
+                            <li key={gc.id}>
+                              <Link
+                                href={`/courses/${gc.slug}`}
+                                className="tw:underline"
+                              >
+                                {gc.title}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                  <div className="cmeta">
+                    <div className="smeta">
+                      <CourseMeta slug={course?.slug} />
+                    </div>
+                    <div className="ccategory">
+                      <Link href={`/courses/${course?.category?.slug}`}>
+                        {course?.category?.name}
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Empty State */}
+        {(!courses || courses.length === 0) && (
+          <div className="row">
+            <div className="col-12 tw:text-center tw:py-16">
+              <div className="tw:text-gray-400 tw:text-6xl tw:mb-4">📚</div>
+              <h3 className="tw:text-xl tw:font-semibold tw:text-gray-600 tw:mb-2">
+                No courses available
+              </h3>
+              <p className="tw:text-gray-500">
+                Check back soon for new courses!
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
   );
 }

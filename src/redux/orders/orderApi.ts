@@ -12,12 +12,12 @@ export const orderApi = apiSlice.injectEndpoints({
     // Create a new order for a course
     createOrder: builder.mutation<
       OrderCreateResponse,
-      { slug: string; notes?: string }
+      { slug: string; notes?: string; coupon_code?: string }
     >({
-      query: ({ slug, notes }) => ({
+      query: ({ slug, notes, coupon_code }) => ({
         url: `/orders/create/${slug}`,
         method: "POST",
-        body: { notes },
+        body: { notes, coupon_code },
       }),
     }),
 
