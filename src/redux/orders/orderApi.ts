@@ -16,6 +16,8 @@ interface CouponCheckResponse {
   original_price?: number;
   discount_amount?: number;
   final_price?: number;
+  final_amount?: number; // Added to match API response
+  course_price?: number; // Added to match API response
 }
 
 export const orderApi = apiSlice.injectEndpoints({

@@ -89,8 +89,8 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
         setCouponApplied(true);
         setDiscountInfo({
           discount_amount: res.discount_amount || 0,
-          final_price: res.final_price || 0,
-          original_price: res.original_price || 0,
+          final_price: res.final_amount || res.final_price || 0,
+          original_price: res.course_price || res.original_price || 0,
         });
         setCouponError("");
       } else {
