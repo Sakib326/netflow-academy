@@ -7,8 +7,30 @@ import {
 } from "@/types/orders";
 import { apiSlice } from "../api/apiSlice";
 
+interface CouponCheckResponse {
+  success: boolean;
+  message?: string;
+  coupon_code?: string;
+  discount_type?: string;
+  discount_value?: number;
+  original_price?: number;
+  discount_amount?: number;
+  final_price?: number;
+}
+
 export const orderApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    // Check coupon validity
+    checkCoupon: builder.query<
+      CouponCheckResponse,
+      { slug: string; coupon_code: string }
+    >({
+      query: ({ slug, coupon_code }) => ({
+        url: `/coupons/check/${slug}?coupon_code=${coupon_code}`,
+        method: "GET",
+      }),
+    }),
+
     // Create a new order for a course
     createOrder: builder.mutation<
       OrderCreateResponse,
@@ -61,6 +83,8 @@ export const orderApi = apiSlice.injectEndpoints({
 });
 
 export const {
+  useCheckCouponQuery,
+  useLazyCheckCouponQuery,
   useCreateOrderMutation,
   useGetMyOrdersQuery,
   useGetOrderDetailQuery,

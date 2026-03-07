@@ -6,7 +6,10 @@ import Link from "next/link";
 import CourseCurriculum from "./components/CourseCurriculum";
 import { useRouter } from "next/navigation";
 import Modal from "react-modal";
-import { useCreateOrderMutation } from "@/redux/orders/orderApi";
+import {
+  useCreateOrderMutation,
+  useLazyCheckCouponQuery,
+} from "@/redux/orders/orderApi";
 import { SingleCourseModule } from "@/types/singleCourse";
 import {
   FaBookOpen,
@@ -25,8 +28,18 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [note, setNote] = useState("");
+  const [couponCode, setCouponCode] = useState("");
+  const [couponApplied, setCouponApplied] = useState(false);
+  const [couponError, setCouponError] = useState("");
+  const [discountInfo, setDiscountInfo] = useState<{
+    discount_amount: number;
+    final_price: number;
+    original_price: number;
+  } | null>(null);
   const router = useRouter();
   const [createOrder] = useCreateOrderMutation();
+  const [checkCoupon, { isLoading: isCouponLoading }] =
+    useLazyCheckCouponQuery();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -53,6 +66,51 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
     //   return;
     // }
     setModalOpen(true);
+    // Reset coupon state when modal opens
+    setCouponCode("");
+    setCouponApplied(false);
+    setCouponError("");
+    setDiscountInfo(null);
+  };
+
+  // Check coupon handler
+  const handleCheckCoupon = async () => {
+    if (!couponCode.trim()) {
+      setCouponError("Please enter a coupon code");
+      return;
+    }
+    setCouponError("");
+    try {
+      const res = await checkCoupon({
+        slug: course.slug!,
+        coupon_code: couponCode.trim(),
+      }).unwrap();
+      if (res.success) {
+        setCouponApplied(true);
+        setDiscountInfo({
+          discount_amount: res.discount_amount || 0,
+          final_price: res.final_price || 0,
+          original_price: res.original_price || 0,
+        });
+        setCouponError("");
+      } else {
+        setCouponApplied(false);
+        setDiscountInfo(null);
+        setCouponError(res.message || "Invalid coupon code");
+      }
+    } catch (err: any) {
+      setCouponApplied(false);
+      setDiscountInfo(null);
+      setCouponError(err?.data?.message || "Failed to validate coupon");
+    }
+  };
+
+  // Remove coupon handler
+  const handleRemoveCoupon = () => {
+    setCouponCode("");
+    setCouponApplied(false);
+    setCouponError("");
+    setDiscountInfo(null);
   };
 
   const handleOrderSubmit = async (e: React.FormEvent) => {
@@ -62,10 +120,11 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
       const res: any = await createOrder({
         slug: course.slug!,
         notes: note,
+        coupon_code: couponApplied ? couponCode : undefined,
       }).unwrap();
       if (res.success) {
         setModalOpen(false);
-        router.push("/dashboard/orders/" + res.order_number);
+        router.push("/dashboard/orders/");
       } else {
         alert(res.message || "Could not place order.");
       }
@@ -74,6 +133,9 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
     } finally {
       setLoading(false);
       setNote("");
+      setCouponCode("");
+      setCouponApplied(false);
+      setDiscountInfo(null);
     }
   };
 
@@ -82,7 +144,7 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
     (course?.modules
       ?.slice()
       .sort(
-        (a, b) => (a.order || 0) - (b.order || 0)
+        (a, b) => (a.order || 0) - (b.order || 0),
       ) as SingleCourseModule[]) || [];
 
   // Calculate totals
@@ -92,9 +154,10 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
         total +
         (module?.lessons?.filter(
           (lesson) =>
-            lesson.lesson_type !== "assignment" && lesson.lesson_type !== "quiz"
+            lesson.lesson_type !== "assignment" &&
+            lesson.lesson_type !== "quiz",
         )?.length || 0),
-      0
+      0,
     );
   };
 
@@ -104,7 +167,7 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
         total +
         (module.lessons?.filter((lesson) => lesson.lesson_type === "assignment")
           .length || 0),
-      0
+      0,
     );
 
   const getTotalQuizzes = () =>
@@ -113,7 +176,7 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
         total +
         (module.lessons?.filter((lesson) => lesson.lesson_type === "quiz")
           .length || 0),
-      0
+      0,
     );
 
   return (
@@ -134,25 +197,171 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
             isOpen={modalOpen}
             onRequestClose={() => setModalOpen(false)}
             ariaHideApp={false}
-            className="tw:bg-white tw:rounded tw:p-6 tw:max-w-md tw:mx-auto tw:mt-32 tw:shadow-lg"
-            overlayClassName="tw:fixed tw:inset-0 tw:bg-black tw:bg-opacity-10 tw:flex tw:items-center tw:justify-center"
+            className="tw:bg-white tw:rounded-2xl tw:max-w-lg tw:w-full tw:mx-4 tw:shadow-2xl tw:outline-none tw:overflow-hidden"
+            overlayClassName="tw:fixed tw:inset-0 tw:bg-black/60 tw:backdrop-blur-sm tw:flex tw:items-center tw:justify-center tw:z-50"
           >
-            <form onSubmit={handleOrderSubmit}>
-              <h2 className="tw:text-lg tw:font-semibold tw:mb-4">
-                Special Request (optional)
-              </h2>
-              <textarea
-                className="tw:w-full tw:border tw:rounded tw:p-2 tw:mb-4"
-                rows={3}
-                placeholder="Any special request?"
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-                disabled={loading}
-              />
-              <div className="tw:flex tw:justify-end tw:gap-2">
+            {/* Modal Header */}
+            <div className="tw:bg-gradient-to-r tw:from-blue-600 tw:to-blue-800 tw:p-6 tw:text-white">
+              <div className="tw:flex tw:items-center tw:justify-between">
+                <div>
+                  <h2 className="tw:text-xl tw:font-bold tw:mb-1">
+                    Complete Your Order
+                  </h2>
+                  <p className="tw:text-blue-100 tw:text-sm">
+                    You're enrolling in: {course?.title}
+                  </p>
+                </div>
                 <button
                   type="button"
-                  className="tw:bg-gray-200 tw:px-4 tw:py-2 tw:rounded"
+                  onClick={() => setModalOpen(false)}
+                  className="tw:w-8 tw:h-8 tw:rounded-full tw:bg-white/20 hover:tw:bg-white/30 tw:flex tw:items-center tw:justify-center tw:transition-colors"
+                >
+                  <span className="tw:text-white tw:text-xl tw:leading-none">
+                    &times;
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <form onSubmit={handleOrderSubmit} className="tw:p-6">
+              {/* Price Summary */}
+              <div className="tw:bg-gray-50 tw:rounded-xl tw:p-4 tw:mb-6">
+                <div className="tw:flex tw:justify-between tw:items-center tw:mb-2">
+                  <span className="tw:text-gray-600">Original Price</span>
+                  <span
+                    className={`tw:font-semibold ${discountInfo ? "tw:line-through tw:text-gray-400" : "tw:text-gray-900"}`}
+                  >
+                    ৳
+                    {discountInfo?.original_price ||
+                      course?.discounted_price ||
+                      course?.price}
+                  </span>
+                </div>
+                {discountInfo && (
+                  <>
+                    <div className="tw:flex tw:justify-between tw:items-center tw:mb-2 tw:text-green-600">
+                      <span className="tw:flex tw:items-center tw:gap-2">
+                        <span className="tw:text-lg">🎉</span> Discount Applied
+                      </span>
+                      <span className="tw:font-semibold">
+                        -৳{discountInfo.discount_amount}
+                      </span>
+                    </div>
+                    <div className="tw:border-t tw:border-gray-200 tw:pt-2 tw:mt-2">
+                      <div className="tw:flex tw:justify-between tw:items-center">
+                        <span className="tw:text-gray-900 tw:font-semibold">
+                          Final Price
+                        </span>
+                        <span className="tw:text-2xl tw:font-bold tw:text-green-600">
+                          ৳{discountInfo.final_price}
+                        </span>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Coupon Section */}
+              <div className="tw:mb-6">
+                <label className="tw:block tw:text-sm tw:font-semibold tw:text-gray-700 tw:mb-2">
+                  🏷️ Have a Coupon Code?
+                </label>
+                {!couponApplied ? (
+                  <div className="tw:flex tw:gap-2">
+                    <input
+                      type="text"
+                      className="tw:flex-1 tw:border tw:border-gray-300 tw:rounded-lg tw:px-4 tw:py-3 tw:text-sm focus:tw:ring-2 focus:tw:ring-blue-500 focus:tw:border-blue-500 tw:outline-none tw:transition-all tw:uppercase"
+                      placeholder="Enter coupon code"
+                      value={couponCode}
+                      onChange={(e) => {
+                        setCouponCode(e.target.value.toUpperCase());
+                        setCouponError("");
+                      }}
+                      disabled={loading || isCouponLoading}
+                    />
+                    <button
+                      type="button"
+                      onClick={handleCheckCoupon}
+                      disabled={
+                        loading || isCouponLoading || !couponCode.trim()
+                      }
+                      className="tw:px-5 tw:py-3 tw:bg-gray-800 tw:text-white tw:rounded-lg tw:font-semibold tw:text-sm hover:tw:bg-gray-900 disabled:tw:bg-gray-400 disabled:tw:cursor-not-allowed tw:transition-colors"
+                    >
+                      {isCouponLoading ? (
+                        <span className="tw:flex tw:items-center tw:gap-2">
+                          <svg
+                            className="tw:animate-spin tw:h-4 tw:w-4"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              className="tw:opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                              fill="none"
+                            />
+                            <path
+                              className="tw:opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                            />
+                          </svg>
+                          Checking
+                        </span>
+                      ) : (
+                        "Apply"
+                      )}
+                    </button>
+                  </div>
+                ) : (
+                  <div className="tw:flex tw:items-center tw:justify-between tw:bg-green-50 tw:border tw:border-green-200 tw:rounded-lg tw:px-4 tw:py-3">
+                    <div className="tw:flex tw:items-center tw:gap-2">
+                      <span className="tw:text-green-600 tw:text-lg">✓</span>
+                      <span className="tw:text-green-800 tw:font-semibold">
+                        {couponCode}
+                      </span>
+                      <span className="tw:text-green-600 tw:text-sm">
+                        applied
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleRemoveCoupon}
+                      className="tw:text-red-500 hover:tw:text-red-700 tw:text-sm tw:font-medium tw:transition-colors"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                )}
+                {couponError && (
+                  <p className="tw:text-red-500 tw:text-sm tw:mt-2 tw:flex tw:items-center tw:gap-1">
+                    <span>⚠️</span> {couponError}
+                  </p>
+                )}
+              </div>
+
+              {/* Special Request */}
+              <div className="tw:mb-6">
+                <label className="tw:block tw:text-sm tw:font-semibold tw:text-gray-700 tw:mb-2">
+                  📝 Special Request (Optional)
+                </label>
+                <textarea
+                  className="tw:w-full tw:border tw:border-gray-300 tw:rounded-lg tw:px-4 tw:py-3 tw:text-sm focus:tw:ring-2 focus:tw:ring-blue-500 focus:tw:border-blue-500 tw:outline-none tw:transition-all tw:resize-none"
+                  rows={3}
+                  placeholder="Any special request or message for us?"
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  disabled={loading}
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="tw:flex tw:gap-3">
+                <button
+                  type="button"
+                  className="tw:flex-1 tw:px-6 tw:py-3 tw:bg-gray-100 tw:text-gray-700 tw:rounded-lg tw:font-semibold hover:tw:bg-gray-200 tw:transition-colors"
                   onClick={() => setModalOpen(false)}
                   disabled={loading}
                 >
@@ -160,12 +369,50 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                 </button>
                 <button
                   type="submit"
-                  className="tw:bg-blue-600 tw:text-white tw:px-4 tw:py-2 tw:rounded"
+                  className="tw:flex-1 tw:px-6 tw:py-3 tw:bg-gradient-to-r tw:from-blue-600 tw:to-blue-700 tw:text-white tw:rounded-lg tw:font-semibold hover:tw:from-blue-700 hover:tw:to-blue-800 tw:transition-all tw:shadow-lg hover:tw:shadow-xl disabled:tw:opacity-50 disabled:tw:cursor-not-allowed"
                   disabled={loading}
                 >
-                  {loading ? "Processing..." : "Place Order"}
+                  {loading ? (
+                    <span className="tw:flex tw:items-center tw:justify-center tw:gap-2">
+                      <svg
+                        className="tw:animate-spin tw:h-5 tw:w-5"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="tw:opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                          fill="none"
+                        />
+                        <path
+                          className="tw:opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
+                      </svg>
+                      Processing...
+                    </span>
+                  ) : (
+                    <span className="tw:flex tw:items-center tw:justify-center tw:gap-2">
+                      🛒 Place Order
+                    </span>
+                  )}
                 </button>
               </div>
+
+              {/* Terms Note */}
+              <p className="tw:text-xs tw:text-gray-500 tw:text-center tw:mt-4">
+                By placing this order, you agree to our{" "}
+                <a
+                  href="/terms"
+                  className="tw:text-blue-600 hover:tw:underline"
+                >
+                  Terms & Conditions
+                </a>
+              </p>
             </form>
           </Modal>
           <div className="row">
