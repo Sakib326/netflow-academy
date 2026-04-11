@@ -834,16 +834,9 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                     {loading ? "Processing..." : "Buy Course"}
                   </button>
                 </div>
-                {/* Bundle savings in sidebar */}
-                {course.is_bundle && course.bundle_savings && (
-                  <div className="tw:mt-3 tw:text-green-600 tw:text-center">
-                    Save ৳{course.bundle_savings} on this bundle!
-                  </div>
-                )}
               </div>
             </div>
           </div>
-          {/* Related courses section can be made dynamic if you have related courses data */}
         </div>
       </section>
     </>
