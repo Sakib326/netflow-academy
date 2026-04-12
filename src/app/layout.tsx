@@ -12,7 +12,9 @@ export const metadata: Metadata = {
   description:
     "Netflow Academy provides skill-based education to help you succeed in your global career. Our courses teach real-world skills and come with lifetime support and career guidance.",
   icons: {
-    icon: "/vite.svg",
+    icon: "/favicon.ico",
+    apple: "/favicon.svg",
+    shortcut: "/favicon.ico",
   },
 };
 
@@ -27,6 +29,11 @@ export default function RootLayout({ children }: Props) {
       className="tw:overflow-x-hidden tw:m-0 tw:p-0"
       style={{ padding: 0, margin: 0, overflowX: "hidden" }}
     >
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/favicon.svg" />
+      </head>
       <body
         className="tw:overflow-x-hidden tw:m-0 tw:p-0"
         style={{ overflowX: "hidden" }}
