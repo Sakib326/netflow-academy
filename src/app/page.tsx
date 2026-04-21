@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   async function fetchCourses(
-    params: FetchCoursesParams = {}
+    params: FetchCoursesParams = {},
   ): Promise<PaginatedCourses> {
     const url = new URL(`${API_URL}/courses`);
     Object.entries(params).forEach(([key, value]) => {
@@ -64,7 +64,7 @@ export default async function HomePage() {
   }
 
   async function fetchReviews(
-    params: FetchReviewsParams = {}
+    params: FetchReviewsParams = {},
   ): Promise<PaginatedReviews> {
     const url = new URL(`${API_URL}/reviews`);
     Object.entries(params).forEach(([key, value]) => {
@@ -83,7 +83,7 @@ export default async function HomePage() {
     fetchCourses({ page: 1, per_page: 10, sort: "latest" }),
     fetchCategories(),
     fetchInstructors(),
-    fetchReviews({ page: 1, per_page: 10 }),
+    fetchReviews({ page: 1, per_page: 100 }),
   ]);
 
   return (
