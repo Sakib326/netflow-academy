@@ -11,7 +11,6 @@ import {
 } from "@/redux/orders/orderApi";
 import { useGetReviewsQuery } from "@/redux/reviews/reviewApi";
 import { SingleCourseModule } from "@/types/singleCourse";
-import { Review } from "@/types/review";
 import {
   FaBookOpen,
   FaChartLine,
@@ -46,6 +45,7 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
   const {
     data: reviewData,
     isLoading: reviewLoading,
+    isFetching: reviewFetching,
     error: reviewQueryError,
   } = useGetReviewsQuery(
     {
@@ -68,22 +68,6 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
   const instructor = course?.instructor ?? {};
   const category = course?.category ?? {};
   const rating_distribution = course?.rating_distribution ?? [];
-  const reviewTotalPages = reviewData?.last_page ?? 1;
-  const reviewPageItems = (() => {
-    if (reviewTotalPages <= 5) {
-      return Array.from({ length: reviewTotalPages }, (_, index) => index + 1);
-    }
-
-    const pages = new Set<number>([1, reviewTotalPages]);
-
-    for (const page of [reviewPage - 1, reviewPage, reviewPage + 1]) {
-      if (page > 1 && page < reviewTotalPages) {
-        pages.add(page);
-      }
-    }
-
-    return Array.from(pages).sort((a, b) => a - b);
-  })();
 
   useEffect(() => {
     setReviewPage(1);
@@ -94,6 +78,17 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
       ? "Failed to load reviews."
       : "Unable to load reviews."
     : "";
+
+  const reviewTotalPages = reviewData?.last_page || 1;
+  const reviewPageItems = (() => {
+    if (reviewTotalPages <= 5) {
+      return Array.from({ length: reviewTotalPages }, (_, i) => i + 1);
+    }
+    const pages = [1, reviewTotalPages];
+    if (reviewPage > 2) pages.push(reviewPage);
+    if (reviewPage < reviewTotalPages - 1) pages.push(reviewPage);
+    return Array.from(new Set(pages)).sort((a, b) => a - b);
+  })();
 
   // Buy Now handler
   const handleBuyNow = () => {
@@ -678,209 +673,182 @@ export default function CourseDetailsArea({ course }: CourseDetailsAreaProps) {
                   aria-labelledby="nav-review-tab"
                   tabIndex={0}
                 >
-                  <div className="cd_rating">
-                    <h3>Student's Reviews</h3>
-                    <div className="cd_rating_top">
-                      <div className="cdr_rate_summary">
-                        <h1>{(course?.average_rating ?? 0).toFixed(1)}</h1>
-                        <span className="cdr_rating">
-                          {[...Array(5)].map((_, i) => (
-                            <i
-                              key={i}
-                              className={
-                                i < Math.round(course?.average_rating ?? 0)
-                                  ? "bx bxs-star"
-                                  : "bx bx-star"
-                              }
-                            ></i>
-                          ))}
+                  <div className="cd_rating tw:relative tw:overflow-hidden tw:rounded-2xl tw:bg-gradient-to-br tw:from-indigo-500 tw:via-fuchsia-500 tw:to-cyan-500 tw:p-[1px]">
+                    <div className="tw:rounded-2xl tw:bg-white/95 tw:backdrop-blur-md tw:p-4 md:tw:p-6">
+                      <div className="tw:mb-4 tw:flex tw:items-center tw:justify-between">
+                        <h3 className="tw:mb-0 tw:bg-gradient-to-r tw:from-indigo-600 tw:via-fuchsia-600 tw:to-cyan-600 tw:bg-clip-text tw:text-transparent">
+                          Student's Reviews
+                        </h3>
+                        <span className="tw:rounded-full tw:bg-gradient-to-r tw:from-indigo-500 tw:to-fuchsia-500 tw:px-3 tw:py-1 tw:text-xs tw:font-semibold tw:text-white tw:shadow-md">
+                          {course?.total_reviews ?? 0} total
                         </span>
-                        <p>Total {course?.total_reviews ?? 0} Rating</p>
                       </div>
-                      <div className="cdr_rate_number">
-                        <ul>
+
+                      <div className="tw:grid tw:grid-cols-1 tw:gap-4 md:tw:grid-cols-12 tw:mb-5">
+                        <div className="md:tw:col-span-4 tw:rounded-xl tw:bg-gradient-to-br tw:from-indigo-500 tw:via-purple-500 tw:to-fuchsia-500 tw:p-4 tw:text-white tw:shadow-lg tw:transition-transform tw:duration-300 hover:tw:-translate-y-0.5">
+                          <h1 className="tw:text-4xl tw:font-bold tw:leading-none">
+                            {(course?.average_rating ?? 0).toFixed(1)}
+                          </h1>
+                          <span className="cdr_rating tw:mt-2 tw:block tw:text-yellow-300">
+                            {[...Array(5)].map((_, i) => (
+                              <i
+                                key={i}
+                                className={
+                                  i < Math.round(course?.average_rating ?? 0)
+                                    ? "bx bxs-star"
+                                    : "bx bx-star"
+                                }
+                              ></i>
+                            ))}
+                          </span>
+                          <p className="tw:mt-2 tw:text-xs tw:text-white/90">
+                            Rated by {course?.total_reviews ?? 0} learners
+                          </p>
+                        </div>
+
+                        <div className="md:tw:col-span-8 tw:rounded-xl tw:bg-slate-50 tw:p-4 tw:shadow-inner">
                           {rating_distribution.length > 0 ? (
-                            rating_distribution.map((dist) => (
-                              <li key={dist.rating}>
-                                <span className="cdr_rate_star">
-                                  {dist.rating}
-                                </span>
-                                <span className="cdr_rate_value">
-                                  <span
-                                    className="rating_width"
-                                    style={{
-                                      width: `${dist.percentage ?? 0}%`,
-                                    }}
-                                  ></span>
-                                  <span className="cdr_rate_count">
-                                    {dist.count ?? 0} Rating
+                            <ul className="tw:space-y-2">
+                              {rating_distribution.map((dist) => (
+                                <li
+                                  key={dist.rating}
+                                  className="tw:flex tw:items-center tw:gap-3"
+                                >
+                                  <span className="tw:w-7 tw:text-sm tw:font-semibold tw:text-slate-700">
+                                    {dist.rating}
                                   </span>
-                                </span>
-                              </li>
-                            ))
+                                  <span className="tw:flex-1 tw:overflow-hidden tw:rounded-full tw:bg-slate-200">
+                                    <span
+                                      className="tw:block tw:h-2.5 tw:rounded-full tw:bg-gradient-to-r tw:from-amber-400 tw:via-orange-500 tw:to-rose-500 tw:transition-all tw:duration-700"
+                                      style={{
+                                        width: `${dist.percentage ?? 0}%`,
+                                      }}
+                                    ></span>
+                                  </span>
+                                  <span className="tw:min-w-[72px] tw:text-right tw:text-xs tw:font-medium tw:text-slate-500">
+                                    {dist.count ?? 0} rating
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
                           ) : (
-                            <li>No rating distribution available.</li>
+                            <p className="tw:text-sm tw:text-slate-500">
+                              No rating distribution available.
+                            </p>
                           )}
-                        </ul>
+                        </div>
                       </div>
-                    </div>
-                    {reviewLoading ? (
-                      <div className="tw:mt-5 tw:rounded-2xl tw:border tw:border-slate-200 tw:bg-slate-50 tw:px-4 tw:py-3 tw:text-sm tw:text-slate-600">
-                        Loading reviews...
-                      </div>
-                    ) : reviewError ? (
-                      <div className="tw:mt-5 tw:rounded-2xl tw:border tw:border-red-200 tw:bg-red-50 tw:px-4 tw:py-3 tw:text-sm tw:text-red-600">
-                        {reviewError}
-                      </div>
-                    ) : null}
 
-                    <div className="tw:mt-5 tw:rounded-2xl tw:border tw:border-slate-200 tw:bg-white tw:shadow-sm">
-                      <div className="tw:flex tw:flex-wrap tw:items-center tw:justify-between tw:gap-3 tw:border-b tw:border-slate-100 tw:px-5 tw:py-4">
-                        <div>
-                          <h4 className="tw:text-base tw:font-semibold tw:text-slate-900">
-                            Recent Reviews
-                          </h4>
-                          <p className="tw:text-sm tw:text-slate-500">
-                            Page {reviewData?.current_page ?? reviewPage} of{" "}
-                            {reviewTotalPages}
+                      <div className="tw:overflow-hidden tw:rounded-xl tw:border tw:border-fuchsia-100 tw:bg-white tw:shadow-lg tw:shadow-fuchsia-100/70">
+                        <div className="tw:bg-gradient-to-r tw:from-indigo-600 tw:via-fuchsia-600 tw:to-cyan-500 tw:px-6 tw:py-4 tw:text-white">
+                          <h4 className="tw:font-semibold">Recent Reviews</h4>
+                          <p className="tw:text-xs tw:text-white/85">
+                            {reviewData?.total ?? 0} reviews
                           </p>
                         </div>
-                        <div className="tw:inline-flex tw:items-center tw:gap-2 tw:rounded-full tw:bg-slate-100 tw:px-3 tw:py-1.5 tw:text-sm tw:font-medium tw:text-slate-700">
-                          <span className="tw:h-2 tw:w-2 tw:rounded-full tw:bg-blue-600"></span>
-                          {reviewData?.total ?? 0} total reviews
-                        </div>
-                      </div>
 
-                      <div className="rating_list tw:!m-0 tw:px-5 tw:py-5">
-                        {!reviewLoading &&
-                        !reviewError &&
-                        reviewData?.data?.length ? (
-                          reviewData.data.map((review: Review) => (
-                            <div
-                              className="rating_item tw:rounded-xl tw:border tw:border-slate-100 tw:bg-slate-50 tw:p-4 tw:shadow-sm tw:transition-shadow hover:tw:shadow-md"
-                              key={review.id}
-                            >
-                              <div className="rating_item_avatar tw:items-start">
-                                <img
-                                  src={
-                                    review.user?.avatar ??
-                                    "/assets/img/review/default.jpg"
-                                  }
-                                  alt={review.user?.name ?? "avatar"}
-                                  className="tw:h-12 tw:w-12 tw:rounded-full tw:border tw:border-white tw:object-cover tw:shadow-sm"
+                        <div className="tw:min-h-72 tw:px-6 tw:py-5 tw:bg-gradient-to-b tw:from-white tw:to-slate-50/70">
+                          {reviewLoading ? (
+                            <div className="tw:space-y-3 tw:animate-pulse">
+                              {Array.from({ length: 3 }).map((_, i) => (
+                                <div
+                                  key={i}
+                                  className="tw:h-20 tw:rounded-lg tw:bg-slate-200/70"
                                 />
-                                <div className="rava_conent tw:pt-0.5">
-                                  <div className="tw:flex tw:flex-wrap tw:items-center tw:gap-3">
-                                    <h3 className="tw:text-sm tw:font-semibold tw:text-slate-900">
-                                      {review.user?.name ?? "Anonymous"}
-                                    </h3>
-                                    <span className="tw:rounded-full tw:bg-amber-50 tw:px-2.5 tw:py-1 tw:text-xs tw:font-semibold tw:text-amber-700">
-                                      {review.rating.toFixed(1)} / 5
-                                    </span>
-                                  </div>
-                                  <span className="rating_item_ricon tw:mt-1 tw:flex tw:text-amber-500">
-                                    {[...Array(5)].map((_, i) => (
-                                      <i
-                                        key={i}
-                                        className={
-                                          i < (review.rating ?? 0)
-                                            ? "bx bxs-star"
-                                            : "bx bx-star"
-                                        }
-                                      ></i>
-                                    ))}
-                                  </span>
-                                </div>
-                              </div>
-                              <div className="rating_item_content tw:mt-3 tw:border-l-2 tw:border-blue-200 tw:pl-4">
-                                <p className="tw:text-sm tw:leading-6 tw:text-slate-700">
-                                  {review.review ?? ""}
-                                </p>
-                              </div>
+                              ))}
                             </div>
-                          ))
-                        ) : !reviewLoading && !reviewError ? (
-                          <div className="tw:rounded-xl tw:border tw:border-dashed tw:border-slate-200 tw:bg-slate-50 tw:px-4 tw:py-8 tw:text-center tw:text-sm tw:text-slate-500">
-                            No reviews yet.
-                          </div>
-                        ) : null}
-                      </div>
-
-                      {reviewData && reviewTotalPages > 1 && (
-                        <div className="tw:flex tw:flex-wrap tw:items-center tw:justify-between tw:gap-4 tw:border-t tw:border-slate-100 tw:px-5 tw:py-4">
-                          <p className="tw:text-sm tw:text-slate-500">
-                            Showing {reviewData.from ?? 0}-
-                            {Math.min(
-                              reviewData.to ?? 0,
-                              reviewData.total ?? 0,
-                            )}{" "}
-                            of {reviewData.total ?? 0}
-                          </p>
-
-                          <div className="tw:flex tw:flex-wrap tw:items-center tw:gap-2">
-                            <button
-                              type="button"
-                              onClick={() =>
-                                setReviewPage((page) => Math.max(1, page - 1))
-                              }
-                              disabled={reviewPage === 1}
-                              className="tw:inline-flex tw:items-center tw:gap-2 tw:rounded-full tw:border tw:border-slate-200 tw:bg-white tw:px-4 tw:py-2 tw:text-sm tw:font-medium tw:text-slate-700 tw:shadow-sm tw:transition-colors hover:tw:bg-slate-50 disabled:tw:cursor-not-allowed disabled:tw:opacity-50"
+                          ) : reviewError ? (
+                            <p className="tw:rounded-lg tw:bg-red-50 tw:p-3 tw:text-center tw:text-sm tw:font-medium tw:text-red-500">
+                              {reviewError}
+                            </p>
+                          ) : !reviewData?.data?.length ? (
+                            <p className="tw:rounded-lg tw:bg-slate-100 tw:p-3 tw:text-center tw:text-sm tw:text-slate-500">
+                              No reviews yet.
+                            </p>
+                          ) : (
+                            <div
+                              className={`tw:space-y-3 tw:transition-all tw:duration-500 ${
+                                reviewFetching
+                                  ? "tw:opacity-60 tw:scale-[0.99]"
+                                  : "tw:opacity-100 tw:scale-100"
+                              }`}
                             >
-                              Previous
-                            </button>
-
-                            <div className="tw:flex tw:flex-wrap tw:items-center tw:gap-2">
-                              {reviewPageItems.map((pageNumber, index) => {
-                                const previousPage = reviewPageItems[index - 1];
-                                const showGap =
-                                  index > 0 && previousPage !== pageNumber - 1;
-
-                                return (
-                                  <span
-                                    key={pageNumber}
-                                    className="tw:flex tw:items-center tw:gap-2"
-                                  >
-                                    {showGap && (
-                                      <span className="tw:px-1 tw:text-sm tw:text-slate-400">
-                                        ...
-                                      </span>
+                              {reviewData.data.map((r) => (
+                                <div
+                                  key={r.id}
+                                  className="tw:group tw:rounded-xl tw:border tw:border-slate-100 tw:bg-white tw:p-4 tw:shadow-sm tw:transition-all tw:duration-300 hover:tw:-translate-y-0.5 hover:tw:shadow-xl hover:tw:shadow-fuchsia-100"
+                                >
+                                  <div className="tw:flex tw:gap-3">
+                                    {r.user?.avatar ? (
+                                      <img
+                                        src={r.user.avatar}
+                                        alt={r.user?.name || "Reviewer"}
+                                        className="tw:h-10 tw:w-10 tw:flex-shrink-0 tw:rounded-full tw:object-cover tw:ring-2 tw:ring-fuchsia-100"
+                                      />
+                                    ) : (
+                                      <div className="tw:flex tw:h-10 tw:w-10 tw:flex-shrink-0 tw:items-center tw:justify-center tw:rounded-full tw:bg-gradient-to-br tw:from-indigo-500 tw:to-fuchsia-500 tw:text-sm tw:font-bold tw:text-white">
+                                        {(r.user?.name || "A")
+                                          .charAt(0)
+                                          .toUpperCase()}
+                                      </div>
                                     )}
-                                    <button
-                                      type="button"
-                                      onClick={() => setReviewPage(pageNumber)}
-                                      aria-current={
-                                        reviewPage === pageNumber
-                                          ? "page"
-                                          : undefined
-                                      }
-                                      className={`tw:h-10 tw:min-w-10 tw:rounded-full tw:px-3 tw:text-sm tw:font-semibold tw:transition-all ${
-                                        reviewPage === pageNumber
-                                          ? "tw:bg-blue-600 tw:text-white tw:shadow-md tw:shadow-blue-200"
-                                          : "tw:border tw:border-slate-200 tw:bg-white tw:text-slate-700 hover:tw:bg-slate-50"
-                                      }`}
-                                    >
-                                      {pageNumber}
-                                    </button>
-                                  </span>
-                                );
-                              })}
-                            </div>
 
-                            <button
-                              type="button"
-                              onClick={() =>
-                                setReviewPage((page) =>
-                                  Math.min(reviewTotalPages, page + 1),
-                                )
-                              }
-                              disabled={reviewPage === reviewTotalPages}
-                              className="tw:inline-flex tw:items-center tw:gap-2 tw:rounded-full tw:border tw:border-slate-200 tw:bg-white tw:px-4 tw:py-2 tw:text-sm tw:font-medium tw:text-slate-700 tw:shadow-sm tw:transition-colors hover:tw:bg-slate-50 disabled:tw:cursor-not-allowed disabled:tw:opacity-50"
-                            >
-                              Next
-                            </button>
-                          </div>
+                                    <div className="tw:min-w-0 tw:flex-1">
+                                      <div className="tw:flex tw:flex-wrap tw:items-center tw:justify-between tw:gap-2">
+                                        <span className="tw:text-sm tw:font-semibold tw:text-slate-800">
+                                          {r.user?.name || "Anonymous"}
+                                        </span>
+                                        <div className="tw:flex tw:items-center tw:gap-0.5 tw:text-amber-500">
+                                          {Array.from({ length: 5 }).map(
+                                            (_, i) => (
+                                              <i
+                                                key={i}
+                                                className={
+                                                  i < Math.floor(r.rating ?? 0)
+                                                    ? "bx bxs-star"
+                                                    : "bx bx-star"
+                                                }
+                                              />
+                                            ),
+                                          )}
+                                        </div>
+                                      </div>
+                                      <p className="tw:mt-1 tw:text-sm tw:leading-relaxed tw:text-slate-600">
+                                        {r.review}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
                         </div>
-                      )}
+
+                        {reviewData && reviewTotalPages > 1 && (
+                          <div className="tw:flex tw:flex-wrap tw:items-center tw:justify-between tw:gap-2 tw:border-t tw:border-fuchsia-100 tw:bg-white tw:px-6 tw:py-3 tw:text-xs">
+                            <span className="tw:font-medium tw:text-slate-500">
+                              {reviewData.from}-{reviewData.to} of{" "}
+                              {reviewData.total}
+                            </span>
+
+                            <div className="tw:flex tw:gap-1.5">
+                              {reviewPageItems.map((p) => (
+                                <button
+                                  key={p}
+                                  onClick={() => setReviewPage(p)}
+                                  className={`tw:h-7 tw:min-w-7 tw:rounded-md tw:px-2 tw:font-semibold tw:transition-all tw:duration-200 ${
+                                    reviewPage === p
+                                      ? "tw:bg-gradient-to-r tw:from-indigo-500 tw:to-fuchsia-500 tw:text-white tw:shadow-md"
+                                      : "tw:border tw:border-slate-200 tw:bg-white tw:text-slate-600 hover:tw:border-fuchsia-300 hover:tw:text-fuchsia-600"
+                                  }`}
+                                >
+                                  {p}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
