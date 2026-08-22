@@ -13,21 +13,29 @@ interface CourseDetailsPageProps {
 export async function generateMetadata({
   params,
 }: CourseDetailsPageProps): Promise<Metadata> {
-  const res = await fetch(`${API_URL}/courses/${params.slug}`, {
-    cache: "no-store",
-  });
-  if (!res.ok) {
+  try {
+    const res = await fetch(`${API_URL}/courses/${params.slug}`, {
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      return {
+        title: "Course Not Found | Netflow Academy",
+        description: "This course does not exist.",
+      };
+    }
+    const course: SingleCourse = await res.json();
     return {
-      title: "Course Not Found | Netflow Academy",
-      description: "This course does not exist.",
+      title: `${course.title} | Netflow Academy`,
+      description: course.description || "Course details and curriculum.",
+      keywords: [course.title, course.category?.name || "Category", "Netflow Academy", "Course"],
+    };
+  } catch (error) {
+    console.error("Error generating metadata for course:", error);
+    return {
+      title: "Course | Netflow Academy",
+      description: "Course details and curriculum.",
     };
   }
-  const course: SingleCourse = await res.json();
-  return {
-    title: `${course.title} | Netflow Academy`,
-    description: course.description || "Course details and curriculum.",
-    keywords: [course.title, course.category.name, "Netflow Academy", "Course"],
-  };
 }
 
 export default async function CourseDetailsPage({

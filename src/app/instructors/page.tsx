@@ -5,11 +5,18 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default async function InstructorsPage() {
   async function fetchInstructors(): Promise<Instructor[]> {
-    const res = await fetch(`${API_URL}/instructors`, { cache: "no-store" });
-    if (!res.ok) {
-      throw new Error("Failed to fetch instructors");
+    try {
+      if (!API_URL) return [];
+      const res = await fetch(`${API_URL}/instructors`, { cache: "no-store" });
+      if (!res.ok) {
+        console.error(`Failed to fetch instructors: ${res.status} ${res.statusText}`);
+        return [];
+      }
+      return await res.json();
+    } catch (error) {
+      console.error("Error fetching instructors:", error);
+      return [];
     }
-    return res.json();
   }
 
   const [instructors] = await Promise.all([fetchInstructors()]);

@@ -18,21 +18,44 @@ interface FetchCoursesParams {
   sort?: "latest" | "popular" | "price_low" | "price_high";
 }
 
+const emptyPaginatedCourses: PaginatedCourses = {
+  current_page: 1,
+  data: [],
+  first_page_url: "",
+  from: 0,
+  last_page: 1,
+  last_page_url: "",
+  links: [],
+  next_page_url: null,
+  path: "",
+  per_page: 20,
+  prev_page_url: null,
+  to: 0,
+  total: 0,
+};
+
 async function fetchCourses(
   params: FetchCoursesParams = {}
 ): Promise<PaginatedCourses> {
-  const url = new URL(`${API_URL}/courses`);
-  Object.entries(params).forEach(([key, value]) => {
-    if (value !== undefined && value !== null) {
-      url.searchParams.append(key, String(value));
-    }
-  });
+  try {
+    if (!API_URL) return emptyPaginatedCourses;
+    const url = new URL(`${API_URL}/courses`);
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null) {
+        url.searchParams.append(key, String(value));
+      }
+    });
 
-  const res = await fetch(url.toString(), { cache: "no-store" });
-  if (!res.ok) {
-    throw new Error("Failed to fetch courses");
+    const res = await fetch(url.toString(), { cache: "no-store" });
+    if (!res.ok) {
+      console.error(`Failed to fetch courses: ${res.status} ${res.statusText}`);
+      return emptyPaginatedCourses;
+    }
+    return await res.json();
+  } catch (error) {
+    console.error("Error fetching courses:", error);
+    return emptyPaginatedCourses;
   }
-  return res.json();
 }
 
 export default async function CoursesPage() {
